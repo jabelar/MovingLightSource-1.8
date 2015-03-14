@@ -21,7 +21,6 @@ package com.blogspot.jabelarminecraft.blocksmith;
 
 import java.io.File;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumChatFormatting;
@@ -42,6 +41,7 @@ import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockCloud;
+import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
 import com.blogspot.jabelarminecraft.blocksmith.materials.MaterialCloud;
 import com.blogspot.jabelarminecraft.blocksmith.proxy.CommonProxy;
 
@@ -82,10 +82,11 @@ public class BlockSmith
     
     // instantiate blocks
     // need to instantiate beanstalk block before item as the item constructor associates with block
-	public final static Block blockCloud = new BlockCloud();
+	public final static BlockCloud blockCloud = new BlockCloud();
 
     // instantiate items
-	// important to do this after blocks where item is associate with custom block
+	// important to do this after blocks where item is associated with custom block, like with crop
+	public final static ItemCowHide cowHide = new ItemCowHide();
     
 	// initiate spawn egg items
    

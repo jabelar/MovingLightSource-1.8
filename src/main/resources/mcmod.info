@@ -1,7 +1,7 @@
 [
 {
-  "modid": "magicbeans",
-  "name": "Magic Beans",
+  "modid": "blocksmith",
+  "name": "Block Smith",
   "description": "",
   "version": "1.0.0",
   "mcversion": "1.8",
@@ -9,7 +9,7 @@
   "updateUrl": "",
   "authorList": [],
   "credits": "",
-  "logoFile": "jackandbeanstalk.png",
+  "logoFile": "modconfiggraphic.png",
   "screenshots": [],
   "dependencies": []
 }

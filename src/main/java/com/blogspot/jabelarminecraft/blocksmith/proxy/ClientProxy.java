@@ -136,6 +136,7 @@ public class ClientProxy extends CommonProxy
 		// DEBUG
 		System.out.println("Registering item renderers");
 		
+		registerItemRenderer(BlockSmith.cowHide);
 		// registerItemRenderer(JnaeMod.magicBeans);
 	}
 	

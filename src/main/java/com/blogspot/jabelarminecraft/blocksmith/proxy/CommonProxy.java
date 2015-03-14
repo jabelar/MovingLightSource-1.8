@@ -43,9 +43,9 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
+import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.EventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.FMLEventHandler;
-import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.OreGenEventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.TerrainGenEventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.commands.CommandStructureCapture;
@@ -224,7 +224,7 @@ public class CommonProxy
         // DEBUG
         System.out.println("Registering items");
 
-//        GameRegistry.registerItem(JnaeMod.itemGoldenEgg, JnaeMod.itemGoldenEgg.getUnlocalizedName().substring(5));
+        GameRegistry.registerItem(BlockSmith.cowHide, BlockSmith.cowHide.getUnlocalizedName().substring(5));
     }
     
     /**
