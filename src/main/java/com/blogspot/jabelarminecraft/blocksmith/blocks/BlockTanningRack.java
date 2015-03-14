@@ -39,16 +39,16 @@ import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
  * @author jabelar
  *
  */
-public class BlockCloud extends Block
+public class BlockTanningRack extends Block
 {
 
-    public BlockCloud()
+    public BlockTanningRack()
     {
         super(BlockSmith.materialCloud);
         // DEBUG
-        System.out.println("BlockCloud constructor");
+        System.out.println("BlockTanningRack constructor");
         // override default values of Block, where appropriate
-        setUnlocalizedName("cloud");
+        setUnlocalizedName("tanningrack");
         setCreativeTab(CreativeTabs.tabBlock);
         stepSound = soundTypeSnow;
         blockParticleGravity = 1.0F;

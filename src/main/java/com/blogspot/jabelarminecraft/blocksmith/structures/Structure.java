@@ -265,7 +265,7 @@ public class Structure implements IStructure
 						}
 						else
 						{
-							theWorld.setBlockState(thePos, BlockSmith.blockCloud.getDefaultState());
+							theWorld.setBlockState(thePos, BlockSmith.blockTanningRack.getDefaultState());
 						}
 					}
 				}
@@ -376,7 +376,7 @@ public class Structure implements IStructure
 			{
 				BlockPos thePos = new BlockPos(posX, startY+1, indZ);
 
-				theWorld.setBlockState(thePos, BlockSmith.blockCloud.getDefaultState());
+				theWorld.setBlockState(thePos, BlockSmith.blockTanningRack.getDefaultState());
 			}
 		}
 		ticksGenerating += dimZ+2*cloudMarginZ;
@@ -419,7 +419,7 @@ public class Structure implements IStructure
 				BlockPos thePos = new BlockPos(indX, parY-1, indZ);
 				
 				// parWorld.setBlockToAir(thePos);
-				parWorld.setBlockState(thePos, BlockSmith.blockCloud.getDefaultState());
+				parWorld.setBlockState(thePos, BlockSmith.blockTanningRack.getDefaultState());
 			}
 		}
 	}

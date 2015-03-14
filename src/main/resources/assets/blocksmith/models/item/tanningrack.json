@@ -1,5 +1,5 @@
 {
-    "parent": "blocksmith:block/cloud",
+    "parent": "blocksmith:block/tanningrack",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

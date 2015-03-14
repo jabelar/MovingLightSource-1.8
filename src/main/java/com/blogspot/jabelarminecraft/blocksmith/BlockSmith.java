@@ -40,7 +40,7 @@ import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockCloud;
+import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
 import com.blogspot.jabelarminecraft.blocksmith.materials.MaterialCloud;
 import com.blogspot.jabelarminecraft.blocksmith.proxy.CommonProxy;
@@ -82,7 +82,7 @@ public class BlockSmith
     
     // instantiate blocks
     // need to instantiate beanstalk block before item as the item constructor associates with block
-	public final static BlockCloud blockCloud = new BlockCloud();
+	public final static BlockTanningRack blockTanningRack = new BlockTanningRack();
 
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop

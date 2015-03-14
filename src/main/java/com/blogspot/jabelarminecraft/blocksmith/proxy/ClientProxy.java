@@ -154,7 +154,7 @@ public class ClientProxy extends CommonProxy
 		
     	RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         
-    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockCloud), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockCloud.getUnlocalizedName().substring(5), "inventory"));
+    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockTanningRack), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockTanningRack.getUnlocalizedName().substring(5), "inventory"));
 	}
 	
 	/*	 
