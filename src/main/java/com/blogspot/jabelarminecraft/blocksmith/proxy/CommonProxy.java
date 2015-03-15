@@ -22,6 +22,7 @@ package com.blogspot.jabelarminecraft.blocksmith.proxy;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.stats.Achievement;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -389,12 +390,12 @@ public class CommonProxy
 	 */
 	protected void registerAchievements()
 	{
-		BlockSmith.achievementStartMagicBeans = new Achievement("achievement.startmagicbeans", "startmagicbeans", 0, 0, (Item)null, (Achievement)null);
-		BlockSmith.achievementStartMagicBeans.registerStat().initIndependentStat(); // Eclipse is having trouble chaining these in previous line
-		BlockSmith.achievementGiantSlayer = new Achievement("achievement.giantslayer", "giantslayer", 2, 1, (Item)null, BlockSmith.achievementStartMagicBeans).setSpecial();
-		BlockSmith.achievementGiantSlayer.registerStat(); // Eclipse is having trouble chaining this in previous line
+		BlockSmith.achievementTanningAHide = new Achievement("achievement.tanningahide", "tanningahide", 0, 0, Items.leather, (Achievement)null);
+		BlockSmith.achievementTanningAHide.registerStat().initIndependentStat(); // Eclipse is having trouble chaining these in previous line
+//		BlockSmith.achievementGiantSlayer = new Achievement("achievement.giantslayer", "giantslayer", 2, 1, (Item)null, BlockSmith.achievementTanningAHide).setSpecial();
+//		BlockSmith.achievementGiantSlayer.registerStat(); // Eclipse is having trouble chaining this in previous line
 		
-		AchievementPage.registerAchievementPage(new AchievementPage("Magic Beans Achievements", new Achievement[] {BlockSmith.achievementStartMagicBeans, BlockSmith.achievementGiantSlayer}));
+		AchievementPage.registerAchievementPage(new AchievementPage("Magic Beans Achievements", new Achievement[] {BlockSmith.achievementTanningAHide, BlockSmith.achievementGiantSlayer}));
 	}
 
 }

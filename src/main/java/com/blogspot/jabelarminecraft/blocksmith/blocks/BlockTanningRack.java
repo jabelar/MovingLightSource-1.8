@@ -44,7 +44,7 @@ public class BlockTanningRack extends Block
 
     public BlockTanningRack()
     {
-        super(BlockSmith.materialCloud);
+        super(BlockSmith.materialTanningRack);
         // DEBUG
         System.out.println("BlockTanningRack constructor");
         // override default values of Block, where appropriate

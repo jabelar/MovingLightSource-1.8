@@ -17,11 +17,21 @@
 package com.blogspot.jabelarminecraft.blocksmith.items;
 
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
+import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.utilities.MagicBeansUtilities;
 
 /**
@@ -41,6 +51,71 @@ public class ItemCowHide extends Item
     public String getItemStackDisplayName(ItemStack parItemStack) 
     {
         return (MagicBeansUtilities.stringToRainbow(StatCollector.translateToLocal(getUnlocalizedNameInefficiently(parItemStack) + ".name")).trim());
+    }
+    
+    /**
+     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
+     */
+    @Override
+	public ItemStack onItemRightClick(ItemStack parItemStack, World parWorld, EntityPlayer parPlayer)
+    {
+        MovingObjectPosition movingObjectPosition = getMovingObjectPositionFromPlayer(parWorld, parPlayer, false);
+
+        if (movingObjectPosition == null)
+        {
+            return parItemStack;
+        }
+        else
+        {
+            if (movingObjectPosition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            {
+                BlockPos blockPos = movingObjectPosition.func_178782_a();
+
+                if (!parPlayer.func_175151_a(blockPos.offset(movingObjectPosition.field_178784_b), movingObjectPosition.field_178784_b, parItemStack))
+                {
+                    return parItemStack;
+                }
+
+                IBlockState theBlockState = parWorld.getBlockState(blockPos);
+                Block theBlock = theBlockState.getBlock();
+                Material theMaterial = theBlock.getMaterial();
+
+                if (theBlock == BlockSmith.blockTanningRack)
+                {
+                	// DEBUG
+                	System.out.println("ItemCowHide onRightClick() interacting with Tanning Rack");
+                	parPlayer.triggerAchievement(BlockSmith.achievementTanningAHide);
+                    parPlayer.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
+                    return exchangeItemStack(parItemStack, parPlayer, Items.leather);
+                }
+            }
+
+            return parItemStack;
+        }
+    }
+
+    
+    private ItemStack exchangeItemStack(ItemStack parHeldItemStack, EntityPlayer parPlayer, Item parNewItem)
+    {
+        if (parPlayer.capabilities.isCreativeMode)
+        {
+            return parHeldItemStack;
+        }
+        else if (--parHeldItemStack.stackSize <= 0)
+        {
+        	// DEBUG
+        	System.out.println("ItemCowHide exchangeItemStack() tanned a hide");
+            return new ItemStack(parNewItem);
+        }
+        else
+        {
+            if (!parPlayer.inventory.addItemStackToInventory(new ItemStack(parNewItem)))
+            {
+                parPlayer.dropPlayerItemWithRandomChoice(new ItemStack(parNewItem, 1, 0), false);
+            }
+
+            return parHeldItemStack;
+        }
     }
 
 }

@@ -21,7 +21,6 @@ package com.blogspot.jabelarminecraft.blocksmith;
 
 import java.io.File;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.Configuration;
@@ -42,7 +41,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
-import com.blogspot.jabelarminecraft.blocksmith.materials.MaterialCloud;
+import com.blogspot.jabelarminecraft.blocksmith.materials.MaterialTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.proxy.CommonProxy;
 
 @Mod(modid = 
@@ -76,7 +75,7 @@ public class BlockSmith
 //    public static Boolean configGiantIsHostile = true;
     
     // instantiate materials
-    public final static Material materialCloud = new MaterialCloud();
+    public final static MaterialTanningRack materialTanningRack = new MaterialTanningRack();
     // see custom armor tutorial at: http://bedrockminer.jimdo.com/modding-tutorials/basic-modding/custom-armor/
     // public final static ArmorMaterial SAFEFALLINGLEATHER = EnumHelper.addArmorMaterial("SAFEFALLINGLEATHER", "safe_falling", 5, new int[]{2, 6, 5, 2}, 15);
     
@@ -94,7 +93,7 @@ public class BlockSmith
     // important to do this after blocks in case structure uses custom block
 
 	// instantiate achievements
-    public static Achievement achievementStartMagicBeans;
+    public static Achievement achievementTanningAHide;
     public static Achievement achievementGiantSlayer;
 
     // instantiate the mod

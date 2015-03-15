@@ -23,9 +23,9 @@ import net.minecraft.block.material.Material;
  * @author jabelar
  *
  */
-public class MaterialCloud extends Material
+public class MaterialTanningRack extends Material
 {
-	public MaterialCloud() 
+	public MaterialTanningRack() 
 	{
 		super(MapColor.snowColor);
 	}
