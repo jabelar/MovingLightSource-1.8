@@ -21,6 +21,8 @@ package com.blogspot.jabelarminecraft.blocksmith;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -244,18 +246,32 @@ public class EventHandler
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     public void onEvent(LivingDropsEvent event)
     {
-    	if (event.entityLiving instanceof EntityCow)
-    	{
-    		for (EntityItem dropItem: event.drops)
-    		{
-    			if (dropItem.getEntityItem().getItem() == Items.leather)
-    			{
-    				// DEBUG
-    				System.out.println("Replacing leather drop with cowhide");
-    				int stackSize = dropItem.getEntityItem().stackSize;
-    				dropItem.setEntityItemStack(new ItemStack(BlockSmith.cowHide, stackSize));
-    			}
-    		}
+		for (EntityItem dropItem: event.drops)
+		{
+			if (dropItem.getEntityItem().getItem() == Items.leather)
+			{
+				if (event.entityLiving instanceof EntityCow)
+				{
+					// DEBUG
+					System.out.println("Replacing leather drop with cowhide");
+					int stackSize = dropItem.getEntityItem().stackSize;
+					dropItem.setEntityItemStack(new ItemStack(BlockSmith.cowHide, stackSize));
+				}
+				if (event.entityLiving instanceof EntityHorse)
+				{
+					// DEBUG
+					System.out.println("Replacing leather drop with horsehide");
+					int stackSize = dropItem.getEntityItem().stackSize;
+					dropItem.setEntityItemStack(new ItemStack(BlockSmith.cowHide, stackSize));
+				}
+				if (event.entityLiving instanceof EntityMooshroom)
+				{
+					// DEBUG
+					System.out.println("Replacing leather drop with cowhide");
+					int stackSize = dropItem.getEntityItem().stackSize;
+					dropItem.setEntityItemStack(new ItemStack(BlockSmith.cowHide, stackSize));
+				}
+			}
     	}
     }
     
