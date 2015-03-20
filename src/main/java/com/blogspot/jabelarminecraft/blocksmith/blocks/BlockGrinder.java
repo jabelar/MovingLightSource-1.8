@@ -30,7 +30,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -158,39 +157,45 @@ public class BlockGrinder extends BlockContainer
     {
         if (parWorld.isRemote)
         {
-            TileEntity tileentity = parWorld.getTileEntity(parBlockPos);
-            
-			Minecraft.getMinecraft().displayGuiScreen(new GuiGrinder(parPlayer.inventory, (IInventory) tileentity));
-
-			return true;
+        	// DEBUG
+        	System.out.println("BlockGrinder onBlockActivated() on client side");
+			Minecraft.getMinecraft().displayGuiScreen(new GuiGrinder(parPlayer.inventory, (TileEntityGrinder)parWorld.getTileEntity(parBlockPos)));
+            return true;
         }
-		return false;
+        else
+        {
+        	// DEBUG
+        	System.out.println("BlockGrinder onBlockActivated() on server side");
+            parPlayer.displayGui((TileEntityGrinder)parWorld.getTileEntity(parBlockPos));
+
+            return true;
+        }
     }
 
     public static void changeBlockBasedOnGrindingStatus(boolean parIsGrinding, World parWorld, BlockPos parBlockPos)
     {
-        IBlockState iBlockState = parWorld.getBlockState(parBlockPos);
-        TileEntity tileentity = parWorld.getTileEntity(parBlockPos);
-        hasTileEntity = true;
-
-        if (parIsGrinding)
-        {
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockActiveGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockActiveGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
-        }
-        else
-        {
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
-        }
-
-        hasTileEntity = false;
-
-        if (tileentity != null)
-        {
-            tileentity.validate();
-            parWorld.setTileEntity(parBlockPos, tileentity);
-        }
+//        IBlockState iBlockState = parWorld.getBlockState(parBlockPos);
+//        TileEntity tileentity = parWorld.getTileEntity(parBlockPos);
+//        hasTileEntity = true;
+//
+//        if (parIsGrinding)
+//        {
+//            parWorld.setBlockState(parBlockPos, BlockSmith.blockActiveGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
+//            parWorld.setBlockState(parBlockPos, BlockSmith.blockActiveGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
+//        }
+//        else
+//        {
+//            parWorld.setBlockState(parBlockPos, BlockSmith.blockGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
+//            parWorld.setBlockState(parBlockPos, BlockSmith.blockGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
+//        }
+//
+//        hasTileEntity = false;
+//
+//        if (tileentity != null)
+//        {
+//            tileentity.validate();
+//            parWorld.setTileEntity(parBlockPos, tileentity);
+//        }
     }
 
     /**
@@ -199,6 +204,8 @@ public class BlockGrinder extends BlockContainer
     @Override
 	public TileEntity createNewTileEntity(World worldIn, int meta)
     {
+    	// DEBUG
+    	System.out.println("BlockGrinder createNewTileEntity()");
         return new TileEntityGrinder();
     }
 

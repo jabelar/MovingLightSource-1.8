@@ -43,8 +43,11 @@ extends Container
 
     public ContainerGrinder(InventoryPlayer parInventoryPlayer, IInventory parIInventory)
     {
+    	// DEBUG
+    	System.out.println("ContainerGrinder constructor()");
+    	
         tileGrinder = parIInventory;
-        addSlotToContainer(new Slot(tileGrinder, 0, 56, 17));
+        addSlotToContainer(new Slot(tileGrinder, 0, 56, 35));
         addSlotToContainer(new Slot(tileGrinder, 1, 56, 53));
         addSlotToContainer(new SlotGrinderOutput(parInventoryPlayer.player, tileGrinder, 2, 116, 35));
         
@@ -127,17 +130,26 @@ extends Container
     @Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int slotIndex)
     {
+    	// DEBUG
+    	System.out.println("ContainerGrinder transferStackInSlot()");
+    	
         ItemStack itemStack = null;
         Slot slot = (Slot)inventorySlots.get(slotIndex);
 
         if (slot != null && slot.getHasStack())
         {
+        	// DEBUG
+        	System.out.println("There is stack in the slot");
+        	
             ItemStack itemStackAlreadyInSlot = slot.getStack();
             itemStack = itemStackAlreadyInSlot.copy();
 
             // if output slot
             if (slotIndex == 2)
             {
+            	// DEBUG
+            	System.out.println("The slot is the output slot");
+            	
                 if (!mergeItemStack(itemStackAlreadyInSlot, 3, 39, true))
                 {
                     return null;
@@ -147,6 +159,9 @@ extends Container
             }
             else if (slotIndex != 1 && slotIndex != 0) // if inventory slots
             {
+            	// DEBUG
+            	System.out.println("The slot is a player inventory slot");
+            	
                 if (GrinderRecipes.instance().getGrindingResult(itemStackAlreadyInSlot) != null)
                 {
                     if (!mergeItemStack(itemStackAlreadyInSlot, 0, 1, false))
@@ -173,6 +188,9 @@ extends Container
 
             if (itemStackAlreadyInSlot.stackSize == 0)
             {
+            	// DEBUG
+            	System.out.println("The slot is a grinder inventory slot");
+            	
                 slot.putStack((ItemStack)null);
             }
             else

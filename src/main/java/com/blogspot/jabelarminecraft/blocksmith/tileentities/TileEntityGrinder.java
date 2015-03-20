@@ -16,8 +16,6 @@
 
 package com.blogspot.jabelarminecraft.blocksmith.tileentities;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -26,11 +24,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
@@ -51,8 +45,8 @@ import com.blogspot.jabelarminecraft.blocksmith.recipes.GrinderRecipes;
 public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlayerListBox, ISidedInventory
 {
     private static final int[] slotsTop = new int[] {0};
-    private static final int[] slotsBottom = new int[] {2, 1};
-    private static final int[] slotsSides = new int[] {1};
+    private static final int[] slotsBottom = new int[] {2};
+    private static final int[] slotsSides = new int[] {};
     /** The ItemStacks that hold the items currently being used in the grinder */
     private ItemStack[] grinderItemStackArray = new ItemStack[3];
     /** The number of ticks that the grinder will keep grinding */
@@ -141,6 +135,9 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     @Override
 	public void setInventorySlotContents(int index, ItemStack stack)
     {
+    	// DEBUG
+    	System.out.println("TileEntityGrinder setInventorySlotContents()");
+    	
         boolean isSameItemStackAlreadyInSlot = stack != null && stack.isItemEqual(grinderItemStackArray[index]) && ItemStack.areItemStackTagsEqual(stack, grinderItemStackArray[index]);
         grinderItemStackArray[index] = stack;
 
@@ -149,7 +146,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
             stack.stackSize = getInventoryStackLimit();
         }
 
-        // if input slot
+        // if input slot, reset the grinding timers
         if (index == 0 && !isSameItemStackAlreadyInSlot)
         {
             ticksPerItem = timeToGrindOneItem(stack);
@@ -397,52 +394,6 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     }
 
     /**
-     * Returns the number of ticks that the supplied fuel item will keep the grinder grinding, or 0 if the item isn't
-     * fuel
-     */
-    public static int getItemGrindTime(ItemStack parItemStack)
-    {
-        if (parItemStack == null)
-        {
-            return 0;
-        }
-        else
-        {
-            Item item = parItemStack.getItem();
-
-            if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air)
-            {
-                Block block = Block.getBlockFromItem(item);
-
-                if (block == Blocks.wooden_slab)
-                {
-                    return 150;
-                }
-
-                if (block.getMaterial() == Material.wood)
-                {
-                    return 300;
-                }
-
-                if (block == Blocks.coal_block)
-                {
-                    return 16000;
-                }
-            }
-
-            if (item instanceof ItemTool && ((ItemTool)item).getToolMaterialName().equals("WOOD")) return 200;
-            if (item instanceof ItemSword && ((ItemSword)item).getToolMaterialName().equals("WOOD")) return 200;
-            if (item instanceof ItemHoe && ((ItemHoe)item).getMaterialName().equals("WOOD")) return 200;
-            if (item == Items.stick) return 100;
-            if (item == Items.coal) return 1600;
-            if (item == Items.lava_bucket) return 20000;
-            if (item == Item.getItemFromBlock(Blocks.sapling)) return 100;
-            if (item == Items.blaze_rod) return 2400;
-            return 100;
-        }
-    }
-
-    /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
     @Override
@@ -460,7 +411,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     @Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return index == 2 ? false : true; // can always put things in input (may not grind though) and can't put anything in output
+        return index == 0 ? true : false; // can always put things in input (may not grind though) and can't put anything in output
     }
 
     @Override
@@ -492,12 +443,14 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     @Override
 	public String getGuiID()
     {
-        return "minecraft:furnace"; // "blocksmith:grinder";
+        return "blocksmith:grinder";
     }
 
     @Override
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
+    	// DEBUG
+    	System.out.println("TileEntityGrinder createContainer()");
         return new ContainerGrinder(playerInventory, this);
     }
 
