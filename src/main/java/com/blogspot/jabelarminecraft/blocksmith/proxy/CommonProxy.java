@@ -50,6 +50,7 @@ import com.blogspot.jabelarminecraft.blocksmith.FMLEventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.OreGenEventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.TerrainGenEventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.commands.CommandStructureCapture;
+import com.blogspot.jabelarminecraft.blocksmith.gui.GuiHandler;
 import com.blogspot.jabelarminecraft.blocksmith.items.SpawnEgg;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageSyncEntityToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToClient;
@@ -94,9 +95,17 @@ public class CommonProxy
         
         // register achievements here to allow use of items from other mods
         registerAchievements();
+        
+        // register gui handlers
+        registerGuiHandlers();
     }
     
-    public void fmlLifeCycleEvent(FMLPostInitializationEvent event)
+    public void registerGuiHandlers() 
+    {
+    	NetworkRegistry.INSTANCE.registerGuiHandler(BlockSmith.instance, new GuiHandler());		
+	}
+
+	public void fmlLifeCycleEvent(FMLPostInitializationEvent event)
     {
         // can do some inter-mod stuff here
     }

@@ -67,6 +67,7 @@ public class BlockSmith
 	// use a named channel to identify packets related to this mod
     public static final String NETWORK_CHANNEL_NAME = "BlockSmith";
 	public static FMLEventChannel channel;
+
 	// networking
 	public static SimpleNetworkWrapper network;
 
@@ -98,6 +99,12 @@ public class BlockSmith
 	// instantiate achievements
     public static Achievement achievementTanningAHide;
     public static Achievement achievementGiantSlayer;
+    
+    // enumerate guis
+    public enum GUI_ENUM 
+    {
+        GRINDER
+    }
 
     // instantiate the mod
     @Instance(MODID)

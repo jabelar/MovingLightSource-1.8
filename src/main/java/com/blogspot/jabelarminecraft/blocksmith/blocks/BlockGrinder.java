@@ -25,7 +25,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +41,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
-import com.blogspot.jabelarminecraft.blocksmith.gui.GuiGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 
 /**
@@ -157,16 +155,13 @@ public class BlockGrinder extends BlockContainer
     {
         if (parWorld.isRemote)
         {
-        	// DEBUG
-        	System.out.println("BlockGrinder onBlockActivated() on client side");
-			Minecraft.getMinecraft().displayGuiScreen(new GuiGrinder(parPlayer.inventory, (TileEntityGrinder)parWorld.getTileEntity(parBlockPos)));
-            return true;
+        	return false;
         }
         else
         {
         	// DEBUG
         	System.out.println("BlockGrinder onBlockActivated() on server side");
-            parPlayer.displayGui((TileEntityGrinder)parWorld.getTileEntity(parBlockPos));
+            parPlayer.openGui(BlockSmith.instance, BlockSmith.GUI_ENUM.GRINDER.ordinal(), parWorld, parBlockPos.getX(), parBlockPos.getY(), parBlockPos.getZ()); // .displayGui((TileEntityGrinder)parWorld.getTileEntity(parBlockPos));
 
             return true;
         }
