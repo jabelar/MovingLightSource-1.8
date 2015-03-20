@@ -25,10 +25,12 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,6 +43,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
+import com.blogspot.jabelarminecraft.blocksmith.gui.GuiGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 
 /**
@@ -151,23 +154,17 @@ public class BlockGrinder extends BlockContainer
     }
 
     @Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World parWorld, BlockPos parBlockPos, IBlockState parIBlockState, EntityPlayer parPlayer, EnumFacing parSide, float hitX, float hitY, float hitZ)
     {
-        if (worldIn.isRemote)
+        if (parWorld.isRemote)
         {
-            return true;
-        }
-        else
-        {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
+            TileEntity tileentity = parWorld.getTileEntity(parBlockPos);
+            
+			Minecraft.getMinecraft().displayGuiScreen(new GuiGrinder(parPlayer.inventory, (IInventory) tileentity));
 
-            if (tileentity instanceof TileEntityGrinder)
-            {
-                playerIn.displayGUIChest((TileEntityGrinder)tileentity);
-            }
-
-            return true;
+			return true;
         }
+		return false;
     }
 
     public static void changeBlockBasedOnGrindingStatus(boolean parIsGrinding, World parWorld, BlockPos parBlockPos)

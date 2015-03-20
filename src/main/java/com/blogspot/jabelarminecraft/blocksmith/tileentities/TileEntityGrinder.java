@@ -457,9 +457,6 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     @Override
 	public void closeInventory(EntityPlayer playerIn) {}
 
-    /**
-     * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
-     */
     @Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
     {
