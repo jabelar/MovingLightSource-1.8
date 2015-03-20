@@ -55,9 +55,7 @@ public class BlockTanningRack extends Block
         slipperiness = 0.6F;
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         lightOpacity = 20; // cast a light shadow
-        setBlockUnbreakable();
         setTickRandomly(false);
-        setLightLevel(0.5F); // redstone light has light value of 1.0F
         useNeighborBrightness = false;
     }
 

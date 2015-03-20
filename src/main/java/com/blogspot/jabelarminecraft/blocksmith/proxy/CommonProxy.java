@@ -200,6 +200,7 @@ public class CommonProxy
     {
         //example: GameRegistry.registerBlock(blockTomato, "tomatoes");
     	GameRegistry.registerBlock(BlockSmith.blockTanningRack, BlockSmith.blockTanningRack.getUnlocalizedName().substring(5));
+    	GameRegistry.registerBlock(BlockSmith.blockGrinder, BlockSmith.blockGrinder.getUnlocalizedName().substring(5));
     	
         // each instance of your block should have a name that is unique within your mod.  use lower case.
         // you don't need to register an item corresponding to the block, GameRegistry.registerBlock does this automatically.

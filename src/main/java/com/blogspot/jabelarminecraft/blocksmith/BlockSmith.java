@@ -39,6 +39,7 @@ import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
+import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
 import com.blogspot.jabelarminecraft.blocksmith.materials.MaterialTanningRack;
@@ -82,7 +83,8 @@ public class BlockSmith
     // instantiate blocks
     // need to instantiate beanstalk block before item as the item constructor associates with block
 	public final static BlockTanningRack blockTanningRack = new BlockTanningRack();
-
+	public final static BlockGrinder blockGrinder = new BlockGrinder();
+	
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop
 	public final static ItemCowHide cowHide = new ItemCowHide();
