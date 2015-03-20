@@ -22,6 +22,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
+import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 
@@ -31,7 +32,7 @@ import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
  */
 public class GuiGrinder  extends GuiContainer
 {
-	private static final ResourceLocation grinderGuiTextures = new ResourceLocation("textures/gui/container/grinder.png");
+	private static final ResourceLocation grinderGuiTextures = new ResourceLocation(BlockSmith.MODID+":textures/gui/container/grinder.png");
     private final InventoryPlayer field_175383_v;
     private final IInventory tileGrinder;
 
