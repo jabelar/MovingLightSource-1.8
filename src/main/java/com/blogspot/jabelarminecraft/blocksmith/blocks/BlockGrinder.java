@@ -28,7 +28,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
@@ -52,7 +51,7 @@ public class BlockGrinder extends BlockContainer
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     private final boolean isGrinding;
-    private static boolean field_149934_M;
+    private static boolean hasTileEntity;
 
     public BlockGrinder()
     {
@@ -171,24 +170,24 @@ public class BlockGrinder extends BlockContainer
         }
     }
 
-    public static void func_176446_a(boolean p_176446_0_, World parWorld, BlockPos parBlockPos)
+    public static void changeBlockBasedOnGrindingStatus(boolean parIsGrinding, World parWorld, BlockPos parBlockPos)
     {
-        IBlockState iblockstate = parWorld.getBlockState(parBlockPos);
+        IBlockState iBlockState = parWorld.getBlockState(parBlockPos);
         TileEntity tileentity = parWorld.getTileEntity(parBlockPos);
-        field_149934_M = true;
+        hasTileEntity = true;
 
-        if (p_176446_0_)
+        if (parIsGrinding)
         {
-            parWorld.setBlockState(parBlockPos, Blocks.lit_grinder.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            parWorld.setBlockState(parBlockPos, Blocks.lit_grinder.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            parWorld.setBlockState(parBlockPos, BlockSmith.blockActiveGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
+            parWorld.setBlockState(parBlockPos, BlockSmith.blockActiveGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
         }
         else
         {
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockGrinder.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockGrinder.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            parWorld.setBlockState(parBlockPos, BlockSmith.blockGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
+            parWorld.setBlockState(parBlockPos, BlockSmith.blockGrinder.getDefaultState().withProperty(FACING, iBlockState.getValue(FACING)), 3);
         }
 
-        field_149934_M = false;
+        hasTileEntity = false;
 
         if (tileentity != null)
         {
@@ -231,7 +230,7 @@ public class BlockGrinder extends BlockContainer
     @Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
-        if (!field_149934_M)
+        if (!hasTileEntity)
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 

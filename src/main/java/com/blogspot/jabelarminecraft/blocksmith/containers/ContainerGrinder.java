@@ -28,7 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.recipes.GrinderRecipes;
 import com.blogspot.jabelarminecraft.blocksmith.slots.SlotGrinderOutput;
-import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 
 /**
  * @author jabelar
@@ -38,17 +37,16 @@ public class ContainerGrinder
 extends Container
 {
     private final IInventory tileGrinder;
-    private int field_178152_f;
-    private int field_178153_g;
-    private int field_178154_h;
-    private int field_178155_i;
+    private int ticksGrindingItemSoFar;
+    private int ticksPerItem;
+    private int timeCanGrind;
 
-    public ContainerGrinder(InventoryPlayer parPlayer, IInventory parIInventory)
+    public ContainerGrinder(InventoryPlayer parInventoryPlayer, IInventory parIInventory)
     {
         tileGrinder = parIInventory;
-        addSlotToContainer(new Slot(parIInventory, 0, 56, 17));
-//        addSlotToContainer(new SlotGrinderFuel(p_i45794_2_, 1, 56, 53));
-        addSlotToContainer(new SlotGrinderOutput(parPlayer.player, parIInventory, 2, 116, 35));
+        addSlotToContainer(new Slot(tileGrinder, 0, 56, 17));
+        addSlotToContainer(new Slot(tileGrinder, 1, 56, 53));
+        addSlotToContainer(new SlotGrinderOutput(parInventoryPlayer.player, tileGrinder, 2, 116, 35));
         
         // add player inventory slots
         int i;
@@ -56,14 +54,14 @@ extends Container
         {
             for (int j = 0; j < 9; ++j)
             {
-                addSlotToContainer(new Slot(parPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                addSlotToContainer(new Slot(parInventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
         // add hotbar slots
         for (i = 0; i < 9; ++i)
         {
-            addSlotToContainer(new Slot(parPlayer, i, 8 + i * 18, 142));
+            addSlotToContainer(new Slot(parInventoryPlayer, i, 8 + i * 18, 142));
         }
     }
 
@@ -89,31 +87,25 @@ extends Container
         {
             ICrafting icrafting = (ICrafting)crafters.get(i);
 
-            if (field_178152_f != tileGrinder.getField(2))
+            if (ticksGrindingItemSoFar != tileGrinder.getField(2))
             {
                 icrafting.sendProgressBarUpdate(this, 2, tileGrinder.getField(2));
             }
 
-            if (field_178154_h != tileGrinder.getField(0))
+            if (timeCanGrind != tileGrinder.getField(0))
             {
                 icrafting.sendProgressBarUpdate(this, 0, tileGrinder.getField(0));
             }
 
-            if (field_178155_i != tileGrinder.getField(1))
-            {
-                icrafting.sendProgressBarUpdate(this, 1, tileGrinder.getField(1));
-            }
-
-            if (field_178153_g != tileGrinder.getField(3))
+            if (ticksPerItem != tileGrinder.getField(3))
             {
                 icrafting.sendProgressBarUpdate(this, 3, tileGrinder.getField(3));
             }
         }
 
-        field_178152_f = tileGrinder.getField(2);
-        field_178154_h = tileGrinder.getField(0);
-        field_178155_i = tileGrinder.getField(1);
-        field_178153_g = tileGrinder.getField(3);
+        ticksGrindingItemSoFar = tileGrinder.getField(2); // tick grinding item so far
+        timeCanGrind = tileGrinder.getField(0); // time can grind
+        ticksPerItem = tileGrinder.getField(3); // ticks per item
     }
 
     @Override
@@ -158,13 +150,6 @@ extends Container
                 if (GrinderRecipes.instance().getGrindingResult(itemStackAlreadyInSlot) != null)
                 {
                     if (!mergeItemStack(itemStackAlreadyInSlot, 0, 1, false))
-                    {
-                        return null;
-                    }
-                }
-                else if (TileEntityGrinder.isItemFuel(itemStackAlreadyInSlot))
-                {
-                    if (!mergeItemStack(itemStackAlreadyInSlot, 1, 2, false))
                     {
                         return null;
                     }

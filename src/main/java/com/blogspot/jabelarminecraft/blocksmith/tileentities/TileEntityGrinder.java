@@ -56,7 +56,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     /** The ItemStacks that hold the items currently being used in the grinder */
     private ItemStack[] grinderItemStackArray = new ItemStack[3];
     /** The number of ticks that the grinder will keep grinding */
-    private int grindTime;
+    private int timeCanGrind;
     /** The number of ticks that a fresh copy of the currently-grinding item would keep the grinder grinding for */
     private int currentItemGrindTime;
     private int ticksGrindingItemSoFar;
@@ -199,10 +199,9 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
             }
         }
 
-        grindTime = compound.getShort("GrindTime");
+        timeCanGrind = compound.getShort("GrindTime");
         ticksGrindingItemSoFar = compound.getShort("CookTime");
         ticksPerItem = compound.getShort("CookTimeTotal");
-        currentItemGrindTime = getItemGrindTime(grinderItemStackArray[1]);
 
         if (compound.hasKey("CustomName", 8))
         {
@@ -214,7 +213,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
 	public void writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
-        compound.setShort("GrindTime", (short)grindTime);
+        compound.setShort("GrindTime", (short)timeCanGrind);
         compound.setShort("CookTime", (short)ticksGrindingItemSoFar);
         compound.setShort("CookTimeTotal", (short)ticksPerItem);
         NBTTagList nbttaglist = new NBTTagList();
@@ -253,28 +252,26 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      */
     public boolean isGrinding()
     {
-        return grindTime > 0;
+        return timeCanGrind > 0;
     }
 
+    // this function indicates whether container texture should be drawn
     @SideOnly(Side.CLIENT)
-    public static boolean func_174903_a(IInventory p_174903_0_)
+    public static boolean func_174903_a(IInventory parIInventory)
     {
-        return p_174903_0_.getField(0) > 0;
+        return true ; // parIInventory.getField(0) > 0;
     }
 
-    /**
-     * Updates the JList with a new model.
-     */
     @Override
 	public void update()
     {
-        boolean flag = isGrinding();
-        boolean flag1 = false;
+        boolean hasBeenGrinding = isGrinding();
+        boolean hasSomethingChanged = false;
 
-        if (isGrinding())
-        {
-            --grindTime;
-        }
+//        if (isGrinding())
+//        {
+//            --timeCanGrind;
+//        }
 
         if (!worldObj.isRemote)
         {
@@ -289,11 +286,11 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
             {
                 if (!isGrinding() && canGrind())
                 {
-                    currentItemGrindTime = grindTime = getItemGrindTime(grinderItemStackArray[1]);
+                    timeCanGrind = 150;
 
                     if (isGrinding())
                     {
-                        flag1 = true;
+                        hasSomethingChanged = true;
 
                         if (grinderItemStackArray[1] != null)
                         {
@@ -317,7 +314,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
                         ticksGrindingItemSoFar = 0;
                         ticksPerItem = timeToGrindOneItem(grinderItemStackArray[0]);
                         grindItem();
-                        flag1 = true;
+                        hasSomethingChanged = true;
                     }
                 }
                 else
@@ -326,14 +323,15 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
                 }
             }
 
-            if (flag != isGrinding())
+            // started or stopped grinding
+            if (hasBeenGrinding != isGrinding()) // the isGrinding() value may have changed due to call to grindItem() earlier
             {
-                flag1 = true;
-                BlockGrinder.func_176446_a(isGrinding(), worldObj, pos);
+                hasSomethingChanged = true;
+                BlockGrinder.changeBlockBasedOnGrindingStatus(isGrinding(), worldObj, pos);
             }
         }
 
-        if (flag1)
+        if (hasSomethingChanged)
         {
             markDirty();
         }
@@ -440,17 +438,8 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
             if (item == Items.lava_bucket) return 20000;
             if (item == Item.getItemFromBlock(Blocks.sapling)) return 100;
             if (item == Items.blaze_rod) return 2400;
-            return net.minecraftforge.fml.common.registry.GameRegistry.getFuelValue(parItemStack);
+            return 100;
         }
-    }
-
-    public static boolean isItemFuel(ItemStack p_145954_0_)
-    {
-        /**
-         * Returns the number of ticks that the supplied fuel item will keep the grinder grinding, or 0 if the item isn't
-         * fuel
-         */
-        return getItemGrindTime(p_145954_0_) > 0;
     }
 
     /**
@@ -474,7 +463,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     @Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return index == 2 ? false : (index != 1 ? true : isItemFuel(stack) || SlotGrinderFuel.func_178173_c_(stack));
+        return index == 2 ? false : true; // can always put things in input (may not grind though) and can't put anything in output
     }
 
     @Override
@@ -498,25 +487,15 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * side
      */
     @Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
+	public boolean canExtractItem(int parSlotIndex, ItemStack parStack, EnumFacing parFacing)
     {
-        if (direction == EnumFacing.DOWN && index == 1)
-        {
-            Item item = stack.getItem();
-
-            if (item != Items.water_bucket && item != Items.bucket)
-            {
-                return false;
-            }
-        }
-
         return true;
     }
 
     @Override
 	public String getGuiID()
     {
-        return "blocksmith:grinder";
+        return "minecraft:furnace"; // "blocksmith:grinder";
     }
 
     @Override
@@ -531,7 +510,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
         switch (id)
         {
             case 0:
-                return grindTime;
+                return timeCanGrind;
             case 1:
                 return currentItemGrindTime;
             case 2:
@@ -549,7 +528,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
         switch (id)
         {
             case 0:
-                grindTime = value;
+                timeCanGrind = value;
                 break;
             case 1:
                 currentItemGrindTime = value;

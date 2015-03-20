@@ -84,6 +84,7 @@ public class BlockSmith
     // need to instantiate beanstalk block before item as the item constructor associates with block
 	public final static BlockTanningRack blockTanningRack = new BlockTanningRack();
 	public final static BlockGrinder blockGrinder = new BlockGrinder();
+	public final static BlockGrinder blockActiveGrinder = new BlockGrinder();
 	
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop
