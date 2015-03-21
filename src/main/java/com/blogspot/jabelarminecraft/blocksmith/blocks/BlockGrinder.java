@@ -153,18 +153,14 @@ public class BlockGrinder extends BlockContainer
     @Override
 	public boolean onBlockActivated(World parWorld, BlockPos parBlockPos, IBlockState parIBlockState, EntityPlayer parPlayer, EnumFacing parSide, float hitX, float hitY, float hitZ)
     {
-        if (parWorld.isRemote)
-        {
-        	return false;
-        }
-        else
+        if (!parWorld.isRemote)
         {
         	// DEBUG
         	System.out.println("BlockGrinder onBlockActivated() on server side");
-            parPlayer.openGui(BlockSmith.instance, BlockSmith.GUI_ENUM.GRINDER.ordinal(), parWorld, parBlockPos.getX(), parBlockPos.getY(), parBlockPos.getZ()); // .displayGui((TileEntityGrinder)parWorld.getTileEntity(parBlockPos));
-
-            return true;
+            parPlayer.openGui(BlockSmith.instance, BlockSmith.GUI_ENUM.GRINDER.ordinal(), parWorld, parBlockPos.getX(), parBlockPos.getY(), parBlockPos.getZ()); 
         }
+        
+        return true;
     }
 
     public static void changeBlockBasedOnGrindingStatus(boolean parIsGrinding, World parWorld, BlockPos parBlockPos)

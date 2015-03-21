@@ -38,7 +38,7 @@ public class GuiHandler implements IGuiHandler
         {
         	if (ID == BlockSmith.GUI_ENUM.GRINDER.ordinal())
         	{
-                return new ContainerGrinder(player.inventory, (IInventory)tileEntity);
+                return new GuiGrinder(player.inventory, (IInventory)tileEntity);
         	}
         }
 
