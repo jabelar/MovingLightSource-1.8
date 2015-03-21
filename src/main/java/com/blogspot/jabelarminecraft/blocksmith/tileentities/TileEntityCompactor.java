@@ -250,7 +250,7 @@ public class TileEntityCompactor extends TileEntityLockable implements IUpdatePl
      */
     public boolean compactingSomething()
     {
-        return true;
+        return true; // this is where you can add a condition like fuel or redstone power
     }
 
     // this function indicates whether container texture should be drawn
@@ -348,9 +348,26 @@ public class TileEntityCompactor extends TileEntityLockable implements IUpdatePl
         else // check if it has a compacting recipe
         {
             ItemStack itemStackToOutput = CompactorRecipes.instance().getCompactingResult(compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()]);
-            if (itemStackToOutput == null) return false; // no valid recipe for compacting this item
-            if (compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] == null) return true; // output slot is empty
-            if (!compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].isItemEqual(itemStackToOutput)) return false; // output slot has different item occupying it
+            if (itemStackToOutput == null) // no valid recipe for compacting this item
+            {
+            	return false;
+            }
+            if (compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] == null) // output slot is empty
+            {
+            	// check if enough of the input item (to allow recipes that consume multiple amounts)            }
+            	if (compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()].stackSize >= CompactorRecipes.instance().getInputAmount(compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()]))
+            	{
+            		return true;
+            	}
+            	else // not enough in input stack
+            	{
+            		return false;
+            	}
+            }
+            if (!compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].isItemEqual(itemStackToOutput)) // output slot has different item occupying it
+            {
+            	return false;
+            }
             // check if output slot is full
             int result = compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].stackSize + itemStackToOutput.stackSize;
             return result <= getInventoryStackLimit() && result <= compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].getMaxStackSize();
@@ -376,7 +393,8 @@ public class TileEntityCompactor extends TileEntityLockable implements IUpdatePl
                 compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].stackSize += itemstack.stackSize; // Forge BugFix: Results may have multiple items
             }
 
-            --compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()].stackSize;
+            // consume the number of input items based on recipe
+            compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()].stackSize -= CompactorRecipes.instance().getInputAmount(compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()]);
 
             if (compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()].stackSize <= 0)
             {

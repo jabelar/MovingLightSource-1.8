@@ -74,10 +74,30 @@ public class CompactorRecipes
 
         return (ItemStack)entry.getValue();
     }
+    
+    // allows recipe to consume multiple items from input stack
+    public int getInputAmount(ItemStack parItemStack)
+    {
+        Iterator iterator = compactingList.entrySet().iterator();
+        Entry entry;
+
+        do
+        {
+            if (!iterator.hasNext())
+            {
+                return -1;
+            }
+
+            entry = (Entry)iterator.next();
+        }
+        while (!areItemStacksEqual(parItemStack, (ItemStack)entry.getKey()));
+
+        return ((ItemStack)entry.getKey()).stackSize;
+    }
 
     private boolean areItemStacksEqual(ItemStack parItemStack1, ItemStack parItemStack2)
     {
-        return parItemStack2.getItem() == parItemStack1.getItem() && (parItemStack2.getMetadata() == 32767 || parItemStack2.getMetadata() == parItemStack1.getMetadata());
+        return parItemStack2.getItem() == parItemStack1.getItem() && (parItemStack2.getMetadata() == parItemStack1.getMetadata());
     }
 
     public Map getCompactingList()
