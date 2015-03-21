@@ -340,37 +340,63 @@ public class TileEntityCompactor extends TileEntityLockable implements IUpdatePl
      */
     private boolean canCompact()
     {
+    	ItemStack stackInOutputSlot = compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()];
+    	ItemStack stackInInputSlot = compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()];
+    			
     	// if nothing in input slot
-        if (compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()] == null)
+        if (stackInInputSlot == null)
         {
             return false;
         }
         else // check if it has a compacting recipe
         {
-            ItemStack itemStackToOutput = CompactorRecipes.instance().getCompactingResult(compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()]);
+            ItemStack itemStackToOutput = CompactorRecipes.instance().getCompactingResult(stackInInputSlot);
             if (itemStackToOutput == null) // no valid recipe for compacting this item
             {
             	return false;
             }
-            if (compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] == null) // output slot is empty
+            if (stackInOutputSlot == null) // output slot is empty
             {
             	// check if enough of the input item (to allow recipes that consume multiple amounts)            }
-            	if (compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()].stackSize >= CompactorRecipes.instance().getInputAmount(compactorItemStackArray[slotEnum.INPUT_SLOT.ordinal()]))
+            	if (stackInInputSlot.stackSize >= CompactorRecipes.instance().getInputAmount(stackInInputSlot))
             	{
+//            		// DEBUG
+//            		System.out.println("There is "+stackInInputSlot.stackSize+" in input slot and "+CompactorRecipes.instance().getInputAmount(stackInInputSlot)+" is needed");
             		return true;
             	}
             	else // not enough in input stack
             	{
+//            		// DEBUG
+//            		System.out.println("TileEntityCompactor canCompact() right item but not enough in input slot");
             		return false;
             	}
             }
-            if (!compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].isItemEqual(itemStackToOutput)) // output slot has different item occupying it
+            if (!stackInOutputSlot.isItemEqual(itemStackToOutput)) // output slot has different item occupying it
             {
             	return false;
             }
             // check if output slot is full
-            int result = compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].stackSize + itemStackToOutput.stackSize;
-            return result <= getInventoryStackLimit() && result <= compactorItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].getMaxStackSize();
+            int result = stackInOutputSlot.stackSize + itemStackToOutput.stackSize;
+            if (result <= getInventoryStackLimit() && result <= stackInOutputSlot.getMaxStackSize())
+            {
+            	// check if enough of the input item (to allow recipes that consume multiple amounts)            }
+            	if (stackInInputSlot.stackSize >= CompactorRecipes.instance().getInputAmount(stackInInputSlot))
+            	{
+//            		// DEBUG
+//            		System.out.println("There is "+stackInInputSlot.stackSize+" in input slot and "+CompactorRecipes.instance().getInputAmount(stackInInputSlot)+" is needed");
+            		return true;
+            	}
+            	else // not enough in input stack
+            	{
+//            		// DEBUG
+//            		System.out.println("TileEntityCompactor canCompact() right item but not enough in input slot");
+            		return false;
+            	}
+            }
+            else // no room to output
+            {
+            	return false;
+            }
         }
     }
 
