@@ -275,11 +275,6 @@ public class CommonProxy
         		});
     }
 
-    /*
-     *  lots of conflicting tutorials on this, currently following: nly register mod id http://www.minecraftforum.net/topic/1417041-mod-entity-problem/page__st__140#entry18822284
-     *  another tut says to only register global id like http://www.minecraftforge.net/wiki/How_to_register_a_mob_entity#Registering
-     *  another tut says to use both: http://www.minecraftforum.net/topic/2389683-172-forge-add-new-block-item-entity-ai-creative-tab-language-localization-block-textures-side-textures/
-     */
     /**
      * Registers entities as mod entities
      */

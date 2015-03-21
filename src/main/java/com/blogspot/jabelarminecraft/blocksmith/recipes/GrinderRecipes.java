@@ -45,15 +45,29 @@ public class GrinderRecipes
 
     private GrinderRecipes()
     {
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.stonebrick), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.gravel)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.stone_slab), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.gravel)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.stone_slab2), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.gravel)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.stone_stairs), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.gravel)), 0.7F);
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.stone), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.gravel)), 0.7F);
-        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.sandstone), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.sand)), 0.7F);
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.gravel), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.sand)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.sandstone), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.sand)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.cobblestone), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.sand)), 0.7F);
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.sand)), 0.7F);
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.brick_block), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.gravel)), 0.7F);
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 32767), new ItemStack(Items.paper, 10), 0.7F);
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.log), 1, 32767), new ItemStack(Items.paper), 0.7F);
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.log2), 1, 32767), new ItemStack(Items.paper), 0.7F);
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.log2), 1, 32767), new ItemStack(Items.paper), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.nether_brick), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.netherrack)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.nether_brick_stairs), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.netherrack)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.nether_brick_fence), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.netherrack)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.netherrack), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.soul_sand)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.soul_sand), 1, 32767), new ItemStack(Items.gunpowder, 4), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.slime_block), 1, 32767), new ItemStack(Items.slime_ball, 9), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.obsidian), 1, 32767), new ItemStack(Items.flint, 10), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.prismarine), 1, 32767), new ItemStack(Items.prismarine_shard, 10), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.sea_lantern), 1, 32767), new ItemStack(Items.prismarine_crystals, 9), 0.7F);
     }
 
     public void addGrindingRecipe(ItemStack parItemStackIn, ItemStack parItemStackOut, float parExperience)

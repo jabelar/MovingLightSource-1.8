@@ -18,11 +18,9 @@ package com.blogspot.jabelarminecraft.blocksmith.tileentities;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -349,7 +347,6 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
         }
         else // check if it has a grinding recipe
         {
-        	if (grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()].getItem() == Item.getItemFromBlock(Blocks.stone)) return true;
             ItemStack itemStackToOutput = GrinderRecipes.instance().getGrindingResult(grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()]);
             if (itemStackToOutput == null) return false; // no valid recipe for grinding this item
             if (grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] == null) return true; // output slot is empty
