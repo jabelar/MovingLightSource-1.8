@@ -28,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.recipes.GrinderRecipes;
 import com.blogspot.jabelarminecraft.blocksmith.slots.SlotGrinderOutput;
+import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 
 /**
  * @author jabelar
@@ -47,11 +48,11 @@ extends Container
     	System.out.println("ContainerGrinder constructor()");
     	
         tileGrinder = parIInventory;
-        addSlotToContainer(new Slot(tileGrinder, 0, 56, 35));
-        addSlotToContainer(new Slot(tileGrinder, 1, 56, 53));
-        addSlotToContainer(new SlotGrinderOutput(parInventoryPlayer.player, tileGrinder, 2, 116, 35));
+        addSlotToContainer(new Slot(tileGrinder, TileEntityGrinder.slotEnum.INPUT_SLOT.ordinal(), 56, 35));
+        addSlotToContainer(new SlotGrinderOutput(parInventoryPlayer.player, tileGrinder, TileEntityGrinder.slotEnum.OUTPUT_SLOT.ordinal(), 116, 35));
         
         // add player inventory slots
+        // note that the slot numbers are within the player inventory so can be same as the tile entity inventory
         int i;
         for (i = 0; i < 3; ++i)
         {
@@ -130,67 +131,52 @@ extends Container
     @Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int slotIndex)
     {
-    	// DEBUG
-    	System.out.println("ContainerGrinder transferStackInSlot()");
-    	
-        ItemStack itemStack = null;
+        ItemStack itemStack1 = null;
         Slot slot = (Slot)inventorySlots.get(slotIndex);
 
         if (slot != null && slot.getHasStack())
         {
-        	// DEBUG
-        	System.out.println("There is stack in the slot");
-        	
-            ItemStack itemStackAlreadyInSlot = slot.getStack();
-            itemStack = itemStackAlreadyInSlot.copy();
+            ItemStack itemStack2 = slot.getStack();
+            itemStack1 = itemStack2.copy();
 
-            // if output slot
-            if (slotIndex == 2)
+            if (slotIndex == TileEntityGrinder.slotEnum.OUTPUT_SLOT.ordinal())
             {
-            	// DEBUG
-            	System.out.println("The slot is the output slot");
-            	
-                if (!mergeItemStack(itemStackAlreadyInSlot, 3, 39, true))
+                if (!mergeItemStack(itemStack2, 2, 38, true))
                 {
                     return null;
                 }
 
-                slot.onSlotChange(itemStackAlreadyInSlot, itemStack);
+                slot.onSlotChange(itemStack2, itemStack1);
             }
-            else if (slotIndex != 1 && slotIndex != 0) // if inventory slots
+            else if (slotIndex != TileEntityGrinder.slotEnum.INPUT_SLOT.ordinal())
             {
-            	// DEBUG
-            	System.out.println("The slot is a player inventory slot");
-            	
-                if (GrinderRecipes.instance().getGrindingResult(itemStackAlreadyInSlot) != null)
+            	// check if there is a grinding recipe for the stack
+                if (GrinderRecipes.instance().getGrindingResult(itemStack2) != null)
                 {
-                    if (!mergeItemStack(itemStackAlreadyInSlot, 0, 1, false))
+                    if (!mergeItemStack(itemStack2, 0, 1, false))
                     {
                         return null;
                     }
                 }
-                else if (slotIndex >= 3 && slotIndex < 30)
+                else if (slotIndex >= 2 && slotIndex < 29) // player inventory slots
                 {
-                    if (!mergeItemStack(itemStackAlreadyInSlot, 30, 39, false))
+                    if (!mergeItemStack(itemStack2, 29, 38, false))
                     {
                         return null;
                     }
                 }
-                else if (slotIndex >= 30 && slotIndex < 39 && !mergeItemStack(itemStackAlreadyInSlot, 3, 30, false))
+                else if (slotIndex >= 29 && slotIndex < 38 && !mergeItemStack(itemStack2, 3, 30, false)) // hotbar slots
                 {
                     return null;
                 }
             }
-            else if (!mergeItemStack(itemStackAlreadyInSlot, 3, 39, false))
+            else if (!mergeItemStack(itemStack2, 2, 38, false))
             {
                 return null;
             }
 
-            if (itemStackAlreadyInSlot.stackSize == 0)
+            if (itemStack2.stackSize == 0)
             {
-            	// DEBUG
-            	System.out.println("The slot is a grinder inventory slot");
-            	
                 slot.putStack((ItemStack)null);
             }
             else
@@ -198,14 +184,14 @@ extends Container
                 slot.onSlotChanged();
             }
 
-            if (itemStackAlreadyInSlot.stackSize == itemStack.stackSize)
+            if (itemStack2.stackSize == itemStack1.stackSize)
             {
                 return null;
             }
 
-            slot.onPickupFromSlot(playerIn, itemStackAlreadyInSlot);
+            slot.onPickupFromSlot(playerIn, itemStack2);
         }
 
-        return itemStack;
+        return itemStack1;
     }
 }

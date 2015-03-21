@@ -84,15 +84,15 @@ public class GuiGrinder  extends GuiContainer
         return ticksPerItem != 0 && ticksGrindingItemSoFar != 0 ? ticksGrindingItemSoFar * progressIndicatorPixelWidth / ticksPerItem : 0;
     }
 
-    private int getFuelLevel(int fuelIndicatorPixelHeight)
-    {
-        int currentItemGrindTime = tileGrinder.getField(1); // this is currentItemGrindTime
-
-        if (currentItemGrindTime == 0)
-        {
-            currentItemGrindTime = 200;
-        }
-
-        return tileGrinder.getField(0) * fuelIndicatorPixelHeight / currentItemGrindTime;
-    }
+//    private int getFuelLevel(int fuelIndicatorPixelHeight)
+//    {
+//        int currentItemGrindTime = tileGrinder.getField(1); // this is currentItemGrindTime
+//
+//        if (currentItemGrindTime == 0)
+//        {
+//            currentItemGrindTime = 200;
+//        }
+//
+//        return tileGrinder.getField(0) * fuelIndicatorPixelHeight / currentItemGrindTime;
+//    }
  }

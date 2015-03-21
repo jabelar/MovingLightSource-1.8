@@ -18,19 +18,15 @@ package com.blogspot.jabelarminecraft.blocksmith.tileentities;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,11 +40,16 @@ import com.blogspot.jabelarminecraft.blocksmith.recipes.GrinderRecipes;
  */
 public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlayerListBox, ISidedInventory
 {
-    private static final int[] slotsTop = new int[] {0};
-    private static final int[] slotsBottom = new int[] {2};
+    // enumerate the slots
+    public enum slotEnum 
+    {
+        INPUT_SLOT, OUTPUT_SLOT
+    }
+    private static final int[] slotsTop = new int[] {slotEnum.INPUT_SLOT.ordinal()};
+    private static final int[] slotsBottom = new int[] {slotEnum.OUTPUT_SLOT.ordinal()};
     private static final int[] slotsSides = new int[] {};
     /** The ItemStacks that hold the items currently being used in the grinder */
-    private ItemStack[] grinderItemStackArray = new ItemStack[3];
+    private ItemStack[] grinderItemStackArray = new ItemStack[2];
     /** The number of ticks that the grinder will keep grinding */
     private int timeCanGrind;
     /** The number of ticks that a fresh copy of the currently-grinding item would keep the grinder grinding for */
@@ -147,7 +148,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
         }
 
         // if input slot, reset the grinding timers
-        if (index == 0 && !isSameItemStackAlreadyInSlot)
+        if (index == slotEnum.INPUT_SLOT.ordinal() && !isSameItemStackAlreadyInSlot)
         {
             ticksPerItem = timeToGrindOneItem(stack);
             ticksGrindingItemSoFar = 0;
@@ -173,9 +174,9 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
         return grinderCustomName != null && grinderCustomName.length() > 0;
     }
 
-    public void setCustomInventoryName(String p_145951_1_)
+    public void setCustomInventoryName(String parCustomName)
     {
-        grinderCustomName = p_145951_1_;
+        grinderCustomName = parCustomName;
     }
 
     @Override
@@ -187,12 +188,12 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-            byte b0 = nbttagcompound1.getByte("Slot");
+            NBTTagCompound nbtTagCompound = nbttaglist.getCompoundTagAt(i);
+            byte b0 = nbtTagCompound.getByte("Slot");
 
             if (b0 >= 0 && b0 < grinderItemStackArray.length)
             {
-                grinderItemStackArray[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+                grinderItemStackArray[b0] = ItemStack.loadItemStackFromNBT(nbtTagCompound);
             }
         }
 
@@ -219,10 +220,10 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
         {
             if (grinderItemStackArray[i] != null)
             {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte)i);
-                grinderItemStackArray[i].writeToNBT(nbttagcompound1);
-                nbttaglist.appendTag(nbttagcompound1);
+                NBTTagCompound nbtTagCompound = new NBTTagCompound();
+                nbtTagCompound.setByte("Slot", (byte)i);
+                grinderItemStackArray[i].writeToNBT(nbtTagCompound);
+                nbttaglist.appendTag(nbtTagCompound);
             }
         }
 
@@ -272,15 +273,10 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
 
         if (!worldObj.isRemote)
         {
-            if (!isGrinding() && (grinderItemStackArray[1] == null || grinderItemStackArray[0] == null))
+        	// if something in input slot
+            if (grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()] != null)
             {
-                if (!isGrinding() && ticksGrindingItemSoFar > 0)
-                {
-                    ticksGrindingItemSoFar = MathHelper.clamp_int(ticksGrindingItemSoFar - 2, 0, ticksPerItem);
-                }
-            }
-            else
-            {
+             	// start grinding
                 if (!isGrinding() && canGrind())
                 {
                     timeCanGrind = 150;
@@ -288,19 +284,10 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
                     if (isGrinding())
                     {
                         hasSomethingChanged = true;
-
-                        if (grinderItemStackArray[1] != null)
-                        {
-                            --grinderItemStackArray[1].stackSize;
-
-                            if (grinderItemStackArray[1].stackSize == 0)
-                            {
-                                grinderItemStackArray[1] = grinderItemStackArray[1].getItem().getContainerItem(grinderItemStackArray[1]);
-                            }
-                        }
                     }
                 }
 
+                // already grinding
                 if (isGrinding() && canGrind())
                 {
                     ++ticksGrindingItemSoFar;
@@ -334,7 +321,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
         }
     }
 
-    public int timeToGrindOneItem(ItemStack p_174904_1_)
+    public int timeToGrindOneItem(ItemStack parItemStack)
     {
         return 200;
     }
@@ -345,19 +332,19 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     private boolean canGrind()
     {
     	// if nothing in input slot
-        if (grinderItemStackArray[0] == null)
+        if (grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()] == null)
         {
             return false;
         }
-        else
+        else // check if it has a grinding recipe
         {
-            ItemStack itemStackToOutput = GrinderRecipes.instance().getGrindingResult(grinderItemStackArray[0]);
+            ItemStack itemStackToOutput = GrinderRecipes.instance().getGrindingResult(grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()]);
             if (itemStackToOutput == null) return false; // no valid recipe for grinding this item
-            if (grinderItemStackArray[2] == null) return true; // output slot is empty
-            if (!grinderItemStackArray[2].isItemEqual(itemStackToOutput)) return false; // output slot has different item occupying it
+            if (grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] == null) return true; // output slot is empty
+            if (!grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].isItemEqual(itemStackToOutput)) return false; // output slot has different item occupying it
             // check if output slot is full
-            int result = grinderItemStackArray[2].stackSize + itemStackToOutput.stackSize;
-            return result <= getInventoryStackLimit() && result <= grinderItemStackArray[2].getMaxStackSize();
+            int result = grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].stackSize + itemStackToOutput.stackSize;
+            return result <= getInventoryStackLimit() && result <= grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].getMaxStackSize();
         }
     }
 
@@ -368,27 +355,23 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     {
         if (canGrind())
         {
-            ItemStack itemstack = GrinderRecipes.instance().getGrindingResult(grinderItemStackArray[0]);
+            ItemStack itemstack = GrinderRecipes.instance().getGrindingResult(grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()]);
 
-            if (grinderItemStackArray[2] == null)
+            // check if output slot is empty
+            if (grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] == null)
             {
-                grinderItemStackArray[2] = itemstack.copy();
+                grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] = itemstack.copy();
             }
-            else if (grinderItemStackArray[2].getItem() == itemstack.getItem())
+            else if (grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].getItem() == itemstack.getItem())
             {
-                grinderItemStackArray[2].stackSize += itemstack.stackSize; // Forge BugFix: Results may have multiple items
-            }
-
-            if (grinderItemStackArray[0].getItem() == Item.getItemFromBlock(Blocks.sponge) && grinderItemStackArray[0].getMetadata() == 1 && grinderItemStackArray[1] != null && grinderItemStackArray[1].getItem() == Items.bucket)
-            {
-                grinderItemStackArray[1] = new ItemStack(Items.water_bucket);
+                grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()].stackSize += itemstack.stackSize; // Forge BugFix: Results may have multiple items
             }
 
-            --grinderItemStackArray[0].stackSize;
+            --grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()].stackSize;
 
-            if (grinderItemStackArray[0].stackSize <= 0)
+            if (grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()].stackSize <= 0)
             {
-                grinderItemStackArray[0] = null;
+                grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()] = null;
             }
         }
     }
@@ -411,7 +394,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     @Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return index == 0 ? true : false; // can always put things in input (may not grind though) and can't put anything in output
+        return index == slotEnum.INPUT_SLOT.ordinal() ? true : false; // can always put things in input (may not grind though) and can't put anything in output
     }
 
     @Override
