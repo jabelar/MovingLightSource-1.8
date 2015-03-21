@@ -26,31 +26,31 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.blogspot.jabelarminecraft.blocksmith.recipes.GrinderRecipes;
-import com.blogspot.jabelarminecraft.blocksmith.slots.SlotGrinderOutput;
-import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
+import com.blogspot.jabelarminecraft.blocksmith.recipes.CompactorRecipes;
+import com.blogspot.jabelarminecraft.blocksmith.slots.SlotCompactorOutput;
+import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityCompactor;
 
 /**
  * @author jabelar
  *
  */
-public class ContainerGrinder extends Container
+public class ContainerCompactor extends Container
 {
-    private final IInventory tileGrinder;
+    private final IInventory tileCompactor;
     private final int sizeInventory;
-    private int ticksGrindingItemSoFar;
+    private int ticksCompactingItemSoFar;
     private int ticksPerItem;
-    private int timeCanGrind;
+    private int timeCanCompact;
 
-    public ContainerGrinder(InventoryPlayer parInventoryPlayer, IInventory parIInventory)
+    public ContainerCompactor(InventoryPlayer parInventoryPlayer, IInventory parIInventory)
     {
     	// DEBUG
-    	System.out.println("ContainerGrinder constructor()");
+    	System.out.println("ContainerCompactor constructor()");
     	
-        tileGrinder = parIInventory;
-        sizeInventory = tileGrinder.getSizeInventory();
-        addSlotToContainer(new Slot(tileGrinder, TileEntityGrinder.slotEnum.INPUT_SLOT.ordinal(), 56, 35));
-        addSlotToContainer(new SlotGrinderOutput(parInventoryPlayer.player, tileGrinder, TileEntityGrinder.slotEnum.OUTPUT_SLOT.ordinal(), 116, 35));
+        tileCompactor = parIInventory;
+        sizeInventory = tileCompactor.getSizeInventory();
+        addSlotToContainer(new Slot(tileCompactor, TileEntityCompactor.slotEnum.INPUT_SLOT.ordinal(), 56, 35));
+        addSlotToContainer(new SlotCompactorOutput(parInventoryPlayer.player, tileCompactor, TileEntityCompactor.slotEnum.OUTPUT_SLOT.ordinal(), 116, 35));
         
         // add player inventory slots
         // note that the slot numbers are within the player inventory so can be same as the tile entity inventory
@@ -77,7 +77,7 @@ public class ContainerGrinder extends Container
 	public void addCraftingToCrafters(ICrafting listener)
     {
         super.addCraftingToCrafters(listener);
-        listener.func_175173_a(this, tileGrinder);
+        listener.func_175173_a(this, tileCompactor);
     }
 
     /**
@@ -92,38 +92,38 @@ public class ContainerGrinder extends Container
         {
             ICrafting icrafting = (ICrafting)crafters.get(i);
 
-            if (ticksGrindingItemSoFar != tileGrinder.getField(2))
+            if (ticksCompactingItemSoFar != tileCompactor.getField(2))
             {
-                icrafting.sendProgressBarUpdate(this, 2, tileGrinder.getField(2));
+                icrafting.sendProgressBarUpdate(this, 2, tileCompactor.getField(2));
             }
 
-            if (timeCanGrind != tileGrinder.getField(0))
+            if (timeCanCompact != tileCompactor.getField(0))
             {
-                icrafting.sendProgressBarUpdate(this, 0, tileGrinder.getField(0));
+                icrafting.sendProgressBarUpdate(this, 0, tileCompactor.getField(0));
             }
 
-            if (ticksPerItem != tileGrinder.getField(3))
+            if (ticksPerItem != tileCompactor.getField(3))
             {
-                icrafting.sendProgressBarUpdate(this, 3, tileGrinder.getField(3));
+                icrafting.sendProgressBarUpdate(this, 3, tileCompactor.getField(3));
             }
         }
 
-        ticksGrindingItemSoFar = tileGrinder.getField(2); // tick grinding item so far
-        timeCanGrind = tileGrinder.getField(0); // time can grind
-        ticksPerItem = tileGrinder.getField(3); // ticks per item
+        ticksCompactingItemSoFar = tileCompactor.getField(2); // tick compacting item so far
+        timeCanCompact = tileCompactor.getField(0); // time can compact
+        ticksPerItem = tileCompactor.getField(3); // ticks per item
     }
 
     @Override
 	@SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data)
     {
-        tileGrinder.setField(id, data);
+        tileCompactor.setField(id, data);
     }
 
     @Override
 	public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return tileGrinder.isUseableByPlayer(playerIn);
+        return tileCompactor.isUseableByPlayer(playerIn);
     }
 
     /**
@@ -140,7 +140,7 @@ public class ContainerGrinder extends Container
             ItemStack itemStack2 = slot.getStack();
             itemStack1 = itemStack2.copy();
 
-            if (slotIndex == TileEntityGrinder.slotEnum.OUTPUT_SLOT.ordinal())
+            if (slotIndex == TileEntityCompactor.slotEnum.OUTPUT_SLOT.ordinal())
             {
                 if (!mergeItemStack(itemStack2, sizeInventory, sizeInventory+36, true))
                 {
@@ -149,10 +149,10 @@ public class ContainerGrinder extends Container
 
                 slot.onSlotChange(itemStack2, itemStack1);
             }
-            else if (slotIndex != TileEntityGrinder.slotEnum.INPUT_SLOT.ordinal())
+            else if (slotIndex != TileEntityCompactor.slotEnum.INPUT_SLOT.ordinal())
             {
-            	// check if there is a grinding recipe for the stack
-                if (GrinderRecipes.instance().getGrindingResult(itemStack2) != null)
+            	// check if there is a compacting recipe for the stack
+                if (CompactorRecipes.instance().getCompactingResult(itemStack2) != null)
                 {
                     if (!mergeItemStack(itemStack2, 0, 1, false))
                     {
@@ -166,7 +166,7 @@ public class ContainerGrinder extends Container
                         return null;
                     }
                 }
-                else if (slotIndex >= sizeInventory+27 && slotIndex < sizeInventory+36 && !mergeItemStack(itemStack2, sizeInventory+1, sizeInventory+27, false)) // hotbar slots
+                else if (slotIndex >= sizeInventory+27 && slotIndex < sizeInventory+36 && !mergeItemStack(itemStack2, sizeInventory+1, sizeInventory+28, false)) // hotbar slots
                 {
                     return null;
                 }

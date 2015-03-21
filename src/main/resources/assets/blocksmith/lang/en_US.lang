@@ -1,6 +1,8 @@
 tile.tanningrack.name=Tanning Rack
 tile.grinder.name=Grinder
+tile.compactor.name=Compactor
 container.grinder=Grinder
+container.compactor=Compactor
 item.cowhide.name=Cow Hide
 achievement.tanningahide=Tanned A Hide
 

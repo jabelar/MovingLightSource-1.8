@@ -39,6 +39,7 @@ import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
+import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
@@ -82,10 +83,10 @@ public class BlockSmith
     // public final static ArmorMaterial SAFEFALLINGLEATHER = EnumHelper.addArmorMaterial("SAFEFALLINGLEATHER", "safe_falling", 5, new int[]{2, 6, 5, 2}, 15);
     
     // instantiate blocks
-    // need to instantiate beanstalk block before item as the item constructor associates with block
+    // need to instantiate some blocks before related item if the item constructor associates with block
 	public final static BlockTanningRack blockTanningRack = new BlockTanningRack();
 	public final static BlockGrinder blockGrinder = new BlockGrinder();
-	public final static BlockGrinder blockActiveGrinder = new BlockGrinder();
+	public final static BlockCompactor blockCompactor = new BlockCompactor();
 	
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop
