@@ -18,9 +18,11 @@ package com.blogspot.jabelarminecraft.blocksmith.tileentities;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -248,9 +250,9 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     /**
      * Grinder is grinding
      */
-    public boolean isGrinding()
+    public boolean grindingSomething()
     {
-        return timeCanGrind > 0;
+        return true;
     }
 
     // this function indicates whether container texture should be drawn
@@ -263,42 +265,51 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     @Override
 	public void update()
     {
-        boolean hasBeenGrinding = isGrinding();
-        boolean hasSomethingChanged = false;
+        boolean hasBeenGrinding = grindingSomething();
+        boolean changedGrindingState = false;
 
-//        if (isGrinding())
-//        {
-//            --timeCanGrind;
-//        }
+        if (grindingSomething())
+        {
+            --timeCanGrind;
+        }
 
         if (!worldObj.isRemote)
         {
         	// if something in input slot
             if (grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()] != null)
-            {
+            {            	
              	// start grinding
-                if (!isGrinding() && canGrind())
+                if (!grindingSomething() && canGrind())
                 {
-                    timeCanGrind = 150;
-
-                    if (isGrinding())
-                    {
-                        hasSomethingChanged = true;
-                    }
+	            	// DEBUG
+	            	System.out.println("TileEntityGrinder update() started grinding");
+	            	
+	                timeCanGrind = 150;
+	
+	                 if (grindingSomething())
+	                 {
+	                     changedGrindingState = true;
+	                 }
                 }
 
-                // already grinding
-                if (isGrinding() && canGrind())
+                // continue grinding
+                if (grindingSomething() && canGrind())
                 {
+	            	// DEBUG
+	            	System.out.println("TileEntityGrinder update() continuing grinding");
+	            	
                     ++ticksGrindingItemSoFar;
                     
                     // check if completed grinding an item
                     if (ticksGrindingItemSoFar == ticksPerItem)
                     {
+                    	// DEBUG
+                    	System.out.println("Grinding completed another output cycle");
+                    	
                         ticksGrindingItemSoFar = 0;
                         ticksPerItem = timeToGrindOneItem(grinderItemStackArray[0]);
                         grindItem();
-                        hasSomethingChanged = true;
+                        changedGrindingState = true;
                     }
                 }
                 else
@@ -307,15 +318,15 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
                 }
             }
 
-            // started or stopped grinding
-            if (hasBeenGrinding != isGrinding()) // the isGrinding() value may have changed due to call to grindItem() earlier
+            // started or stopped grinding, update block to change to active or inactive model
+            if (hasBeenGrinding != grindingSomething()) // the isGrinding() value may have changed due to call to grindItem() earlier
             {
-                hasSomethingChanged = true;
-                BlockGrinder.changeBlockBasedOnGrindingStatus(isGrinding(), worldObj, pos);
+                changedGrindingState = true;
+                BlockGrinder.changeBlockBasedOnGrindingStatus(grindingSomething(), worldObj, pos);
             }
         }
 
-        if (hasSomethingChanged)
+        if (changedGrindingState)
         {
             markDirty();
         }
@@ -338,6 +349,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
         }
         else // check if it has a grinding recipe
         {
+        	if (grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()].getItem() == Item.getItemFromBlock(Blocks.stone)) return true;
             ItemStack itemStackToOutput = GrinderRecipes.instance().getGrindingResult(grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()]);
             if (itemStackToOutput == null) return false; // no valid recipe for grinding this item
             if (grinderItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] == null) return true; // output slot is empty
