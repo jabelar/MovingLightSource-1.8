@@ -22,8 +22,10 @@ package com.blogspot.jabelarminecraft.blocksmith.proxy;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.AchievementPage;
@@ -263,14 +265,14 @@ public class CommonProxy
         //        GameRegistry.addShapedRecipe(output, params);
         //        GameRegistry.addShapelessRecipe(output, params);
         //        GameRegistry.addSmelting(input, output, xp);
-//        GameRegistry.addShapedRecipe(new ItemStack(JnaeMod.goldenGooseMeat, 1), 
-//        		new Object[]
-//        		{
-//        			"AAA",
-//        			"ABA",
-//        			"AAA",
-//        			'A', Items.gold_ingot, 'B', Items.chicken
-//        		});
+        GameRegistry.addShapedRecipe(new ItemStack(Item.getItemFromBlock(BlockSmith.blockGrinder), 1), 
+        		new Object[]
+        		{
+        			"ABA",
+        			"A A",
+        			"CCC",
+        			'A', Items.stick, 'B', Item.getItemFromBlock(Blocks.stone), 'C', Item.getItemFromBlock(Blocks.cobblestone)
+        		});
     }
 
     /*

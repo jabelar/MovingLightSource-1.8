@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -45,6 +46,14 @@ public class GrinderRecipes
     private GrinderRecipes()
     {
         addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.stone), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.gravel)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.sandstone), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.sand)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.gravel), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.sand)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.sand)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.brick_block), 1, 32767), new ItemStack(Item.getItemFromBlock(Blocks.gravel)), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 32767), new ItemStack(Items.paper, 10), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.log), 1, 32767), new ItemStack(Items.paper), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.log2), 1, 32767), new ItemStack(Items.paper), 0.7F);
+        addGrindingRecipe(new ItemStack(Item.getItemFromBlock(Blocks.log2), 1, 32767), new ItemStack(Items.paper), 0.7F);
     }
 
     public void addGrindingRecipe(ItemStack parItemStackIn, ItemStack parItemStackOut, float parExperience)
