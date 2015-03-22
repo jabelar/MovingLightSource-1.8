@@ -25,7 +25,6 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBasic;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -103,7 +102,12 @@ public class BlockSmith
 
 	// instantiate achievements
     public static Achievement achievementTanningAHide;
-    public static Achievement achievementGiantSlayer;
+    public static Achievement craftTable;
+    public static Achievement deconstructAny;
+    public static Achievement deconstructDiamondHoe;
+    public static Achievement deconstructJunk;
+    public static Achievement deconstructDiamondShovel;
+    public static Achievement theHatStandAchievement;
     
     // enumerate guis
     public enum GUI_ENUM 
@@ -111,29 +115,7 @@ public class BlockSmith
         GRINDER, COMPACTOR, DECONSTRUCTOR
     }
     
-    // deconstructing stuff
-    /**
-     * The block. Obviously :)
-     */
-
-    public static Achievement craftTable;
-    public static Achievement deconstructAny;
-    public static Achievement deconstructDiamondHoe;
-    public static Achievement deconstructJunk;
-    public static Achievement deconstructDiamondShovel;
-    public static Achievement theHatStandAchievement;
-
-    /**
-     * Number of deconstructed items
-     */
     public static StatBasic deconstructedItemsStat;
-
-    public static int                  deconstructMethod;
-    public static int           maxUsedLevel;
-    public static int           standardLevel;
-    private static Properties          props;
-    public static int                  minLvlServer;
-    public static int                  maxLvlServer;
 
     // instantiate the mod
     @Instance(MODID)

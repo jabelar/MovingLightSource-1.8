@@ -16,15 +16,13 @@ public class GuiDeconstructor extends GuiContainer
 
     public ContainerDeconstructor container;
     private final String blockName;
-    private final boolean inverted;
 
     public GuiDeconstructor(InventoryPlayer playerInventory, World parWorld, String parBlockName, 
-    		int parX, int parY, int parZ, int parMin, int parMax)
+    		int parX, int parY, int parZ)
     {
-        super(new ContainerDeconstructor(playerInventory, parWorld, parX, parY, parZ, parMin, parMax));
+        super(new ContainerDeconstructor(playerInventory, parWorld, parX, parY, parZ));
         container = (ContainerDeconstructor) inventorySlots;
         blockName = parBlockName;
-        inverted = false;
     }
 
     @Override

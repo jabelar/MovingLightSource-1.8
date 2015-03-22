@@ -36,7 +36,7 @@ public class GuiHandler implements IGuiHandler
         }
     	if (ID == BlockSmith.GUI_ENUM.DECONSTRUCTOR.ordinal())
     	{
-            return new ContainerDeconstructor(player.inventory, world, x, y, z, BlockSmith.standardLevel, BlockSmith.maxUsedLevel);
+            return new ContainerDeconstructor(player.inventory, world, x, y, z);
     	}
 
         return null;
@@ -62,9 +62,8 @@ public class GuiHandler implements IGuiHandler
        }
     	if (ID == BlockSmith.GUI_ENUM.DECONSTRUCTOR.ordinal())
     	{
-            return new GuiDeconstructor(player.inventory, world, I18n.format("tile.deconstructor.name"), x, y, z, BlockSmith.minLvlServer, BlockSmith.maxLvlServer);
+            return new GuiDeconstructor(player.inventory, world, I18n.format("tile.deconstructor.name"), x, y, z);
     	}
-// uncraft
         return null;
 	}
 }

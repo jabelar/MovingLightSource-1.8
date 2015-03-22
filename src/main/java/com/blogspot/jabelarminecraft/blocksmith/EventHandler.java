@@ -24,7 +24,6 @@ import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
@@ -111,9 +110,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
-
-import com.blogspot.jabelarminecraft.blocksmith.events.DeconstructingEvent;
-import com.blogspot.jabelarminecraft.blocksmith.events.SuccessfulDeconstructingEvent;
 
 @SuppressWarnings("deprecation")
 public class EventHandler 
@@ -890,50 +886,7 @@ public class EventHandler
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public void onEvent(PopulateChunkEvent.Pre event)
 	{
+		
 	}
-	
-	/*
-	 * Custom event handling
-	 */
-    @SubscribeEvent
-    public void onUncrafting(DeconstructingEvent event)
-    {
-
-    }
-
-    @SubscribeEvent
-    public void onSuccessedUncrafting(SuccessfulDeconstructingEvent event)
-    {
-        Item craftedItem = event.getUncrafted().getItem();
-        if(craftedItem == Items.diamond_hoe)
-        {
-            event.getPlayer().triggerAchievement(BlockSmith.deconstructDiamondHoe);
-        }
-        else if(craftedItem == Items.diamond_shovel)
-        {
-            event.getPlayer().triggerAchievement(BlockSmith.deconstructDiamondShovel);
-        }
-
-        if(craftedItem == Items.leather_leggings)
-        {
-            event.getPlayer().triggerAchievement(BlockSmith.deconstructJunk);
-        }
-        else if(craftedItem == Items.leather_helmet)
-        {
-            event.getPlayer().triggerAchievement(BlockSmith.deconstructJunk);
-        }
-        else if(craftedItem == Items.leather_boots)
-        {
-            event.getPlayer().triggerAchievement(BlockSmith.deconstructJunk);
-        }
-        else if(craftedItem == Items.leather_chestplate)
-        {
-            event.getPlayer().triggerAchievement(BlockSmith.deconstructJunk);
-        }
-        else if(craftedItem == Items.glass_bottle)
-        {
-            event.getPlayer().triggerAchievement(BlockSmith.deconstructJunk);
-        }
-    }
 }
 

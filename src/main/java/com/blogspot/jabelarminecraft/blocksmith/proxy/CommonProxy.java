@@ -437,11 +437,6 @@ public class CommonProxy
 	{
         BlockSmith.config = new Configuration(event.getSuggestedConfigurationFile());
         BlockSmith.config.load();
-        BlockSmith.standardLevel = config.getInt("standardLevel", Configuration.CATEGORY_GENERAL, 5, 0, 50, "Minimum required level to deconstruct an item");
-        BlockSmith.maxUsedLevel = config.getInt("standardLevel", Configuration.CATEGORY_GENERAL, 30, 0, 50, "Maximum required level to deconstruct an item");
-        BlockSmith.deconstructMethod = config.getInt("deconstructMethod", Configuration.CATEGORY_GENERAL, 0, 0, 1, "ID of the used deconstructing equation.");
-        BlockSmith.minLvlServer = BlockSmith.standardLevel;
-        BlockSmith.maxLvlServer = BlockSmith.maxUsedLevel;
         BlockSmith.config.save();
 
     }

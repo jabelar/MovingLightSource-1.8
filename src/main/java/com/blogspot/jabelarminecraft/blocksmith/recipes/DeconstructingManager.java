@@ -1,4 +1,5 @@
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,10 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 
-/**
- * Main part of the Deconstructing Table. The manager is used to parse the existing recipes and find the correct one depending on the given stack.
- * @author jglrxavpok
- */
+
 public class DeconstructingManager 
 {
 
@@ -22,15 +20,15 @@ public class DeconstructingManager
 		List<Integer> list = new ArrayList<Integer>();
 		for(int i = 0;i<crafts.size();i++)
 		{
-			IRecipe r = (IRecipe) crafts.get(i);
-			if(r != null)
+			IRecipe recipe = (IRecipe) crafts.get(i);
+			if(recipe != null)
 			{
-				ItemStack s = r.getRecipeOutput();
-				if(s!=null)
+				ItemStack outputItemStack = recipe.getRecipeOutput();
+				if(outputItemStack!=null)
 				{
-					if(s.getItem() == item.getItem() && s.getItemDamage() == item.getItemDamage())
+					if(outputItemStack.getItem() == item.getItem() && outputItemStack.getItemDamage() == item.getItemDamage())
 					{
-						list.add(s.stackSize);
+						list.add(outputItemStack.stackSize);
 					}
 				}
 			}
