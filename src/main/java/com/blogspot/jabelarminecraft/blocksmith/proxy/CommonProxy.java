@@ -27,6 +27,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
+import net.minecraft.stats.StatBasic;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,6 +59,7 @@ import com.blogspot.jabelarminecraft.blocksmith.items.SpawnEgg;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageSyncEntityToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToServer;
+import com.blogspot.jabelarminecraft.blocksmith.recipes.DefaultsRecipeHandlers;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 import com.google.common.base.Predicates;
@@ -85,6 +88,7 @@ public class CommonProxy
 //        VillagerRegistry.instance().registerVillagerId(10);
 //		VillagerRegistry.instance().registerVillageTradeHandler(10, new VillageTradeHandlerMagicBeans());
 //		VillagerRegistry.getRegisteredVillagers();
+        registerUncraftingPreInit(event);
 
     }
 
@@ -101,6 +105,8 @@ public class CommonProxy
         
         // register gui handlers
         registerGuiHandlers();
+        
+        registerUncraftingInit(event);
     }
     
     public void registerGuiHandlers() 
@@ -215,6 +221,7 @@ public class CommonProxy
     	GameRegistry.registerBlock(BlockSmith.blockTanningRack, BlockSmith.blockTanningRack.getUnlocalizedName().substring(5));
     	GameRegistry.registerBlock(BlockSmith.blockGrinder, BlockSmith.blockGrinder.getUnlocalizedName().substring(5));
     	GameRegistry.registerBlock(BlockSmith.blockCompactor, BlockSmith.blockCompactor.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(BlockSmith.blockDeconstructor, BlockSmith.blockDeconstructor.getUnlocalizedName().substring(5));
     	
         // each instance of your block should have a name that is unique within your mod.  use lower case.
         // you don't need to register an item corresponding to the block, GameRegistry.registerBlock does this automatically.
@@ -276,6 +283,11 @@ public class CommonProxy
         			"CCC",
         			'A', Items.stick, 'B', Item.getItemFromBlock(Blocks.stone), 'C', Item.getItemFromBlock(Blocks.cobblestone)
         		});
+        GameRegistry.addShapedRecipe(new ItemStack(BlockSmith.blockDeconstructor), new Object[]
+        {
+                "SSS", "SXS", "SSS", 'X', Blocks.crafting_table, 'S', Blocks.cobblestone
+        });
+
     }
 
     /**
@@ -405,8 +417,41 @@ public class CommonProxy
 		BlockSmith.achievementTanningAHide.registerStat().initIndependentStat(); // Eclipse is having trouble chaining these in previous line
 //		BlockSmith.achievementGiantSlayer = new Achievement("achievement.giantslayer", "giantslayer", 2, 1, (Item)null, BlockSmith.achievementTanningAHide).setSpecial();
 //		BlockSmith.achievementGiantSlayer.registerStat(); // Eclipse is having trouble chaining this in previous line
+        BlockSmith.craftTable = (Achievement) new Achievement("createDecraftTable", "createDecraftTable", 1 - 2 - 2, -1 - 3, BlockSmith.blockDeconstructor, null).registerStat();
+        BlockSmith.uncraftAny = (Achievement) new Achievement("uncraftAnything", "uncraftAnything", 2 - 2, -2 - 2, Items.diamond_hoe, BlockSmith.craftTable).registerStat();
+        BlockSmith.uncraftDiamondHoe = (Achievement) new Achievement("uncraftDiamondHoe", "uncraftDiamondHoe", 2 - 2, 0 - 2, Items.diamond_hoe, BlockSmith.uncraftAny).registerStat();
+        BlockSmith.uncraftJunk = (Achievement) new Achievement("uncraftJunk", "uncraftJunk", 1 - 2, -1 - 2, Items.leather_boots, BlockSmith.uncraftAny).registerStat();
+        BlockSmith.uncraftDiamondShovel = (Achievement) new Achievement("uncraftDiamondShovel", "uncraftDiamondShovel", 3 - 2, -1 - 2, Items.diamond_shovel, BlockSmith.uncraftAny).registerStat();
+        BlockSmith.theHatStandAchievement = (Achievement) new Achievement("porteManteauAchievement", "porteManteauAchievement", 3 - 2, -4 - 2, Blocks.oak_fence, BlockSmith.craftTable).registerStat();
+        AchievementPage.registerAchievementPage(new AchievementPage("BlockSmith",
+                new Achievement[]
+                {
+        		BlockSmith.craftTable, BlockSmith.uncraftAny, BlockSmith.uncraftDiamondHoe, BlockSmith.uncraftJunk, BlockSmith.uncraftDiamondShovel, BlockSmith.theHatStandAchievement
+                }));
+
+        BlockSmith.uncraftedItemsStat = (StatBasic) (new StatBasic("stat.uncrafteditems", new ChatComponentTranslation("stat.uncrafteditems", new Object[0])).registerStat());
 		
-		AchievementPage.registerAchievementPage(new AchievementPage("Magic Beans Achievements", new Achievement[] {BlockSmith.achievementTanningAHide, BlockSmith.achievementGiantSlayer}));
 	}
 
+	protected void registerUncraftingPreInit(FMLPreInitializationEvent event)
+	{
+        BlockSmith.logger = event.getModLog();
+
+        BlockSmith.config = new Configuration(event.getSuggestedConfigurationFile());
+        BlockSmith.config.load();
+        BlockSmith.standardLevel = config.getInt("standardLevel", Configuration.CATEGORY_GENERAL, 5, 0, 50, "Minimum required level to uncraft an item");
+        BlockSmith.maxUsedLevel = config.getInt("standardLevel", Configuration.CATEGORY_GENERAL, 30, 0, 50, "Maximum required level to uncraft an item");
+        BlockSmith.uncraftMethod = config.getInt("uncraftMethod", Configuration.CATEGORY_GENERAL, 0, 0, 1, "ID of the used uncrafting equation.");
+        BlockSmith.minLvlServer = BlockSmith.standardLevel;
+        BlockSmith.maxLvlServer = BlockSmith.maxUsedLevel;
+        BlockSmith.config.save();
+
+    }
+	
+	protected void registerUncraftingInit(FMLInitializationEvent event)
+	{
+        DefaultsRecipeHandlers.load();
+
+        BlockSmith.logger.info("Uncrafting Table has been correctly initialized!");
+	}
 }

@@ -59,7 +59,7 @@ public class BlockGrinder extends BlockContainer
         setUnlocalizedName("grinder");
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         isGrinding = false;
-        setCreativeTab(CreativeTabs.tabBlock);
+        setCreativeTab(CreativeTabs.tabDecorations);
         stepSound = soundTypeSnow;
         blockParticleGravity = 1.0F;
         slipperiness = 0.6F;

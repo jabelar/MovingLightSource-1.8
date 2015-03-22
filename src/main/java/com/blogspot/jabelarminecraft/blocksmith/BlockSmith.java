@@ -22,8 +22,10 @@ package com.blogspot.jabelarminecraft.blocksmith;
 import java.io.File;
 
 import net.minecraft.stats.Achievement;
+import net.minecraft.stats.StatBasic;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -39,7 +41,10 @@ import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
+import org.apache.logging.log4j.Logger;
+
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockCompactor;
+import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockDeconstructor;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
@@ -87,6 +92,7 @@ public class BlockSmith
 	public final static BlockTanningRack blockTanningRack = new BlockTanningRack();
 	public final static BlockGrinder blockGrinder = new BlockGrinder();
 	public final static BlockCompactor blockCompactor = new BlockCompactor();
+    public static BlockDeconstructor blockDeconstructor = new BlockDeconstructor();
 	
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop
@@ -104,8 +110,36 @@ public class BlockSmith
     // enumerate guis
     public enum GUI_ENUM 
     {
-        GRINDER
+        GRINDER, COMPACTOR, DECONSTRUCTOR
     }
+    
+    // uncrafting stuff
+    /**
+     * The block. Obviously :)
+     */
+
+    public static Achievement craftTable;
+    public static Achievement uncraftAny;
+    public static Achievement uncraftDiamondHoe;
+    public static Achievement uncraftJunk;
+    public static Achievement uncraftDiamondShovel;
+    public static Achievement theHatStandAchievement;
+
+    /**
+     * Number of uncrafted items
+     */
+    public static StatBasic uncraftedItemsStat;
+
+    private File                cfgFile;
+    public static int                  uncraftMethod;
+    public static int           maxUsedLevel;
+    public static int           standardLevel;
+    private static Properties          props;
+    public static int                  minLvlServer;
+    public static int                  maxLvlServer;
+
+    public static Logger        logger;
+
 
     // instantiate the mod
     @Instance(MODID)
@@ -209,4 +243,16 @@ public class BlockSmith
 		proxy.fmlLifeCycleEvent(event);
 	}
 
+
+    public static void saveProperties()
+    {
+        try
+        {
+            config.save();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }

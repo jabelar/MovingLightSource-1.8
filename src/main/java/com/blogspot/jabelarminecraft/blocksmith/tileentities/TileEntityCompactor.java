@@ -279,8 +279,8 @@ public class TileEntityCompactor extends TileEntityLockable implements IUpdatePl
              	// start compacting
                 if (!compactingSomething() && canCompact())
                 {
-	            	// DEBUG
-	            	System.out.println("TileEntityCompactor update() started compacting");
+//	            	// DEBUG
+//	            	System.out.println("TileEntityCompactor update() started compacting");
 	            	
 	                timeCanCompact = 150;
 	
@@ -293,16 +293,16 @@ public class TileEntityCompactor extends TileEntityLockable implements IUpdatePl
                 // continue compacting
                 if (compactingSomething() && canCompact())
                 {
-	            	// DEBUG
-	            	System.out.println("TileEntityCompactor update() continuing compacting");
+//	            	// DEBUG
+//	            	System.out.println("TileEntityCompactor update() continuing compacting");
 	            	
                     ++ticksCompactingItemSoFar;
                     
                     // check if completed compacting an item
                     if (ticksCompactingItemSoFar == ticksPerItem)
                     {
-                    	// DEBUG
-                    	System.out.println("Compacting completed another output cycle");
+//                    	// DEBUG
+//                    	System.out.println("Compacting completed another output cycle");
                     	
                         ticksCompactingItemSoFar = 0;
                         ticksPerItem = timeToCompactOneItem(compactorItemStackArray[0]);

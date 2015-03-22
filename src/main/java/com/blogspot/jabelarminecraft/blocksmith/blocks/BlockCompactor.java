@@ -59,7 +59,7 @@ public class BlockCompactor extends BlockContainer
         setUnlocalizedName("compactor");
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         isCompacting = false;
-        setCreativeTab(CreativeTabs.tabBlock);
+        setCreativeTab(CreativeTabs.tabDecorations);
         stepSound = soundTypeSnow;
         blockParticleGravity = 1.0F;
         slipperiness = 0.6F;
@@ -157,7 +157,7 @@ public class BlockCompactor extends BlockContainer
         {
         	// DEBUG
         	System.out.println("BlockCompactor onBlockActivated() on server side");
-            parPlayer.openGui(BlockSmith.instance, BlockSmith.GUI_ENUM.GRINDER.ordinal(), parWorld, parBlockPos.getX(), parBlockPos.getY(), parBlockPos.getZ()); 
+            parPlayer.openGui(BlockSmith.instance, BlockSmith.GUI_ENUM.COMPACTOR.ordinal(), parWorld, parBlockPos.getX(), parBlockPos.getY(), parBlockPos.getZ()); 
         }
         
         return true;
