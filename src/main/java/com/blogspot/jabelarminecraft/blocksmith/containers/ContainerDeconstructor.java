@@ -21,15 +21,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
-import com.blogspot.jabelarminecraft.blocksmith.events.SuccessedUncraftingEvent;
-import com.blogspot.jabelarminecraft.blocksmith.events.UncraftingEvent;
-import com.blogspot.jabelarminecraft.blocksmith.recipes.UncraftingManager;
+import com.blogspot.jabelarminecraft.blocksmith.events.DeconstructingEvent;
+import com.blogspot.jabelarminecraft.blocksmith.events.SuccessfulDeconstructingEvent;
+import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingManager;
 
-/**
- * 
- * @author jglrxavpok
- *
- */
 public class ContainerDeconstructor extends Container
 {
 
@@ -38,129 +33,93 @@ public class ContainerDeconstructor extends Container
         ERROR, READY
     }
 
-    public InventoryCrafting      uncraftIn   = new InventoryCrafting(this, 1, 1);
-    public InventoryUncraftResult uncraftOut  = new InventoryUncraftResult();
-    public InventoryCrafting      calculInput = new InventoryCrafting(this, 1, 1);
-    private final World                 worldObj;
-    public InventoryPlayer        playerInv;
-    public String                 result      = I18n.format("uncrafting.result.ready");
-    public State                  type        = State.READY;
-    public int                    xp          = -BlockSmith.standardLevel;
-    public int                    x           = 0;
-    public int                    y           = 0;
-    public int                    z           = 0;
-    private final int                   minLvl;
-    private final int                   maxLvl;
-    private ItemStack             toReturn;
+    public InventoryCrafting deconstructIn = new InventoryCrafting(this, 1, 1);
+    public InventoryDeconstructResult deconstructOut = new InventoryDeconstructResult();
+    public InventoryCrafting calculInput = new InventoryCrafting(this, 1, 1);
+    private final World worldObj;
+    public InventoryPlayer playerInventory;
+    public String result = I18n.format("deconstructing.result.ready");
+    public State type = State.READY;
+    public int xp = -BlockSmith.standardLevel;
+    public int x = 0;
+    public int y = 0;
+    public int z = 0;
+    private final int minLvl;
+    private final int maxLvl;
 
-    public ContainerDeconstructor(InventoryPlayer par1PlayerInventory, World world, boolean inverted, int x, int y, int z, int minLvl, int maxLvl)
+    public ContainerDeconstructor(InventoryPlayer parPlayerInventory, World parWorld, int parX, int parY, int parZ, int parMinLevel, int parMaxLevel)
     {
-        this.minLvl = minLvl;
-        this.maxLvl = maxLvl;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.worldObj = world;
-        int l;
-        int i1;
-        int i2;
-        if(!inverted)
+        minLvl = parMinLevel;
+        maxLvl = parMaxLevel;
+        x = parX;
+        y = parY;
+        z = parZ;
+        worldObj = parWorld;
+        
+        for(int outputSlotIndexX = 0; outputSlotIndexX < 3; ++outputSlotIndexX)
         {
-            for(l = 0; l < 3; ++l)
+            for(int outputSlotIndexY = 0; outputSlotIndexY < 3; ++outputSlotIndexY)
             {
-                for(i1 = 0; i1 < 3; ++i1)
-                {
-                    this.addSlotToContainer(new Slot(this.uncraftOut, i1 + l * 3, 112 + i1 * 18, 17 + l * 18));
-                }
-            }
-            this.addSlotToContainer(new Slot(this.uncraftIn, 0, 30 + 15, 35));
-            this.addSlotToContainer(new Slot(this.calculInput, 0, 15, 35));
-
-            for(l = 0; l < 3; ++l)
-            {
-                for(i1 = 0; i1 < 9; ++i1)
-                {
-                    this.addSlotToContainer(new Slot(par1PlayerInventory, i1 + l * 9 + 9, 8 + i1 * 18, 84 + l * 18));
-                }
-            }
-            for(l = 0; l < 9; ++l)
-            {
-                this.addSlotToContainer(new Slot(par1PlayerInventory, l, 8 + l * 18, 142));
+                addSlotToContainer(new Slot(deconstructOut, outputSlotIndexY + outputSlotIndexX * 3, 112 + outputSlotIndexY * 18, 17 + outputSlotIndexX * 18));
             }
         }
-        else
+        
+        addSlotToContainer(new Slot(deconstructIn, 0, 30 + 15, 35));
+        addSlotToContainer(new Slot(calculInput, 0, 15, 35));
+
+        for(int playerSlotIndexY = 0; playerSlotIndexY < 3; ++playerSlotIndexY)
         {
-            int height = 166 - 16;
-            for(l = 0; l < 3; ++l)
+            for(int playerSlotIndexX = 0; playerSlotIndexX < 9; ++playerSlotIndexX)
             {
-                for(i1 = 0; i1 < 3; ++i1)
-                {
-                    this.addSlotToContainer(new Slot(this.uncraftOut, i1 + l * 3, 112 + i1 * 18, height - (17 + l * 18)));
-                }
-            }
-
-            this.addSlotToContainer(new Slot(this.uncraftIn, 0, 30 + 15, height - 35));
-            this.addSlotToContainer(new Slot(this.calculInput, 0, 15, height - 35));
-
-            for(l = 0; l < 3; ++l)
-            {
-                for(i1 = 0; i1 < 9; ++i1)
-                {
-                    this.addSlotToContainer(new Slot(par1PlayerInventory, i1 + l * 9 + 9, 8 + i1 * 18, height - (84 + l * 18)));
-                }
-            }
-
-            for(l = 0; l < 9; ++l)
-            {
-                this.addSlotToContainer(new Slot(par1PlayerInventory, l, 8 + l * 18, height - 142));
+                addSlotToContainer(new Slot(parPlayerInventory, playerSlotIndexX + playerSlotIndexY * 9 + 9, 8 + playerSlotIndexX * 18, 84 + playerSlotIndexY * 18));
             }
         }
-        playerInv = par1PlayerInventory;
+        
+        for(int hotbarSlotIndex = 0; hotbarSlotIndex < 9; ++hotbarSlotIndex)
+        {
+            addSlotToContainer(new Slot(parPlayerInventory, hotbarSlotIndex, 8 + hotbarSlotIndex * 18, 142));
+        }     
+        
+        playerInventory = parPlayerInventory;
     }
 
-    /**
-     * Short story: fires a UncraftingEvent instance and look if the uncrafting is possible.
-     * If possible, tries to do the uncrafting and fires a SuccessedUncraftingEvent if managed to do it.
-     */
     @Override
-	@SuppressWarnings("rawtypes")
     public void onCraftMatrixChanged(IInventory inventory)
     {
-        toReturn = null;
         if(inventory == calculInput)
         {
             if(calculInput.getStackInSlot(0) == null)
             {
                 xp = 0;
-                if(uncraftIn.getStackInSlot(0) == null)
+                if(deconstructIn.getStackInSlot(0) == null)
                 {
-                    String r = I18n.format("uncrafting.result.ready");
+                    String r = I18n.format("deconstructing.result.ready");
                     result = r;
                     type = State.READY;
                     xp = -BlockSmith.standardLevel;
                 }
                 return;
             }
-            else if(uncraftIn.getStackInSlot(0) == null)
+            else if(deconstructIn.getStackInSlot(0) == null)
             {
-                List<ItemStack[]> list1 = UncraftingManager.getUncraftResults(calculInput.getStackInSlot(0));
+                List<ItemStack[]> list1 = DeconstructingManager.getDeconstructResults(calculInput.getStackInSlot(0));
                 ItemStack[] output = null;
                 if(list1.size() > 0)
                     output = list1.get(0);
-                List<Integer> needs = UncraftingManager.getStackSizeNeeded(calculInput.getStackInSlot(0));
+                List<Integer> needs = DeconstructingManager.getStackSizeNeeded(calculInput.getStackInSlot(0));
                 int required = 1;
                 if(needs.size() > 0)
                 {
                     required = needs.get(0);
                 }
-                UncraftingEvent event = new UncraftingEvent(calculInput.getStackInSlot(0), output, required, playerInv.player);
+                DeconstructingEvent event = new DeconstructingEvent(calculInput.getStackInSlot(0), output, required, playerInventory.player);
                 if(!MinecraftForge.EVENT_BUS.post(event))
                 {
                     int nbrStacks = event.getRequiredNumber();
                     if(nbrStacks > calculInput.getStackInSlot(0).stackSize)
                     {
 
-                        String r = I18n.format("uncrafting.result.needMoreStacks", (nbrStacks - calculInput.getStackInSlot(0).stackSize));
+                        String r = I18n.format("deconstructing.result.needMoreStacks", (nbrStacks - calculInput.getStackInSlot(0).stackSize));
                         result = r;
                         type = State.ERROR;
                         xp = -minLvl;
@@ -168,7 +127,7 @@ public class ContainerDeconstructor extends Container
                     }
                     else if(event.getOutput() == null)
                     {
-                        String r = I18n.format("uncrafting.result.impossible");
+                        String r = I18n.format("deconstructing.result.impossible");
                         result = r;
                         type = State.ERROR;
                         xp = -minLvl;
@@ -176,15 +135,15 @@ public class ContainerDeconstructor extends Container
                     }
                     else
                     {
-                        String r = I18n.format("uncrafting.result.ready");
+                        String r = I18n.format("deconstructing.result.ready");
                         result = r;
                         type = State.READY;
                     }
-                    if(BlockSmith.instance.uncraftMethod == 0)
+                    if(BlockSmith.deconstructMethod == 0)
                     {
                         xp = 0;
                     }
-                    else if(BlockSmith.instance.uncraftMethod == 1)
+                    else if(BlockSmith.deconstructMethod == 1)
                     {
                         ItemStack s1 = calculInput.getStackInSlot(0);
                         int percent = (int) (((double) s1.getItemDamage() / (double) s1.getMaxDamage()) * 100);
@@ -194,19 +153,19 @@ public class ContainerDeconstructor extends Container
             }
             else
             {
-                String r = I18n.format("uncrafting.result.impossible");
+                String r = I18n.format("deconstructing.result.impossible");
                 result = r;
                 type = State.ERROR;
                 xp = -minLvl;
                 return;
             }
         }
-        else if(inventory == uncraftIn)
+        else if(inventory == deconstructIn)
         {
             xp = 0;
-            if(uncraftIn.getStackInSlot(0) == null)
+            if(deconstructIn.getStackInSlot(0) == null)
             {
-                result = I18n.format("uncrafting.result.ready");
+                result = I18n.format("deconstructing.result.ready");
                 if(calculInput.getStackInSlot(0) == null)
                 {
                     xp = 0;
@@ -214,35 +173,35 @@ public class ContainerDeconstructor extends Container
                 type = State.READY;
                 return;
             }
-            List<ItemStack[]> list1 = UncraftingManager.getUncraftResults(uncraftIn.getStackInSlot(0));
+            List<ItemStack[]> list1 = DeconstructingManager.getDeconstructResults(deconstructIn.getStackInSlot(0));
             ItemStack[] output = null;
             if(list1.size() > 0)
                 output = list1.get(0);
-            List<Integer> needs = UncraftingManager.getStackSizeNeeded(uncraftIn.getStackInSlot(0));
+            List<Integer> needs = DeconstructingManager.getStackSizeNeeded(deconstructIn.getStackInSlot(0));
             int required = 1;
             if(needs.size() > 0)
             {
                 required = needs.get(0);
             }
-            UncraftingEvent event = new UncraftingEvent(uncraftIn.getStackInSlot(0), output, required, playerInv.player);
+            DeconstructingEvent event = new DeconstructingEvent(deconstructIn.getStackInSlot(0), output, required, playerInventory.player);
             if(!MinecraftForge.EVENT_BUS.post(event))
             {
                 int nbrStacks = event.getRequiredNumber();
-                if(nbrStacks > uncraftIn.getStackInSlot(0).stackSize)
+                if(nbrStacks > deconstructIn.getStackInSlot(0).stackSize)
                 {
-                    String r = I18n.format("uncrafting.result.needMoreStacks", (nbrStacks - uncraftIn.getStackInSlot(0).stackSize));
-                    result = r;
+                    String resultString = I18n.format("deconstructing.result.needMoreStacks", (nbrStacks - deconstructIn.getStackInSlot(0).stackSize));
+                    result = resultString;
                     type = State.ERROR;
                     return;
                 }
-                while(uncraftIn.getStackInSlot(0) != null && nbrStacks <= uncraftIn.getStackInSlot(0).stackSize)
+                while(deconstructIn.getStackInSlot(0) != null && nbrStacks <= deconstructIn.getStackInSlot(0).stackSize)
                 {
-                    EntityPlayer player = playerInv.player;
-                    int lvl = player.experienceLevel;
+                    EntityPlayer player = playerInventory.player;
+                    int playerLevel = player.experienceLevel;
                     xp = 0;
-                    if(!EnchantmentHelper.getEnchantments(uncraftIn.getStackInSlot(0)).isEmpty() && calculInput.getStackInSlot(0) != null && calculInput.getStackInSlot(0).getItem() == Items.book)
+                    if(!EnchantmentHelper.getEnchantments(deconstructIn.getStackInSlot(0)).isEmpty() && calculInput.getStackInSlot(0) != null && calculInput.getStackInSlot(0).getItem() == Items.book)
                     {
-                        Map enchantsMap = EnchantmentHelper.getEnchantments(uncraftIn.getStackInSlot(0));
+                        Map enchantsMap = EnchantmentHelper.getEnchantments(deconstructIn.getStackInSlot(0));
                         Iterator<?> i = enchantsMap.keySet().iterator();
                         Map<Integer, Integer> tmpMap = new LinkedHashMap<Integer, Integer>();
                         ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
@@ -259,12 +218,12 @@ public class ContainerDeconstructor extends Container
                         for(ItemStack s : stacks)
                         {
                             nbr-- ;
-                            if(!playerInv.addItemStackToInventory(s))
+                            if(!playerInventory.addItemStackToInventory(s))
                             {
-                                EntityItem e = playerInv.player.entityDropItem(s, 0.5f);
-                                e.posX = playerInv.player.posX;
-                                e.posY = playerInv.player.posY;
-                                e.posZ = playerInv.player.posZ;
+                                EntityItem e = playerInventory.player.entityDropItem(s, 0.5f);
+                                e.posX = playerInventory.player.posX;
+                                e.posY = playerInventory.player.posY;
+                                e.posZ = playerInventory.player.posZ;
                             }
                             if(nbr <= 0)
                             {
@@ -276,17 +235,17 @@ public class ContainerDeconstructor extends Container
                     ItemStack[] items = event.getOutput();
                     if(items == null)
                     {
-                        String r = I18n.format("uncrafting.result.impossible");
+                        String r = I18n.format("deconstructing.result.impossible");
                         result = r;
                         type = State.ERROR;
                         return;
                     }
-                    if(!playerInv.player.capabilities.isCreativeMode && uncraftIn.getStackInSlot(0).getItem().getItemEnchantability() > 0)
+                    if(!playerInventory.player.capabilities.isCreativeMode && deconstructIn.getStackInSlot(0).getItem().getItemEnchantability() > 0)
                     {
-                        if(BlockSmith.instance.uncraftMethod == 0)
+                        if(BlockSmith.deconstructMethod == 0)
                         {
                             int count = 0;
-                            ItemStack s1 = uncraftIn.getStackInSlot(0);
+                            ItemStack s1 = deconstructIn.getStackInSlot(0);
 
                             int percent = (int) (((double) s1.getItemDamage() / (double) s1.getMaxDamage()) * 100);
                             for(int i = 0; i < items.length; i++ )
@@ -309,39 +268,39 @@ public class ContainerDeconstructor extends Container
                                     }
                                 }
                         }
-                        else if(BlockSmith.instance.uncraftMethod == 1)
+                        else if(BlockSmith.deconstructMethod == 1)
                         {
-                            ItemStack s1 = uncraftIn.getStackInSlot(0);
-                            int percent = (int) (((double) s1.getItemDamage() / (double) s1.getMaxDamage()) * 100);
+                            ItemStack inputStack = deconstructIn.getStackInSlot(0);
+                            int percent = (int) (((double) inputStack.getItemDamage() / (double) inputStack.getMaxDamage()) * 100);
                             xp = (maxLvl * percent) / 100;
                         }
                     }
-                    if(lvl < BlockSmith.standardLevel + xp && !player.capabilities.isCreativeMode)
+                    if(playerLevel < BlockSmith.standardLevel + xp && !player.capabilities.isCreativeMode)
                     {
-                        String r = I18n.format("uncrafting.result.needMoreXP");
-                        result = r;
+                        String resultString = I18n.format("deconstructing.result.needMoreXP");
+                        result = resultString;
                         type = State.ERROR;
                         return;
                     }
-                    else if(lvl >= BlockSmith.standardLevel + xp && !player.capabilities.isCreativeMode)
+                    else if(playerLevel >= BlockSmith.standardLevel + xp && !player.capabilities.isCreativeMode)
                     {
                         player.experienceLevel -= BlockSmith.standardLevel + xp;
                     }
-                    if(!uncraftOut.isEmpty())
+                    if(!deconstructOut.isEmpty())
                     {
-                        for(int i = 0; i < uncraftOut.getSizeInventory(); i++ )
+                        for(int i = 0; i < deconstructOut.getSizeInventory(); i++ )
                         {
-                            ItemStack item = uncraftOut.getStackInSlot(i);
+                            ItemStack item = deconstructOut.getStackInSlot(i);
                             if((item != null && items[i] != null && item.getItem() != items[i].getItem()))
                             {
-                                if(!playerInv.addItemStackToInventory(item))
+                                if(!playerInventory.addItemStackToInventory(item))
                                 {
-                                    EntityItem e = playerInv.player.entityDropItem(item, 0.5f);
-                                    e.posX = playerInv.player.posX;
-                                    e.posY = playerInv.player.posY;
-                                    e.posZ = playerInv.player.posZ;
+                                    EntityItem entityItem = playerInventory.player.entityDropItem(item, 0.5f);
+                                    entityItem.posX = playerInventory.player.posX;
+                                    entityItem.posY = playerInventory.player.posY;
+                                    entityItem.posZ = playerInventory.player.posZ;
                                 }
-                                uncraftOut.setInventorySlotContents(i, null);
+                                deconstructOut.setInventorySlotContents(i, null);
                             }
                         }
                     }
@@ -349,7 +308,7 @@ public class ContainerDeconstructor extends Container
                     for(int i = 0; i < items.length; i++ )
                     {
                         ItemStack s = items[i];
-                        ItemStack currentStack = uncraftOut.getStackInSlot(i);
+                        ItemStack currentStack = deconstructOut.getStackInSlot(i);
                         if(s != null)
                         {
                             int metadata = s.getItemDamage();
@@ -364,116 +323,102 @@ public class ContainerDeconstructor extends Container
                             }
                             else
                             {
-                                if(currentStack != null && !playerInv.addItemStackToInventory(currentStack))
+                                if(currentStack != null && !playerInventory.addItemStackToInventory(currentStack))
                                 {
-                                    EntityItem e = playerInv.player.entityDropItem(currentStack, 0.5f);
-                                    e.posX = playerInv.player.posX;
-                                    e.posY = playerInv.player.posY;
-                                    e.posZ = playerInv.player.posZ;
+                                    EntityItem entityItem = playerInventory.player.entityDropItem(currentStack, 0.5f);
+                                    entityItem.posX = playerInventory.player.posX;
+                                    entityItem.posY = playerInventory.player.posY;
+                                    entityItem.posZ = playerInventory.player.posZ;
                                 }
                                 newStack = new ItemStack(s.getItem(), 1, metadata);
                             }
-                            uncraftOut.setInventorySlotContents(i, newStack);
+                            deconstructOut.setInventorySlotContents(i, newStack);
                         }
                         else
                         {
-                            uncraftOut.setInventorySlotContents(i, null);
+                            deconstructOut.setInventorySlotContents(i, null);
                         }
                     }
-                    ItemStack stack = uncraftIn.getStackInSlot(0);
-                    //    				int n = (stack.stackSize-nbrStacks);
-                    //    				if(n > 0)
-                    //    				{
-                    //    					ItemStack newStack = new ItemStack(stack.getItem(), n, stack.getItemDamageForDisplay());
-                    //    //					toReturn = newStack;
-                    //    					if(!playerInv.addItemStackToInventory(newStack))
-                    //    					{
-                    //    						EntityItem e = playerInv.player.entityDropItem(newStack,0.5f);
-                    //    						e.posX = playerInv.player.posX;
-                    //    						e.posY = playerInv.player.posY;
-                    //    						e.posZ = playerInv.player.posZ;
-                    //    					}
-                    //    				}
-                    SuccessedUncraftingEvent sevent = new SuccessedUncraftingEvent(uncraftIn.getStackInSlot(0), items, event.getRequiredNumber(), playerInv.player);
+                    SuccessfulDeconstructingEvent sevent = new SuccessfulDeconstructingEvent(deconstructIn.getStackInSlot(0), items, event.getRequiredNumber(), playerInventory.player);
                     if(!MinecraftForge.EVENT_BUS.post(sevent))
                     {
-                        event.getPlayer().addStat(BlockSmith.instance.uncraftedItemsStat, event.getRequiredNumber());
-                        event.getPlayer().triggerAchievement(BlockSmith.instance.uncraftAny);
+                        event.getPlayer().addStat(BlockSmith.deconstructedItemsStat, event.getRequiredNumber());
+                        event.getPlayer().triggerAchievement(BlockSmith.deconstructAny);
                     }
-                    int i = uncraftIn.getStackInSlot(0).stackSize - event.getRequiredNumber();
+                    int i = deconstructIn.getStackInSlot(0).stackSize - event.getRequiredNumber();
                     ItemStack newStack = null;
                     if(i > 0)
                     {
-                        newStack = new ItemStack(uncraftIn.getStackInSlot(0).getItem(), i, 0);
+                        newStack = new ItemStack(deconstructIn.getStackInSlot(0).getItem(), i, 0);
                     }
-                    uncraftIn.setInventorySlotContents(0, newStack);
-                    this.onCraftMatrixChanged(calculInput);
+                    deconstructIn.setInventorySlotContents(0, newStack);
+                    onCraftMatrixChanged(calculInput);
                 }
             }
             else
             {
-                String r = I18n.format("uncrafting.result.impossible");
-                result = r;
+                String resultString = I18n.format("deconstructing.result.impossible");
+                result = resultString;
                 type = State.ERROR;
             }
         }
         else
         {
-            String r = I18n.format("uncrafting.result.impossible");
-            result = r;
+            String resultString = I18n.format("deconstructing.result.impossible");
+            result = resultString;
             type = State.ERROR;
         }
     }
 
     @Override
-	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player)
+	public ItemStack slotClick(int parSlotId, int parMouseButtonId, int parClickMode, EntityPlayer parPlayer)
     {
-        ItemStack r = super.slotClick(par1, par2, par3, player);
-        if(inventorySlots.size() > par1 && par1 >= 0)
+        ItemStack clickItemStack = super.slotClick(parSlotId, parMouseButtonId, parClickMode, parPlayer);
+        if(inventorySlots.size() > parSlotId && parSlotId >= 0)
         {
-            if(inventorySlots.get(par1) != null)
+            if(inventorySlots.get(parSlotId) != null)
             {
-                if((((Slot) inventorySlots.get(par1)).inventory == calculInput || ((Slot) inventorySlots.get(par1)).inventory == playerInv))
-                    this.onCraftMatrixChanged(calculInput);
-                else if(((Slot) inventorySlots.get(par1)).inventory == uncraftIn)
+                if((((Slot) inventorySlots.get(parSlotId)).inventory == calculInput || ((Slot) inventorySlots.get(parSlotId)).inventory == playerInventory))
+                    onCraftMatrixChanged(calculInput);
+                else if(((Slot) inventorySlots.get(parSlotId)).inventory == deconstructIn)
                 {
-                    this.onCraftMatrixChanged(uncraftIn);
+                    onCraftMatrixChanged(deconstructIn);
                 }
             }
         }
-        return r;
+        return clickItemStack;
     }
 
     /**
      * Callback for when the crafting gui is closed.
      */
     @Override
-	public void onContainerClosed(EntityPlayer par1EntityPlayer)
+	public void onContainerClosed(EntityPlayer parPlayer)
     {
-        if(playerInv.getItemStack() != null)
+        if(playerInventory.getItemStack() != null)
         {
-            par1EntityPlayer.entityDropItem(playerInv.getItemStack(), 0.5f);
+            parPlayer.entityDropItem(playerInventory.getItemStack(), 0.5f);
         }
-        if(!this.worldObj.isRemote)
+        if(!worldObj.isRemote)
         {
-            ItemStack itemstack = this.uncraftIn.getStackInSlotOnClosing(0);
-            if(itemstack != null)
+            ItemStack itemStack = deconstructIn.getStackInSlotOnClosing(0);
+            if(itemStack != null)
             {
-                par1EntityPlayer.entityDropItem(itemstack, 0.5f);
+                parPlayer.entityDropItem(itemStack, 0.5f);
             }
 
-            itemstack = this.calculInput.getStackInSlotOnClosing(0);
-            if(itemstack != null)
+            itemStack = calculInput.getStackInSlotOnClosing(0);
+            if(itemStack != null)
             {
-                par1EntityPlayer.entityDropItem(itemstack, 0.5f);
+                parPlayer.entityDropItem(itemStack, 0.5f);
             }
-            for(int i = 0; i < uncraftOut.getSizeInventory(); i++ )
+            for(int i = 0; i < deconstructOut.getSizeInventory(); i++ )
             {
-                itemstack = this.uncraftOut.getStackInSlotOnClosing(i);
+                itemStack = deconstructOut.getStackInSlotOnClosing(i);
 
-                if(itemstack != null)
+                if(itemStack != null)
                 {
-                    par1EntityPlayer.entityDropItem(itemstack, 0.5f);
+                    parPlayer.entityDropItem(itemStack, 0.5f);
                 }
             }
         }
@@ -489,26 +434,25 @@ public class ContainerDeconstructor extends Container
      * Called when a player shift-clicks on a slot.
      */
     @Override
-	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+	public ItemStack transferStackInSlot(EntityPlayer parPlayer, int parSlotIndex)
     {
-        ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(par2);
+        Slot slot = (Slot) inventorySlots.get(parSlotIndex);
         if(slot != null && slot.getHasStack())
             if(slot.inventory.equals(calculInput))
             {
                 ItemStack itemstack1 = slot.getStack();
-                slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
-                if(!playerInv.addItemStackToInventory(itemstack1))
+                slot.onPickupFromSlot(parPlayer, itemstack1);
+                if(!playerInventory.addItemStackToInventory(itemstack1))
                 {
                     return null;
                 }
                 slot.putStack(null);
             }
-            else if(slot.inventory.equals(uncraftIn))
+            else if(slot.inventory.equals(deconstructIn))
             {
                 if(slot.getHasStack())
                 {
-                    if(!playerInv.addItemStackToInventory(slot.getStack()))
+                    if(!playerInventory.addItemStackToInventory(slot.getStack()))
                     {
                         return null;
                     }
@@ -516,10 +460,10 @@ public class ContainerDeconstructor extends Container
                     slot.onSlotChanged();
                 }
             }
-            else if(slot.inventory.equals(playerInv))
+            else if(slot.inventory.equals(playerInventory))
             {
                 Slot calcInput = null;
-                Slot uncraftSlot = null;
+                Slot deconstructSlot = null;
                 for(Object s : inventorySlots)
                 {
                     Slot s1 = (Slot) s;
@@ -527,9 +471,9 @@ public class ContainerDeconstructor extends Container
                     {
                         calcInput = s1;
                     }
-                    else if(s1.inventory.equals(uncraftIn))
+                    else if(s1.inventory.equals(deconstructIn))
                     {
-                        uncraftSlot = s1;
+                        deconstructSlot = s1;
                     }
                 }
                 if(calcInput != null)
@@ -545,10 +489,10 @@ public class ContainerDeconstructor extends Container
                         if(slot.getStack() != null)
                         {
                             ItemStack i = slot.getStack();
-                            slot.onPickupFromSlot(par1EntityPlayer, slot.getStack());
+                            slot.onPickupFromSlot(parPlayer, slot.getStack());
                             slot.putStack(calcInput.getStack().copy());
                             calcInput.putStack(i.copy());
-                            this.onCraftMatrixChanged(calculInput);
+                            onCraftMatrixChanged(calculInput);
                             calcInput.onSlotChanged();
                         }
                         else
@@ -558,11 +502,11 @@ public class ContainerDeconstructor extends Container
                     }
                 }
             }
-            else if(slot.inventory.equals(uncraftOut))
+            else if(slot.inventory.equals(deconstructOut))
             {
                 if(slot.getHasStack())
                 {
-                    if(!playerInv.addItemStackToInventory(slot.getStack()))
+                    if(!playerInventory.addItemStackToInventory(slot.getStack()))
                     {
                         return null;
                     }
@@ -574,17 +518,17 @@ public class ContainerDeconstructor extends Container
     }
 
     @Override
-	public boolean func_94530_a(ItemStack par1ItemStack, Slot par2Slot)
+	public boolean func_94530_a(ItemStack parItemStack, Slot parSlot)
     {
-        return !par2Slot.inventory.equals(uncraftOut);
+        return !parSlot.inventory.equals(deconstructOut);
     }
 
     @Override
-	public Slot getSlot(int par1)
+	public Slot getSlot(int parSlotIndex)
     {
-        if(par1 >= this.inventorySlots.size())
-            par1 = this.inventorySlots.size() - 1;
-        return super.getSlot(par1);
+        if(parSlotIndex >= inventorySlots.size())
+            parSlotIndex = inventorySlots.size() - 1;
+        return super.getSlot(parSlotIndex);
     }
 
 }

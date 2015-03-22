@@ -1,15 +1,11 @@
 package com.blogspot.jabelarminecraft.blocksmith.containers;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IChatComponent;
 
-/**
- * 
- * @author jglrxavpok
- *
- */
-public class InventoryUncraftResult implements IInventory
+public class InventoryDeconstructResult implements IInventory
 {
     private final ItemStack[] stackResult = new ItemStack[9];
 
@@ -121,7 +117,7 @@ public class InventoryUncraftResult implements IInventory
     @Override
     public String getName()
     {
-        return "UncraftResult";
+        return "DeconstructResult";
     }
 
     @Override

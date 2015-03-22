@@ -41,8 +41,6 @@ import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-import org.apache.logging.log4j.Logger;
-
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockDeconstructor;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockGrinder;
@@ -113,33 +111,29 @@ public class BlockSmith
         GRINDER, COMPACTOR, DECONSTRUCTOR
     }
     
-    // uncrafting stuff
+    // deconstructing stuff
     /**
      * The block. Obviously :)
      */
 
     public static Achievement craftTable;
-    public static Achievement uncraftAny;
-    public static Achievement uncraftDiamondHoe;
-    public static Achievement uncraftJunk;
-    public static Achievement uncraftDiamondShovel;
+    public static Achievement deconstructAny;
+    public static Achievement deconstructDiamondHoe;
+    public static Achievement deconstructJunk;
+    public static Achievement deconstructDiamondShovel;
     public static Achievement theHatStandAchievement;
 
     /**
-     * Number of uncrafted items
+     * Number of deconstructed items
      */
-    public static StatBasic uncraftedItemsStat;
+    public static StatBasic deconstructedItemsStat;
 
-    private File                cfgFile;
-    public static int                  uncraftMethod;
+    public static int                  deconstructMethod;
     public static int           maxUsedLevel;
     public static int           standardLevel;
     private static Properties          props;
     public static int                  minLvlServer;
     public static int                  maxLvlServer;
-
-    public static Logger        logger;
-
 
     // instantiate the mod
     @Instance(MODID)

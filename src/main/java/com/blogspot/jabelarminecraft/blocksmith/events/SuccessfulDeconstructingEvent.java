@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * @author jglrxavpok
  *
  */
-public class SuccessedUncraftingEvent extends Event
+public class SuccessfulDeconstructingEvent extends Event
 {
 
 	/**
@@ -32,7 +32,7 @@ public class SuccessedUncraftingEvent extends Event
 	 */
 	private final long	when;
 
-	public SuccessedUncraftingEvent(ItemStack stack, ItemStack[] output, int required, EntityPlayer player)
+	public SuccessfulDeconstructingEvent(ItemStack stack, ItemStack[] output, int required, EntityPlayer player)
 	{
 		uncrafted = stack;
 		out = output;

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * @author jglrxavpok
  *
  */
-public class UncraftingEvent extends Event
+public class DeconstructingEvent extends Event
 {
 
 	/**
@@ -43,7 +43,7 @@ public class UncraftingEvent extends Event
 	 * @param required : The number of items required in order to do this uncrafting.
 	 * @param player : The player uncrafting the item.
 	 */
-	public UncraftingEvent(ItemStack uncrafted, ItemStack[] output, int required, EntityPlayer player)
+	public DeconstructingEvent(ItemStack uncrafted, ItemStack[] output, int required, EntityPlayer player)
 	{
 		item = uncrafted;
 		when = System.currentTimeMillis();
