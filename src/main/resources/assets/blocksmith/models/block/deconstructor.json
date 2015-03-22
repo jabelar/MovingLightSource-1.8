@@ -1,12 +1,12 @@
 {
-    "parent": "block/cube",
+    "parent": "block/orientable",
     "textures": 
     {
-    	"up": "deconstructor:blocks/uncrafting_top",
-        "down": "deconstructor:blocks/uncrafting_bottom",
-        "east": "deconstructor:blocks/uncrafting_front",
-        "west": "deconstructor:blocks/uncrafting_side",
-        "north": "deconstructor:blocks/uncrafting_front",
-        "south": "deconstructor:blocks/uncrafting_side"
+    	"up": "deconstructor:blocks/deconstructing_top",
+        "down": "deconstructor:blocks/deconstructing_bottom",
+        "east": "deconstructor:blocks/deconstructing_front",
+        "west": "deconstructor:blocks/deconstructing_side",
+        "north": "deconstructor:blocks/deconstructing_front",
+        "south": "deconstructor:blocks/deconstructing_side"
     }
 }
