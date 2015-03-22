@@ -1,17 +1,11 @@
 package com.blogspot.jabelarminecraft.blocksmith.containers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
@@ -32,7 +26,6 @@ public class ContainerDeconstructor extends Container
 
     public InventoryCrafting inputInventory = new InventoryCrafting(this, 1, 1);
     public InventoryDeconstructResult outputInventory = new InventoryDeconstructResult();
-    public InventoryCrafting checkInventory = new InventoryCrafting(this, 1, 1);
     private final World worldObj;
     public InventoryPlayer playerInventory;
     public String resultString = I18n.format("deconstructing.result.ready");
@@ -106,39 +99,7 @@ public class ContainerDeconstructor extends Container
             {
                 EntityPlayer player = playerInventory.player;
                 int playerLevel = player.experienceLevel;
-                if(!EnchantmentHelper.getEnchantments(inputInventory.getStackInSlot(0)).isEmpty() && checkInventory.getStackInSlot(0) != null && checkInventory.getStackInSlot(0).getItem() == Items.book)
-                {
-                    Map enchantsMap = EnchantmentHelper.getEnchantments(inputInventory.getStackInSlot(0));
-                    Iterator<?> i = enchantsMap.keySet().iterator();
-                    Map<Integer, Integer> tmpMap = new LinkedHashMap<Integer, Integer>();
-                    ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-                    while(i.hasNext())
-                    {
-                        int id = (Integer) i.next();
-                        tmpMap.put(id, (Integer) enchantsMap.get(id));
-                        ItemStack stack = new ItemStack(Items.enchanted_book, 1);
-                        EnchantmentHelper.setEnchantments(tmpMap, stack);
-                        stacks.add(stack);
-                        tmpMap.clear();
-                    }
-                    int nbr = checkInventory.getStackInSlot(0).stackSize;
-                    for(ItemStack s : stacks)
-                    {
-                        nbr-- ;
-                        if(!playerInventory.addItemStackToInventory(s))
-                        {
-                            EntityItem entityItem = playerInventory.player.entityDropItem(s, 0.5f);
-                            entityItem.posX = playerInventory.player.posX;
-                            entityItem.posY = playerInventory.player.posY;
-                            entityItem.posZ = playerInventory.player.posZ;
-                        }
-                        if(nbr <= 0)
-                        {
-                            break;
-                        }
-                    }
-                    checkInventory.setInventorySlotContents(0, null);
-                }
+                
                 ItemStack[] items = output;
                 if(items == null)
                 {
@@ -239,7 +200,6 @@ public class ContainerDeconstructor extends Container
                     newStack = new ItemStack(inputInventory.getStackInSlot(0).getItem(), i, 0);
                 }
                 inputInventory.setInventorySlotContents(0, newStack);
-                onCraftMatrixChanged(checkInventory);
             }
         }
         else
@@ -257,9 +217,7 @@ public class ContainerDeconstructor extends Container
         {
             if(inventorySlots.get(parSlotId) != null)
             {
-                if((((Slot) inventorySlots.get(parSlotId)).inventory == checkInventory || ((Slot) inventorySlots.get(parSlotId)).inventory == playerInventory))
-                    onCraftMatrixChanged(checkInventory);
-                else if(((Slot) inventorySlots.get(parSlotId)).inventory == inputInventory)
+            	if(((Slot) inventorySlots.get(parSlotId)).inventory == inputInventory)
                 {
                     onCraftMatrixChanged(inputInventory);
                 }
