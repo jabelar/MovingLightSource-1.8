@@ -59,8 +59,8 @@ public class DeconstructingManager
 				ItemStack recipeKeyItemStack = recipe.getRecipeOutput();
 				if(recipeKeyItemStack!=null)
 				{
-					// DEBUG
-					System.out.println("Comparing with a recipe for "+recipeKeyItemStack.getUnlocalizedName()+" with input item = "+parItemStack.getUnlocalizedName());
+//					// DEBUG
+//					System.out.println("Comparing with a recipe for "+recipeKeyItemStack.getUnlocalizedName()+" with input item = "+parItemStack.getUnlocalizedName());
 					if (recipeKeyItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG
@@ -81,8 +81,8 @@ public class DeconstructingManager
 					}
 					else
 					{
-						// DEBUG
-						System.out.println("Recipe doesn't match item type");
+//						// DEBUG
+//						System.out.println("Recipe doesn't match item type");
 					}
 				}
 				else
