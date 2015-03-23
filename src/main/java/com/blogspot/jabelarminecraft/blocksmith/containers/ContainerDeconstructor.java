@@ -78,10 +78,7 @@ public class ContainerDeconstructor extends Container
                 type = State.READY;
                 return;
             }
-            List<ItemStack[]> list1 = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
-            ItemStack[] output = null;
-            if(list1.size() > 0)
-                output = list1.get(0);
+            ItemStack[] output = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
             List<Integer> needs = DeconstructingManager.getStackSizeNeeded(inputInventory.getStackInSlot(0));
             int required = 1;
             if(needs.size() > 0)
@@ -96,10 +93,7 @@ public class ContainerDeconstructor extends Container
                 return;
             }
             while(inputInventory.getStackInSlot(0) != null && nbrStacks <= inputInventory.getStackInSlot(0).stackSize)
-            {
-                EntityPlayer player = playerInventory.player;
-                int playerLevel = player.experienceLevel;
-                
+            {              
                 ItemStack[] items = output;
                 if(items == null)
                 {

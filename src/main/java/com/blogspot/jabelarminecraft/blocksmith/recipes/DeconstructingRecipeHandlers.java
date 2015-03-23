@@ -30,13 +30,15 @@ public final class DeconstructingRecipeHandlers
 		{
 			// DEBUG
 			System.out.println("getCraftingGrid for shapeless recipe");
-			ItemStack[] stacks = new ItemStack[9];
-			ShapelessRecipes shaped = (ShapelessRecipes)parRecipe;
-			for(int j = 0;j<shaped.recipeItems.size();j++)
+			ItemStack[] itemStackArray = new ItemStack[9];
+			ShapelessRecipes shapeless = (ShapelessRecipes)parRecipe;
+			for(int j = 0;j<shapeless.recipeItems.size();j++)
 			{
-				stacks[j] = (ItemStack) shaped.recipeItems.get(j);
+				itemStackArray[j] = (ItemStack) shapeless.recipeItems.get(j);
+				// DEBUG
+				System.out.println("Crafting grid slot "+j+" has "+itemStackArray[j].getUnlocalizedName());
 			}
-			return stacks;
+			return itemStackArray;
 		}
 	}
 	
@@ -53,13 +55,13 @@ public final class DeconstructingRecipeHandlers
 		{
 			// DEBUG
 			System.out.println("getCraftingGrid for shaped recipe");
-			ItemStack[] stacks = new ItemStack[9];
+			ItemStack[] itemStackArray = new ItemStack[9];
 			ShapedRecipes shaped = (ShapedRecipes)parRecipe;
 			for(int j = 0;j<shaped.recipeItems.length;j++)
 			{
-				stacks[j] = shaped.recipeItems[j];
+				itemStackArray[j] = shaped.recipeItems[j];
 			}
-			return stacks;
+			return itemStackArray;
 		}
 	}
 	

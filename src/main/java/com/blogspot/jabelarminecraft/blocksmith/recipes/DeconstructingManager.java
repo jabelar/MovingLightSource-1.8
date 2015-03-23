@@ -41,14 +41,12 @@ public class DeconstructingManager
 		return list;
 	}
 	
-	public static List<ItemStack[]> getDeconstructResults(ItemStack parItemStack)
+	public static ItemStack[] getDeconstructResults(ItemStack parItemStack)
 	{
 		List<?> listAllRecipes = CraftingManager.getInstance().getRecipeList();
 		// DEBUG
 		System.out.println("DeconstructingManager getDeconstructResults() recipe list size = "+listAllRecipes.size());
-		
-		List<ItemStack[]> list = new ArrayList<ItemStack[]>();
-		
+				
 		// check all recipes for recipe for Itemstack
 		for(int i = 0;i<listAllRecipes.size();i++)
 		{
@@ -61,9 +59,9 @@ public class DeconstructingManager
 				ItemStack recipeKeyItemStack = recipe.getRecipeOutput();
 				if(recipeKeyItemStack!=null)
 				{
-//					// DEBUG
-//					System.out.println("Found a recipe for the item = "+recipeKeyItemStack.getUnlocalizedName()+" with stacksize = "+recipeKeyItemStack.stackSize);
-					if (recipeKeyItemStack.getItem() == parItemStack.getItem())
+					// DEBUG
+					System.out.println("Comparing with a recipe for "+recipeKeyItemStack.getUnlocalizedName()+" with input item = "+parItemStack.getUnlocalizedName());
+					if (recipeKeyItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG
 						System.out.println("Recipe matches item type");
@@ -75,8 +73,9 @@ public class DeconstructingManager
 							if(recipeHandler != null)
 							{
 								// DEBUG
+								System.out.println("The item has damage value = "+parItemStack.getItemDamage());
 								System.out.println("Recipe handler found for class "+recipe.getClass().toString()+", adding crafting grid to list");
-								list.add(recipeHandler.getCraftingGrid(recipe));
+								return recipeHandler.getCraftingGrid(recipe);
 							}
 							else
 							{
@@ -92,8 +91,8 @@ public class DeconstructingManager
 					}
 					else
 					{
-//						// DEBUG
-//						System.out.println("Recipe doesn't match item type");
+						// DEBUG
+						System.out.println("Recipe doesn't match item type");
 					}
 				}
 				else
@@ -103,7 +102,7 @@ public class DeconstructingManager
 				}
 			}
 		}
-		return list;
+		return null;
 	}
 	
 	public static void setRecipeHandler(Class<? extends IRecipe> recipe, RecipeHandler handler)
