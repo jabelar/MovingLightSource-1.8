@@ -80,12 +80,12 @@ public class ContainerDeconstructor extends Container
             }
             ItemStack[] output = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
             List<Integer> needs = DeconstructingManager.getStackSizeNeeded(inputInventory.getStackInSlot(0));
-            int required = 1;
+            int amountRequired = 1;
             if(needs.size() > 0)
             {
-                required = needs.get(0);
+                amountRequired = needs.get(0);
             }
-            int nbrStacks = required;
+            int nbrStacks = amountRequired;
             if(nbrStacks > inputInventory.getStackInSlot(0).stackSize)
             {
                 resultString = I18n.format("deconstructing.result.needMoreStacks", (nbrStacks - inputInventory.getStackInSlot(0).stackSize));
@@ -184,10 +184,10 @@ public class ContainerDeconstructor extends Container
                         outputInventory.setInventorySlotContents(i, null);
                     }
                 }
-                playerInventory.player.addStat(BlockSmith.deconstructedItemsStat, required);
+                playerInventory.player.addStat(BlockSmith.deconstructedItemsStat, amountRequired);
                 playerInventory.player.triggerAchievement(BlockSmith.deconstructAny);
                 
-                int i = inputInventory.getStackInSlot(0).stackSize - required;
+                int i = inputInventory.getStackInSlot(0).stackSize - amountRequired;
                 ItemStack newStack = null;
                 if(i > 0)
                 {
