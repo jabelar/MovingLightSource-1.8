@@ -1,7 +1,5 @@
 package com.blogspot.jabelarminecraft.blocksmith.containers;
 
-import java.util.List;
-
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,20 +77,14 @@ public class ContainerDeconstructor extends Container
                 return;
             }
             ItemStack[] output = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
-            List<Integer> needs = DeconstructingManager.getStackSizeNeeded(inputInventory.getStackInSlot(0));
-            int amountRequired = 1;
-            if(needs.size() > 0)
+            int amountRequired = DeconstructingManager.getStackSizeNeeded(inputInventory.getStackInSlot(0));
+            if(amountRequired > inputInventory.getStackInSlot(0).stackSize)
             {
-                amountRequired = needs.get(0);
-            }
-            int nbrStacks = amountRequired;
-            if(nbrStacks > inputInventory.getStackInSlot(0).stackSize)
-            {
-                resultString = I18n.format("deconstructing.result.needMoreStacks", (nbrStacks - inputInventory.getStackInSlot(0).stackSize));
+                resultString = I18n.format("deconstructing.result.needMoreStacks", (amountRequired - inputInventory.getStackInSlot(0).stackSize));
                 type = State.ERROR;
                 return;
             }
-            while(inputInventory.getStackInSlot(0) != null && nbrStacks <= inputInventory.getStackInSlot(0).stackSize)
+            while(inputInventory.getStackInSlot(0) != null && amountRequired <= inputInventory.getStackInSlot(0).stackSize)
             {              
                 ItemStack[] items = output;
                 if(items == null)

@@ -1,6 +1,5 @@
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,10 +13,9 @@ public class DeconstructingManager
 
 	private static HashMap<Class<? extends IRecipe>, RecipeHandler>	deconstructingHandlers = new HashMap<Class<? extends IRecipe>, RecipeHandler>();
 
-	public static List<Integer> getStackSizeNeeded(ItemStack item)
+	public static int getStackSizeNeeded(ItemStack item)
 	{
 		List<?> crafts = CraftingManager.getInstance().getRecipeList();
-		List<Integer> list = new ArrayList<Integer>();
 		for(int i = 0;i<crafts.size();i++)
 		{
 			IRecipe recipe = (IRecipe) crafts.get(i);
@@ -26,9 +24,11 @@ public class DeconstructingManager
 				ItemStack outputItemStack = recipe.getRecipeOutput();
 				if(outputItemStack!=null)
 				{
-					if(outputItemStack.getItem() == item.getItem() && outputItemStack.getItemDamage() == item.getItemDamage())
+					if(outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
 					{
-						list.add(outputItemStack.stackSize);
+						// DEBUG
+						System.out.println("DeconstructingManager getStackSizeNeeded() needs stack size of "+outputItemStack.stackSize);
+						return outputItemStack.stackSize;
 					}
 				}
 				else
@@ -38,7 +38,7 @@ public class DeconstructingManager
 				}
 			}
 		}
-		return list;
+		return 1;
 	}
 	
 	public static ItemStack[] getDeconstructResults(ItemStack parItemStack)
@@ -65,28 +65,18 @@ public class DeconstructingManager
 					{
 						// DEBUG
 						System.out.println("Recipe matches item type");
-						if(recipeKeyItemStack.stackSize <= parItemStack.stackSize)
+						RecipeHandler recipeHandler = deconstructingHandlers.get(recipe.getClass());
+						if(recipeHandler != null)
 						{
 							// DEBUG
-							System.out.println("There is enough of the item to deconstruct");
-							RecipeHandler recipeHandler = deconstructingHandlers.get(recipe.getClass());
-							if(recipeHandler != null)
-							{
-								// DEBUG
-								System.out.println("The item has damage value = "+parItemStack.getItemDamage());
-								System.out.println("Recipe handler found for class "+recipe.getClass().toString()+", adding crafting grid to list");
-								return recipeHandler.getCraftingGrid(recipe);
-							}
-							else
-							{
-								// DEBUG
-								System.out.println("Recipe handler is null");
-							}
+							System.out.println("The item has damage value = "+parItemStack.getItemDamage());
+							System.out.println("Recipe handler found for class "+recipe.getClass().toString()+", adding crafting grid to list");
+							return recipeHandler.getCraftingGrid(recipe);
 						}
 						else
 						{
 							// DEBUG
-							System.out.println("There is not enough of the item to deconstruct");
+							System.out.println("Recipe handler is null");
 						}
 					}
 					else
