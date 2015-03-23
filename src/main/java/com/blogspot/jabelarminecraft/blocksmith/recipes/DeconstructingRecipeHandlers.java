@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public final class DefaultsRecipeHandlers 
+public final class DeconstructingRecipeHandlers 
 {
 	/**
 	 * Default Recipe Handlers
