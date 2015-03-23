@@ -59,8 +59,8 @@ public class DeconstructingManager
 				ItemStack recipeKeyItemStack = recipe.getRecipeOutput();
 				if(recipeKeyItemStack!=null)
 				{
-//					// DEBUG
-//					System.out.println("Comparing with a recipe for "+recipeKeyItemStack.getUnlocalizedName()+" with input item = "+parItemStack.getUnlocalizedName());
+					// DEBUG
+					System.out.println("Comparing with a recipe for "+recipeKeyItemStack.getUnlocalizedName()+" with input item = "+parItemStack.getUnlocalizedName());
 					if (recipeKeyItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG

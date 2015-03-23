@@ -27,7 +27,7 @@ public class ContainerDeconstructor extends Container
     private final World worldObj;
     public InventoryPlayer playerInventory;
     public String resultString = I18n.format("deconstructing.result.ready");
-    public State type = State.READY;
+    public State deconstructingState = State.READY;
     public int x = 0;
     public int y = 0;
     public int z = 0;
@@ -73,7 +73,7 @@ public class ContainerDeconstructor extends Container
             if(inputInventory.getStackInSlot(0) == null)
             {
                 resultString = I18n.format("deconstructing.result.ready");
-                type = State.READY;
+                deconstructingState = State.READY;
                 return;
             }
             ItemStack[] output = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
@@ -81,7 +81,7 @@ public class ContainerDeconstructor extends Container
             if(amountRequired > inputInventory.getStackInSlot(0).stackSize)
             {
                 resultString = I18n.format("deconstructing.result.needMoreStacks", (amountRequired - inputInventory.getStackInSlot(0).stackSize));
-                type = State.ERROR;
+                deconstructingState = State.ERROR;
                 return;
             }
             while(inputInventory.getStackInSlot(0) != null && amountRequired <= inputInventory.getStackInSlot(0).stackSize)
@@ -91,7 +91,7 @@ public class ContainerDeconstructor extends Container
                 {
                     String r = I18n.format("deconstructing.result.impossible");
                     resultString = r;
-                    type = State.ERROR;
+                    deconstructingState = State.ERROR;
                     return;
                 }
                 if(!playerInventory.player.capabilities.isCreativeMode && inputInventory.getStackInSlot(0).getItem().getItemEnchantability() > 0)
@@ -191,7 +191,7 @@ public class ContainerDeconstructor extends Container
         else
         {
             resultString = I18n.format("deconstructing.result.impossible");
-            type = State.ERROR;
+            deconstructingState = State.ERROR;
         }
     }
 
