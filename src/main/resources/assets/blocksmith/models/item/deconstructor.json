@@ -1,5 +1,5 @@
 {
-    "parent": "block/deconstructor",
+    "parent": "blocksmith:block/deconstructor",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

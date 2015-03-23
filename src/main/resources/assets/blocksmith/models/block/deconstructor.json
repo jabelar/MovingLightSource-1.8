@@ -2,11 +2,8 @@
     "parent": "block/orientable",
     "textures": 
     {
-    	"up": "deconstructor:blocks/deconstructing_top",
-        "down": "deconstructor:blocks/deconstructing_bottom",
-        "east": "deconstructor:blocks/deconstructing_front",
-        "west": "deconstructor:blocks/deconstructing_side",
-        "north": "deconstructor:blocks/deconstructing_front",
-        "south": "deconstructor:blocks/deconstructing_side"
+        "top": "blocksmith:blocks/deconstructor_top",
+        "front": "blocksmith:blocks/deconstructor_front",
+        "side": "blocksmith:blocks/deconstructor_side"
     }
 }

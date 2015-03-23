@@ -1,5 +1,4 @@
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
@@ -89,25 +88,25 @@ public final class DefaultsRecipeHandlers
 					// DEBUG
 					System.out.println("Is an ItemStack ingredient = "+itemStackArray[j].getUnlocalizedName());
 				}
-				else if(shapeless.getInput().get(j) instanceof ArrayList)
+				else if(shapeless.getInput().get(j) instanceof List)
 				{
-					Object o = ((ArrayList<?>)shapeless.getInput().get(j)).get(0);
+					Object o = ((List)shapeless.getInput().get(j)).get(0);
 					if(o instanceof ItemStack)
 					{
 						itemStackArray[j] = (ItemStack)o;
 						// DEBUG
-						System.out.println("Is an ArrayList ingredient = "+itemStackArray[j].getUnlocalizedName());
+						System.out.println("Is an List ingredient = "+itemStackArray[j].getUnlocalizedName());
 					}
 					else
 					{
 						// DEBUG
-						System.out.println("Is an ArrayList ingredient but not Itemstack inside");
+						System.out.println("Is an List ingredient but not Itemstack inside");
 					}
 				}
 				else
 				{
 					// DEBUG
-					System.out.println("Isn't an ItemStack or ArrayList");
+					System.out.println("Isn't an ItemStack or List, possibly null");
 				}
 			}
 			return itemStackArray;
