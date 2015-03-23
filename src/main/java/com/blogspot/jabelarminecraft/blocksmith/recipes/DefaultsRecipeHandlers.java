@@ -1,5 +1,6 @@
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -18,8 +19,31 @@ public final class DefaultsRecipeHandlers
 	public static final RecipeHandler defaultShapelessOreRecipeHandler = new ShapelessOreRecipeHandler(ShapelessOreRecipe.class);
 	public static final RecipeHandler defaultShapedOreRecipeHandler = new ShapedOreRecipeHandler(ShapedOreRecipe.class);
 
+	private static class ShapelessRecipeHandler extends RecipeHandler
+	{
+		public ShapelessRecipeHandler(Class<? extends IRecipe> parRecipe)
+		{
+			super(parRecipe);
+		}
+
+		@Override
+		public ItemStack[] getCraftingGrid(IRecipe parRecipe)
+		{
+			// DEBUG
+			System.out.println("getCraftingGrid for shapeless recipe");
+			ItemStack[] stacks = new ItemStack[9];
+			ShapelessRecipes shaped = (ShapelessRecipes)parRecipe;
+			for(int j = 0;j<shaped.recipeItems.size();j++)
+			{
+				stacks[j] = (ItemStack) shaped.recipeItems.get(j);
+			}
+			return stacks;
+		}
+	}
+	
 	private static class ShapedRecipeHandler extends RecipeHandler 
 	{
+		
 		public ShapedRecipeHandler(Class<? extends IRecipe> parRecipe)
 		{
 			super(parRecipe);
@@ -28,6 +52,8 @@ public final class DefaultsRecipeHandlers
 		@Override
 		public ItemStack[] getCraftingGrid(IRecipe parRecipe)
 		{
+			// DEBUG
+			System.out.println("getCraftingGrid for shaped recipe");
 			ItemStack[] stacks = new ItemStack[9];
 			ShapedRecipes shaped = (ShapedRecipes)parRecipe;
 			for(int j = 0;j<shaped.recipeItems.length;j++)
@@ -48,24 +74,43 @@ public final class DefaultsRecipeHandlers
 		@Override
 		public ItemStack[] getCraftingGrid(IRecipe parRecipe)
 		{
-			ItemStack[] stacks = new ItemStack[9];
+			// DEBUG
+			System.out.println("getCraftingGrid for shapeless ore recipe");
+			ItemStack[] itemStackArray = new ItemStack[9];
 			ShapelessOreRecipe shapeless = (ShapelessOreRecipe)parRecipe;
 			for(int j = 0;j<shapeless.getInput().size();j++)
 			{
+				// DEBUG
+				System.out.println("Shapeless ore recipe slot "+j);
+				
 				if(shapeless.getInput().get(j) instanceof ItemStack)
 				{
-					stacks[j] = (ItemStack) shapeless.getInput().get(j);
+					itemStackArray[j] = (ItemStack) shapeless.getInput().get(j);
+					// DEBUG
+					System.out.println("Is an ItemStack ingredient = "+itemStackArray[j].getUnlocalizedName());
 				}
 				else if(shapeless.getInput().get(j) instanceof ArrayList)
 				{
 					Object o = ((ArrayList<?>)shapeless.getInput().get(j)).get(0);
 					if(o instanceof ItemStack)
 					{
-						stacks[j] = (ItemStack)o;
+						itemStackArray[j] = (ItemStack)o;
+						// DEBUG
+						System.out.println("Is an ArrayList ingredient = "+itemStackArray[j].getUnlocalizedName());
+					}
+					else
+					{
+						// DEBUG
+						System.out.println("Is an ArrayList ingredient but not Itemstack inside");
 					}
 				}
+				else
+				{
+					// DEBUG
+					System.out.println("Isn't an ItemStack or ArrayList");
+				}
 			}
-			return stacks;
+			return itemStackArray;
 		}
 	}
 	
@@ -79,47 +124,44 @@ public final class DefaultsRecipeHandlers
 		@Override
 		public ItemStack[] getCraftingGrid(IRecipe parRecipe)
 		{
-			ItemStack[] stacks = new ItemStack[9];
+			// DEBUG
+			System.out.println("getCraftingGrid for shaped ore recipe");
+			ItemStack[] itemStackArray = new ItemStack[9];
 			ShapedOreRecipe shaped = (ShapedOreRecipe)parRecipe;
 			for(int j = 0;j<shaped.getInput().length;j++)
 			{
+				// DEBUG
+				System.out.println("Shaped ore recipe slot "+j);
 				if(shaped.getInput()[j] instanceof ItemStack)
 				{
-					stacks[j] = (ItemStack) shaped.getInput()[j];
+					itemStackArray[j] = (ItemStack) shaped.getInput()[j];
+					// DEBUG
+					System.out.println("Is an ItemStack ingredient = "+itemStackArray[j].getUnlocalizedName());
 				}
-				else if(shaped.getInput()[j] instanceof ArrayList)
+				else if(shaped.getInput()[j] instanceof List)
 				{
-					Object o = ((ArrayList<?>)shaped.getInput()[j]).get(0);
+					Object o = ((List) shaped.getInput()[j]).get(0);
 					if(o instanceof ItemStack)
 					{
-						stacks[j] = (ItemStack)o;
+						itemStackArray[j] = (ItemStack)o;
+						// DEBUG
+						System.out.println("Is an List ingredient = "+itemStackArray[j].getUnlocalizedName());
+					}
+					else
+					{
+						// DEBUG
+						System.out.println("Is an List ingredient but not Itemstack inside");
 					}
 				}
+				else
+				{
+					// DEBUG
+					System.out.println("Isn't an ItemStack or List, possibly null");
+				}
 			}
-			return stacks;
+			return itemStackArray;
 		}
 	}
-	
-	private static class ShapelessRecipeHandler extends RecipeHandler
-	{
-		public ShapelessRecipeHandler(Class<? extends IRecipe> parRecipe)
-		{
-			super(parRecipe);
-		}
-
-		@Override
-		public ItemStack[] getCraftingGrid(IRecipe parRecipe)
-		{
-			ItemStack[] stacks = new ItemStack[9];
-			ShapelessRecipes shaped = (ShapelessRecipes)parRecipe;
-			for(int j = 0;j<shaped.recipeItems.size();j++)
-			{
-				stacks[j] = (ItemStack) shaped.recipeItems.get(j);
-			}
-			return stacks;
-		}
-	}
-	
 	/**
 	 * Set the default Recipe Handlers
 	 */
