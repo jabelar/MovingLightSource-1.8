@@ -185,7 +185,7 @@ public final class DeconstructingRecipeHandler
 		if (parItem == Items.dark_oak_door)
 		{
 			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 2, 5),
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
 					null, null, null, null, null, null, null
 			};
@@ -210,29 +210,30 @@ public final class DeconstructingRecipeHandler
 			if(recipe != null)
 			{
 				ItemStack outputItemStack = recipe.getRecipeOutput();
-				if(outputItemStack!=null)
+				// if found matching recipe
+				if (outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
 				{
-					if(outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
+					// DEBUG
+					System.out.println("getStackSizeNeeded() found matching recipe");
+					// If recipe that needs adjustment
+					if (       outputItemStack.getItem() == Items.oak_door
+							|| outputItemStack.getItem() == Items.spruce_door
+							|| outputItemStack.getItem() == Items.birch_door
+							|| outputItemStack.getItem() == Items.jungle_door
+							|| outputItemStack.getItem() == Items.acacia_door
+							|| outputItemStack.getItem() == Items.dark_oak_door
+							|| outputItemStack.getItem() == Items.paper
+							)
 					{
-						if (       outputItemStack.getItem() == Items.oak_door
-								|| outputItemStack.getItem() == Items.spruce_door
-								|| outputItemStack.getItem() == Items.birch_door
-								|| outputItemStack.getItem() == Items.jungle_door
-								|| outputItemStack.getItem() == Items.acacia_door
-								|| outputItemStack.getItem() == Items.dark_oak_door
-								|| outputItemStack.getItem() == Items.paper
-								)
-						{
-							return 1;
-						}
-						// DEBUG
-						System.out.println("DeconstructingManager getStackSizeNeeded() needs stack size of "+outputItemStack.stackSize);
-						return outputItemStack.stackSize;
+						return 1;
 					}
+					// DEBUG
+					System.out.println("No adjustment needed to recipe amount");
+					return outputItemStack.stackSize;
 				}
 			}
 		}
-		return 1;
+		return 0; // no recipe found
 	}
 	
 }

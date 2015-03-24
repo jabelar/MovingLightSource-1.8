@@ -87,7 +87,8 @@ public class ContainerDeconstructor extends Container
                 deconstructingState = State.ERROR;
                 return;
             }
-            while(inputInventory.getStackInSlot(0) != null && amountRequired <= inputInventory.getStackInSlot(0).stackSize)
+            // Loop while there is something in the input slot with sufficient amount
+            while(inputInventory.getStackInSlot(0) != null && amountRequired > 0 && amountRequired <= inputInventory.getStackInSlot(0).stackSize)
             {              
                 if(outputItemStackArray == null)
                 {
