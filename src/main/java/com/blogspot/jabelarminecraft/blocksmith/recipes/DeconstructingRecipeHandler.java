@@ -16,7 +16,12 @@ public final class DeconstructingRecipeHandler
 {	
 	public static ItemStack[] getCraftingGrid(IRecipe parRecipe)
 	{
-		ItemStack[] itemStackArray = new ItemStack[9];
+		// Initialize the result array
+		ItemStack[] resultItemStackArray = new ItemStack[9];
+		for(int j = 0;j<resultItemStackArray.length;j++)
+		{
+			resultItemStackArray[j] = null;
+		}
 		
 		if (parRecipe instanceof ShapedRecipes)
 		{
@@ -25,7 +30,7 @@ public final class DeconstructingRecipeHandler
 			ShapedRecipes shaped = (ShapedRecipes)parRecipe;
 			for(int j = 0;j<shaped.recipeItems.length;j++)
 			{
-				itemStackArray[j] = shaped.recipeItems[j];
+				resultItemStackArray[j] = shaped.recipeItems[j];
 			}
 		}
 		
@@ -36,7 +41,7 @@ public final class DeconstructingRecipeHandler
 			ShapelessRecipes shapeless = (ShapelessRecipes)parRecipe;
 			for(int j = 0;j<shapeless.recipeItems.size();j++)
 			{
-				itemStackArray[j] = (ItemStack) shapeless.recipeItems.get(j);
+				resultItemStackArray[j] = (ItemStack) shapeless.recipeItems.get(j);
 			}
 		}
 		
@@ -49,14 +54,14 @@ public final class DeconstructingRecipeHandler
 			{
 				if(shaped.getInput()[j] instanceof ItemStack)
 				{
-					itemStackArray[j] = (ItemStack) shaped.getInput()[j];
+					resultItemStackArray[j] = (ItemStack) shaped.getInput()[j];
 				}
 				else if(shaped.getInput()[j] instanceof List)
 				{
 					Object o = ((List) shaped.getInput()[j]).get(0);
 					if(o instanceof ItemStack)
 					{
-						itemStackArray[j] = (ItemStack)o;
+						resultItemStackArray[j] = (ItemStack)o;
 					}
 				}
 			}
@@ -71,20 +76,20 @@ public final class DeconstructingRecipeHandler
 			{
 				if(shapeless.getInput().get(j) instanceof ItemStack)
 				{
-					itemStackArray[j] = (ItemStack) shapeless.getInput().get(j);
+					resultItemStackArray[j] = (ItemStack) shapeless.getInput().get(j);
 				}
 				else if(shapeless.getInput().get(j) instanceof List)
 				{
 					Object o = ((List)shapeless.getInput().get(j)).get(0);
 					if(o instanceof ItemStack)
 					{
-						itemStackArray[j] = (ItemStack)o;
+						resultItemStackArray[j] = (ItemStack)o;
 					}
 				}
 			}
 		}
 
-		return adjustOutputQuantities(itemStackArray, parRecipe.getRecipeOutput().getItem());
+		return adjustOutputQuantities(resultItemStackArray, parRecipe.getRecipeOutput().getItem());
 	}
 
 	/**
