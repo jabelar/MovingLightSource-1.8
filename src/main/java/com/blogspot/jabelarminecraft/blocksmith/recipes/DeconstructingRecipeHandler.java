@@ -211,25 +211,28 @@ public final class DeconstructingRecipeHandler
 			{
 				ItemStack outputItemStack = recipe.getRecipeOutput();
 				// if found matching recipe
-				if (outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
+				if (outputItemStack != null)
 				{
-					// DEBUG
-					System.out.println("getStackSizeNeeded() found matching recipe");
-					// If recipe that needs adjustment
-					if (       outputItemStack.getItem() == Items.oak_door
-							|| outputItemStack.getItem() == Items.spruce_door
-							|| outputItemStack.getItem() == Items.birch_door
-							|| outputItemStack.getItem() == Items.jungle_door
-							|| outputItemStack.getItem() == Items.acacia_door
-							|| outputItemStack.getItem() == Items.dark_oak_door
-							|| outputItemStack.getItem() == Items.paper
-							)
+					if (outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
 					{
-						return 1;
+						// DEBUG
+						System.out.println("getStackSizeNeeded() found matching recipe");
+						// If recipe that needs adjustment
+						if (       outputItemStack.getItem() == Items.oak_door
+								|| outputItemStack.getItem() == Items.spruce_door
+								|| outputItemStack.getItem() == Items.birch_door
+								|| outputItemStack.getItem() == Items.jungle_door
+								|| outputItemStack.getItem() == Items.acacia_door
+								|| outputItemStack.getItem() == Items.dark_oak_door
+								|| outputItemStack.getItem() == Items.paper
+								)
+						{
+							return 1;
+						}
+						// DEBUG
+						System.out.println("No adjustment needed to recipe amount");
+						return outputItemStack.stackSize;
 					}
-					// DEBUG
-					System.out.println("No adjustment needed to recipe amount");
-					return outputItemStack.stackSize;
 				}
 			}
 		}
