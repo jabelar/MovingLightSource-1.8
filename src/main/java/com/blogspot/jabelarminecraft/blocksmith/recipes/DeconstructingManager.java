@@ -3,6 +3,7 @@ package com.blogspot.jabelarminecraft.blocksmith.recipes;
 import java.util.HashMap;
 import java.util.List;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -26,6 +27,12 @@ public class DeconstructingManager
 				{
 					if(outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
 					{
+						if (outputItemStack.getItem() == Items.oak_door)
+						{
+							// DEBUG
+							System.out.println("DeconstructingManager getStackSizeNeeded() needs stack size of "+outputItemStack.stackSize/3);
+							return outputItemStack.stackSize / 3 ;
+						}
 						// DEBUG
 						System.out.println("DeconstructingManager getStackSizeNeeded() needs stack size of "+outputItemStack.stackSize);
 						return outputItemStack.stackSize;

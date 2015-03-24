@@ -1,6 +1,9 @@
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
 import java.util.List;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -17,7 +20,7 @@ public final class DeconstructingRecipeHandlers
 	public static final RecipeHandler defaultShapedRecipeHandler = new ShapedRecipeHandler(ShapedRecipes.class);
 	public static final RecipeHandler defaultShapelessOreRecipeHandler = new ShapelessOreRecipeHandler(ShapelessOreRecipe.class);
 	public static final RecipeHandler defaultShapedOreRecipeHandler = new ShapedOreRecipeHandler(ShapedOreRecipe.class);
-
+	
 	private static class ShapelessRecipeHandler extends RecipeHandler
 	{
 		public ShapelessRecipeHandler(Class<? extends IRecipe> parRecipe)
@@ -61,8 +64,28 @@ public final class DeconstructingRecipeHandlers
 			{
 				itemStackArray[j] = shaped.recipeItems[j];
 			}
+			// adjust those cases where the recipe can be divided down (e.g. one door gives back two blocks)
+			if (parRecipe.getRecipeOutput().getItem() == Items.oak_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				return divideStackArray(itemStackArray, 3);
+			}
 			return itemStackArray;
 		}
+	}
+	
+	// works directly on the passed in stack to divide it down
+	private static ItemStack[] divideStackArray(ItemStack[] parItemStackArray, int parDivideBy)
+	{
+		for(int j = 0;j<parItemStackArray.length;j++)
+		{
+			if (parItemStackArray[j] != null)
+			{
+				parItemStackArray[j].stackSize = parItemStackArray[j].stackSize / parDivideBy;
+			}
+		}
+		return parItemStackArray;
 	}
 	
 	private static class ShapelessOreRecipeHandler extends RecipeHandler
@@ -159,6 +182,17 @@ public final class DeconstructingRecipeHandlers
 					// DEBUG
 					System.out.println("Isn't an ItemStack or List, possibly null");
 				}
+			}
+			// adjust those cases where the recipe can be divided down (e.g. one door gives back two blocks)
+			if (parRecipe.getRecipeOutput().getItem() == Items.oak_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
+						null, null, null, null, null, null, null
+				};
 			}
 			return itemStackArray;
 		}
