@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
-import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingManager;
+import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingRecipeHandler;
 
 public class ContainerDeconstructor extends Container
 {
@@ -23,6 +23,7 @@ public class ContainerDeconstructor extends Container
     }
 
     public InventoryCrafting inputInventory = new InventoryCrafting(this, 1, 1);
+    public int inputSlotNumber;
     public InventoryDeconstructResult outputInventory = new InventoryDeconstructResult();
     private final World worldObj;
     public InventoryPlayer playerInventory;
@@ -47,7 +48,7 @@ public class ContainerDeconstructor extends Container
             }
         }
         
-        addSlotToContainer(new Slot(inputInventory, 0, 30 + 15, 35));
+        inputSlotNumber = addSlotToContainer(new Slot(inputInventory, 0, 30 + 15, 35)).slotNumber;
 
         for(int playerSlotIndexY = 0; playerSlotIndexY < 3; ++playerSlotIndexY)
         {
@@ -76,8 +77,10 @@ public class ContainerDeconstructor extends Container
                 deconstructingState = State.READY;
                 return;
             }
-            ItemStack[] outputItemStackArray = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
-            int amountRequired = DeconstructingManager.getStackSizeNeeded(inputInventory.getStackInSlot(0));
+            ItemStack[] outputItemStackArray = DeconstructingRecipeHandler.getDeconstructResults(inputInventory.getStackInSlot(0));
+            int amountRequired = DeconstructingRecipeHandler.getStackSizeNeeded(inputInventory.getStackInSlot(0));
+            // DEBUG
+            System.out.println("Amount required = "+amountRequired);
             if(amountRequired > inputInventory.getStackInSlot(0).stackSize)
             {
                 resultString = I18n.format("deconstructing.result.needMoreStacks", (amountRequired - inputInventory.getStackInSlot(0).stackSize));
@@ -127,8 +130,6 @@ public class ContainerDeconstructor extends Container
                     for(int i = 0; i < outputInventory.getSizeInventory(); i++ )
                     {
                         ItemStack itemStackInOutputSlot = outputInventory.getStackInSlot(i);
-                        // DEBUG
-                        System.out.println("Output item stack array has size = "+outputItemStackArray.length);
                         if((itemStackInOutputSlot != null && outputItemStackArray[i] != null && itemStackInOutputSlot.getItem() != outputItemStackArray[i].getItem()))
                         {
                             if(!playerInventory.addItemStackToInventory(itemStackInOutputSlot))
@@ -255,69 +256,42 @@ public class ContainerDeconstructor extends Container
     @Override
 	public ItemStack transferStackInSlot(EntityPlayer parPlayer, int parSlotIndex)
     {
+    	// DEBUG
+    	System.out.println("Shift-clicked on a slot");
         Slot slot = (Slot) inventorySlots.get(parSlotIndex);
-        if(slot != null && slot.getHasStack())
-        	if(slot.inventory.equals(inputInventory))
+        // If there is something in the stack to pick up
+        if (slot != null && slot.getHasStack())
+        {
+        	// If the slot is one of the custom slots
+        	if (slot.inventory.equals(inputInventory) || slot.inventory.equals(outputInventory))
             {
-                if(slot.getHasStack())
+        		// try to move to player inventory
+                if (!playerInventory.addItemStackToInventory(slot.getStack()))
                 {
-                    if(!playerInventory.addItemStackToInventory(slot.getStack()))
-                    {
-                        return null;
-                    }
-                    slot.putStack(null);
-                    slot.onSlotChanged();
+                    return null;
                 }
+                slot.putStack(null);
+                slot.onSlotChanged();
             }
+         	// if the slot is a player inventory slot
             else if(slot.inventory.equals(playerInventory))
             {
-                Slot calcInput = null;
-                Slot deconstructSlot = null;
-                for(Object s : inventorySlots)
-                {
-                    Slot s1 = (Slot) s;
-                    if(s1.inventory.equals(inputInventory))
-                    {
-                        deconstructSlot = s1;
-                    }
-                }
-                if(calcInput != null)
-                {
-                    if(calcInput.getStack() == null)
-                    {
-                        calcInput.putStack(slot.getStack());
-                        calcInput.onSlotChanged();
-                        slot.putStack(null);
-                    }
-                    else
-                    {
-                        if(slot.getStack() != null)
-                        {
-                            ItemStack i = slot.getStack();
-                            slot.onPickupFromSlot(parPlayer, slot.getStack());
-                            slot.putStack(calcInput.getStack().copy());
-                            calcInput.putStack(i.copy());
-                            calcInput.onSlotChanged();
-                        }
-                        else
-                        {
-                            return null;
-                        }
-                    }
-                }
-            }
-            else if(slot.inventory.equals(outputInventory))
-            {
-                if(slot.getHasStack())
-                {
-                    if(!playerInventory.addItemStackToInventory(slot.getStack()))
-                    {
-                        return null;
-                    }
+            	// DEBUG
+            	System.out.println("Shift-clicked on player inventory slot");
+            	// Try to transfer to input slot
+            	if (!((Slot)inventorySlots.get(inputSlotNumber)).getHasStack())
+            	{
+            		((Slot)inventorySlots.get(inputSlotNumber)).putStack(slot.getStack());
                     slot.putStack(null);
                     slot.onSlotChanged();
-                }
+            	}
+            	else
+            	{
+            		// DEBUG
+            		System.out.println("There is already something in the input slot");
+            	}
             }
+        }
         return null;
     }
 

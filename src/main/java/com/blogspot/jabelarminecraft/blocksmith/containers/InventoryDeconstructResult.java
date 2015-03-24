@@ -24,7 +24,7 @@ public class InventoryDeconstructResult implements IInventory
     @Override
 	public ItemStack getStackInSlot(int par1)
     {
-        return this.stackResult[par1];
+        return stackResult[par1];
     }
 
     /**
@@ -34,10 +34,10 @@ public class InventoryDeconstructResult implements IInventory
     @Override
 	public ItemStack decrStackSize(int par1, int par2)
     {
-        if(this.stackResult[par1] != null)
+        if(stackResult[par1] != null)
         {
-            ItemStack itemstack = this.stackResult[par1];
-            this.stackResult[par1] = null;
+            ItemStack itemstack = stackResult[par1];
+            stackResult[par1] = null;
             return itemstack;
         }
         else
@@ -54,10 +54,10 @@ public class InventoryDeconstructResult implements IInventory
     @Override
 	public ItemStack getStackInSlotOnClosing(int par1)
     {
-        if(this.stackResult[par1] != null)
+        if(stackResult[par1] != null)
         {
-            ItemStack itemstack = this.stackResult[par1];
-            this.stackResult[par1] = null;
+            ItemStack itemstack = stackResult[par1];
+            stackResult[par1] = null;
             return itemstack;
         }
         else
@@ -73,7 +73,7 @@ public class InventoryDeconstructResult implements IInventory
     @Override
 	public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
     {
-        this.stackResult[par1] = par2ItemStack;
+        stackResult[par1] = par2ItemStack;
     }
 
     /**
@@ -100,7 +100,7 @@ public class InventoryDeconstructResult implements IInventory
 
     public boolean isEmpty()
     {
-        for(int i = 0; i < this.stackResult.length; i++ )
+        for(int i = 0; i < stackResult.length; i++ )
         {
             if(stackResult[i] != null)
                 return false;
@@ -171,4 +171,5 @@ public class InventoryDeconstructResult implements IInventory
         for(int i = 0;i<stackResult.length;i++)
             stackResult[i] = null;
     }
+   
 }
