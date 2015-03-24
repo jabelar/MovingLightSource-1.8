@@ -1,6 +1,5 @@
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
 
-import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.init.Items;
@@ -10,10 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 
 
 public class DeconstructingManager 
-{
-
-	private static HashMap<Class<? extends IRecipe>, RecipeHandler>	deconstructingHandlers = new HashMap<Class<? extends IRecipe>, RecipeHandler>();
-
+{	
 	public static int getStackSizeNeeded(ItemStack item)
 	{
 		List<?> crafts = CraftingManager.getInstance().getRecipeList();
@@ -75,20 +71,9 @@ public class DeconstructingManager
 					if (recipeKeyItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG
-						System.out.println("Recipe matches item type");
-						RecipeHandler recipeHandler = deconstructingHandlers.get(recipe.getClass());
-						if(recipeHandler != null)
-						{
-							// DEBUG
-							System.out.println("The item has damage value = "+parItemStack.getItemDamage());
-							System.out.println("Recipe handler found for class "+recipe.getClass().toString()+", adding crafting grid to list");
-							return recipeHandler.getCraftingGrid(recipe);
-						}
-						else
-						{
-							// DEBUG
-							System.out.println("Recipe handler is null");
-						}
+						System.out.println("Recipe matches item type = "+parItemStack.getUnlocalizedName()+" with item has damage value = "+parItemStack.getItemDamage());
+						System.out.println("Recipe class is "+recipe.getClass().toString()+", adding crafting grid to list");
+						return DeconstructingRecipeHandler.getCraftingGrid(recipe);
 					}
 					else
 					{
@@ -104,11 +89,5 @@ public class DeconstructingManager
 			}
 		}
 		return null;
-	}
-	
-	public static void setRecipeHandler(Class<? extends IRecipe> recipe, RecipeHandler handler)
-	{
-		deconstructingHandlers.put(recipe, handler);
-	}
-	
+	}	
 }

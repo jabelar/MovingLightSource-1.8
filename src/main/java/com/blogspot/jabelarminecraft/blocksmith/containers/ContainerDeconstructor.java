@@ -76,7 +76,7 @@ public class ContainerDeconstructor extends Container
                 deconstructingState = State.READY;
                 return;
             }
-            ItemStack[] output = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
+            ItemStack[] outputItemStackArray = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
             int amountRequired = DeconstructingManager.getStackSizeNeeded(inputInventory.getStackInSlot(0));
             if(amountRequired > inputInventory.getStackInSlot(0).stackSize)
             {
@@ -86,8 +86,7 @@ public class ContainerDeconstructor extends Container
             }
             while(inputInventory.getStackInSlot(0) != null && amountRequired <= inputInventory.getStackInSlot(0).stackSize)
             {              
-                ItemStack[] items = output;
-                if(items == null)
+                if(outputItemStackArray == null)
                 {
                     String r = I18n.format("deconstructing.result.impossible");
                     resultString = r;
@@ -100,20 +99,20 @@ public class ContainerDeconstructor extends Container
                     ItemStack s1 = inputInventory.getStackInSlot(0);
 
                     int percent = (int) (((double) s1.getItemDamage() / (double) s1.getMaxDamage()) * 100);
-                    for(int i = 0; i < items.length; i++ )
+                    for(int i = 0; i < outputItemStackArray.length; i++ )
                     {
-                        if(items[i] != null)
+                        if(outputItemStackArray[i] != null)
                             count++ ;
                     }
                     int toRemove = Math.round(percent * count / 100f);
                     if(toRemove > 0)
                     {
-                        for(int i = 0; i < items.length; i++ )
+                        for(int i = 0; i < outputItemStackArray.length; i++ )
                         {
-                            if(items[i] != null)
+                            if(outputItemStackArray[i] != null)
                             {
                                 toRemove-- ;
-                                items[i] = null;
+                                outputItemStackArray[i] = null;
                                 if(toRemove <= 0)
                                 {
                                     break;
@@ -127,12 +126,14 @@ public class ContainerDeconstructor extends Container
                 {
                     for(int i = 0; i < outputInventory.getSizeInventory(); i++ )
                     {
-                        ItemStack item = outputInventory.getStackInSlot(i);
-                        if((item != null && items[i] != null && item.getItem() != items[i].getItem()))
+                        ItemStack itemStackInOutputSlot = outputInventory.getStackInSlot(i);
+                        // DEBUG
+                        System.out.println("Output item stack array has size = "+outputItemStackArray.length);
+                        if((itemStackInOutputSlot != null && outputItemStackArray[i] != null && itemStackInOutputSlot.getItem() != outputItemStackArray[i].getItem()))
                         {
-                            if(!playerInventory.addItemStackToInventory(item))
+                            if(!playerInventory.addItemStackToInventory(itemStackInOutputSlot))
                             {
-                                EntityItem entityItem = playerInventory.player.entityDropItem(item, 0.5f);
+                                EntityItem entityItem = playerInventory.player.entityDropItem(itemStackInOutputSlot, 0.5f);
                                 entityItem.posX = playerInventory.player.posX;
                                 entityItem.posY = playerInventory.player.posY;
                                 entityItem.posZ = playerInventory.player.posZ;
@@ -142,9 +143,9 @@ public class ContainerDeconstructor extends Container
                     }
                 }
 
-                for(int i = 0; i < items.length; i++ )
+                for(int i = 0; i < outputItemStackArray.length; i++ )
                 {
-                    ItemStack s = items[i];
+                    ItemStack s = outputItemStackArray[i];
                     ItemStack currentStack = outputInventory.getStackInSlot(i);
                     if(s != null)
                     {

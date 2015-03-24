@@ -11,7 +11,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public final class DeconstructingRecipeHandlers 
+public final class CopyOfDeconstructingRecipeHandlers 
 {
 	/**
 	 * Default Recipe Handlers
@@ -261,8 +261,8 @@ public final class DeconstructingRecipeHandlers
 				if(shaped.getInput()[j] instanceof ItemStack)
 				{
 					itemStackArray[j] = (ItemStack) shaped.getInput()[j];
-					// DEBUG
-					System.out.println("Is an ItemStack ingredient = "+itemStackArray[j].getUnlocalizedName());
+//					// DEBUG
+//					System.out.println("Is an ItemStack ingredient = "+itemStackArray[j].getUnlocalizedName());
 				}
 				else if(shaped.getInput()[j] instanceof List)
 				{
@@ -270,13 +270,13 @@ public final class DeconstructingRecipeHandlers
 					if(o instanceof ItemStack)
 					{
 						itemStackArray[j] = (ItemStack)o;
-						// DEBUG
-						System.out.println("Is an List ingredient = "+itemStackArray[j].getUnlocalizedName());
+//						// DEBUG
+//						System.out.println("Is an List ingredient = "+itemStackArray[j].getUnlocalizedName());
 					}
 					else
 					{
 						// DEBUG
-						System.out.println("Is an List ingredient but not Itemstack inside");
+						System.out.println("Is an List ingredient but no Itemstack inside");
 					}
 				}
 				else
@@ -354,9 +354,9 @@ public final class DeconstructingRecipeHandlers
 	 */
 	public static void load()
 	{
-		DeconstructingManager.setRecipeHandler(ShapelessRecipes.class, defaultShapelessRecipeHandler);
-		DeconstructingManager.setRecipeHandler(ShapedRecipes.class, defaultShapedRecipeHandler);
-		DeconstructingManager.setRecipeHandler(ShapelessOreRecipe.class, defaultShapelessOreRecipeHandler);
-		DeconstructingManager.setRecipeHandler(ShapedOreRecipe.class, defaultShapedOreRecipeHandler);
+//		DeconstructingManager.setRecipeHandler(ShapelessRecipes.class, defaultShapelessRecipeHandler);
+//		DeconstructingManager.setRecipeHandler(ShapedRecipes.class, defaultShapedRecipeHandler);
+//		DeconstructingManager.setRecipeHandler(ShapelessOreRecipe.class, defaultShapelessOreRecipeHandler);
+//		DeconstructingManager.setRecipeHandler(ShapedOreRecipe.class, defaultShapedOreRecipeHandler);
 	}
 }
