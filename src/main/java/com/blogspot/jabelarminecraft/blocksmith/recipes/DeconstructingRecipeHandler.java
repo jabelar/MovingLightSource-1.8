@@ -5,7 +5,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
@@ -101,117 +100,65 @@ public final class DeconstructingRecipeHandler
 	{
 		if (parItem == Items.oak_door)
 		{
+			// DEBUG
+			System.out.println("Dividing down the door recipe");
 			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 2),
-					null, null, null, null, null, null, null, null
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
+					null, null, null, null, null, null, null
 			};
 		}
 		if (parItem == Items.spruce_door)
 		{
+			// DEBUG
+			System.out.println("Dividing down the door recipe");
 			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 2, 1),
-					null, null, null, null, null, null, null, null
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
+					null, null, null, null, null, null, null
 			};
 		}
 		if (parItem == Items.birch_door)
 		{
+			// DEBUG
+			System.out.println("Dividing down the door recipe");
 			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 2, 2),
-					null, null, null, null, null, null, null, null
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
+					null, null, null, null, null, null, null
 			};
 		}
 		if (parItem == Items.jungle_door)
 		{
+			// DEBUG
+			System.out.println("Dividing down the door recipe");
 			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 2, 3),
-					null, null, null, null, null, null, null, null
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
+					null, null, null, null, null, null, null
 			};
 		}
 		if (parItem == Items.acacia_door)
 		{
+			// DEBUG
+			System.out.println("Dividing down the door recipe");
 			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 2, 4),
-					null, null, null, null, null, null, null, null
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
+					null, null, null, null, null, null, null
 			};
 		}
 		if (parItem == Items.dark_oak_door)
 		{
+			// DEBUG
+			System.out.println("Dividing down the door recipe");
 			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 2, 5),
-					null, null, null, null, null, null, null, null
-			};
-		}
-		if (parItem == Items.iron_door)
-		{
-			return new ItemStack[] {
-					new ItemStack(Items.iron_ingot, 2, 0),
-					null, null, null, null, null, null, null, null
-			};
-		}
-		if (parItem == Items.stick)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 2),
-					null, null, null, null, null, null, null, null
-			};
-		}
-		if (parItem == Items.paper)
-		{
-			return new ItemStack[] {
-					new ItemStack(Items.reeds, 1),
-					null, null, null, null, null, null, null, null
-			};
-		}
-		if (parItem == Items.glass_bottle)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1),
-					null, null, null, null, null, null, null, null
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
+					null, null, null, null, null, null, null
 			};
 		}
 		// else no adjustments needed
 		return parItemStackArray ;
-	}
-	
-	public static int getStackSizeNeeded(ItemStack item)
-	{
-		List<?> crafts = CraftingManager.getInstance().getRecipeList();
-		for(int i = 0;i<crafts.size();i++)
-		{
-			IRecipe recipe = (IRecipe) crafts.get(i);
-			if(recipe != null)
-			{
-				ItemStack outputItemStack = recipe.getRecipeOutput();
-				if(outputItemStack!=null)
-				{
-					if(outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
-					{
-						if (       outputItemStack.getItem() == Items.oak_door
-								|| outputItemStack.getItem() == Items.spruce_door
-								|| outputItemStack.getItem() == Items.birch_door
-								|| outputItemStack.getItem() == Items.jungle_door
-								|| outputItemStack.getItem() == Items.acacia_door
-								|| outputItemStack.getItem() == Items.dark_oak_door
-								|| outputItemStack.getItem() == Items.iron_door
-								|| outputItemStack.getItem() == Items.stick
-								|| outputItemStack.getItem() == Items.paper
-								|| outputItemStack.getItem() == Items.glass_bottle
-								)
-						{
-							return 1;
-						}
-						// DEBUG
-						System.out.println("DeconstructingManager getStackSizeNeeded() needs stack size of "+outputItemStack.stackSize);
-						return outputItemStack.stackSize;
-					}
-				}
-				else
-				{
-//					// DEBUG
-//					System.out.println("DeconstructingManager getStackSizeNeeded can't find recipe matching input item");
-				}
-			}
-		}
-		return 1;
 	}
 }
