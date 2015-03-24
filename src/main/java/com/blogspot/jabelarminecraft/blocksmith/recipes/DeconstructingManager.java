@@ -27,11 +27,15 @@ public class DeconstructingManager
 				{
 					if(outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
 					{
-						if (outputItemStack.getItem() == Items.oak_door)
+						if (       outputItemStack.getItem() == Items.oak_door
+								|| outputItemStack.getItem() == Items.spruce_door
+								|| outputItemStack.getItem() == Items.birch_door
+								|| outputItemStack.getItem() == Items.jungle_door
+								|| outputItemStack.getItem() == Items.acacia_door
+								|| outputItemStack.getItem() == Items.dark_oak_door
+								)
 						{
-							// DEBUG
-							System.out.println("DeconstructingManager getStackSizeNeeded() needs stack size of "+outputItemStack.stackSize/3);
-							return outputItemStack.stackSize / 3 ;
+							return 1;
 						}
 						// DEBUG
 						System.out.println("DeconstructingManager getStackSizeNeeded() needs stack size of "+outputItemStack.stackSize);
@@ -66,8 +70,8 @@ public class DeconstructingManager
 				ItemStack recipeKeyItemStack = recipe.getRecipeOutput();
 				if(recipeKeyItemStack!=null)
 				{
-					// DEBUG
-					System.out.println("Comparing with a recipe for "+recipeKeyItemStack.getUnlocalizedName()+" with input item = "+parItemStack.getUnlocalizedName());
+//					// DEBUG
+//					System.out.println("Comparing with a recipe for "+recipeKeyItemStack.getUnlocalizedName()+" with input item = "+parItemStack.getUnlocalizedName());
 					if (recipeKeyItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG

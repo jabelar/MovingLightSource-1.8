@@ -41,6 +41,67 @@ public final class DeconstructingRecipeHandlers
 				// DEBUG
 				System.out.println("Crafting grid slot "+j+" has "+itemStackArray[j].getUnlocalizedName());
 			}
+			// adjust those cases where the recipe can be divided down (e.g. one door gives back two blocks)
+			if (parRecipe.getRecipeOutput().getItem() == Items.oak_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.spruce_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.birch_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.jungle_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.acacia_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.dark_oak_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
+						null, null, null, null, null, null, null
+				};
+			}
 			return itemStackArray;
 		}
 	}
@@ -65,29 +126,70 @@ public final class DeconstructingRecipeHandlers
 				itemStackArray[j] = shaped.recipeItems[j];
 			}
 			// adjust those cases where the recipe can be divided down (e.g. one door gives back two blocks)
-			if (parRecipe.getRecipeOutput().getItem() == Items.oak_door)
+//			if (parRecipe.getRecipeOutput().getItem() == Items.oak_door)
+//			{
+//				// DEBUG
+//				System.out.println("Dividing down the door recipe");
+//				itemStackArray = new ItemStack[] {
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
+//						null, null, null, null, null, null, null
+//				};
+//			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.spruce_door)
 			{
 				// DEBUG
 				System.out.println("Dividing down the door recipe");
-				return divideStackArray(itemStackArray, 3);
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.birch_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.jungle_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.acacia_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
+						null, null, null, null, null, null, null
+				};
+			}
+			if (parRecipe.getRecipeOutput().getItem() == Items.dark_oak_door)
+			{
+				// DEBUG
+				System.out.println("Dividing down the door recipe");
+				itemStackArray = new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
+						null, null, null, null, null, null, null
+				};
 			}
 			return itemStackArray;
 		}
 	}
-	
-	// works directly on the passed in stack to divide it down
-	private static ItemStack[] divideStackArray(ItemStack[] parItemStackArray, int parDivideBy)
-	{
-		for(int j = 0;j<parItemStackArray.length;j++)
-		{
-			if (parItemStackArray[j] != null)
-			{
-				parItemStackArray[j].stackSize = parItemStackArray[j].stackSize / parDivideBy;
-			}
-		}
-		return parItemStackArray;
-	}
-	
+		
 	private static class ShapelessOreRecipeHandler extends RecipeHandler
 	{
 		public ShapelessOreRecipeHandler(Class<? extends IRecipe> recipe)
@@ -194,6 +296,56 @@ public final class DeconstructingRecipeHandlers
 						null, null, null, null, null, null, null
 				};
 			}
+//			if (parRecipe.getRecipeOutput().getItem() == Items.spruce_door)
+//			{
+//				// DEBUG
+//				System.out.println("Dividing down the door recipe");
+//				itemStackArray = new ItemStack[] {
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
+//						null, null, null, null, null, null, null
+//				};
+//			}
+//			if (parRecipe.getRecipeOutput().getItem() == Items.birch_door)
+//			{
+//				// DEBUG
+//				System.out.println("Dividing down the door recipe");
+//				itemStackArray = new ItemStack[] {
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
+//						null, null, null, null, null, null, null
+//				};
+//			}
+//			if (parRecipe.getRecipeOutput().getItem() == Items.jungle_door)
+//			{
+//				// DEBUG
+//				System.out.println("Dividing down the door recipe");
+//				itemStackArray = new ItemStack[] {
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
+//						null, null, null, null, null, null, null
+//				};
+//			}
+//			if (parRecipe.getRecipeOutput().getItem() == Items.acacia_door)
+//			{
+//				// DEBUG
+//				System.out.println("Dividing down the door recipe");
+//				itemStackArray = new ItemStack[] {
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
+//						null, null, null, null, null, null, null
+//				};
+//			}
+//			if (parRecipe.getRecipeOutput().getItem() == Items.dark_oak_door)
+//			{
+//				// DEBUG
+//				System.out.println("Dividing down the door recipe");
+//				itemStackArray = new ItemStack[] {
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
+//						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
+//						null, null, null, null, null, null, null
+//				};
+//			}
 			return itemStackArray;
 		}
 	}
