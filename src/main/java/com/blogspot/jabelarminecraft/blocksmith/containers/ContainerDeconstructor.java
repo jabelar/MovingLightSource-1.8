@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingManager;
+import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingRecipeHandler;
 
 public class ContainerDeconstructor extends Container
 {
@@ -77,7 +78,7 @@ public class ContainerDeconstructor extends Container
                 return;
             }
             ItemStack[] outputItemStackArray = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
-            int amountRequired = DeconstructingManager.getStackSizeNeeded(inputInventory.getStackInSlot(0));
+            int amountRequired = DeconstructingRecipeHandler.getStackSizeNeeded(inputInventory.getStackInSlot(0));
             if(amountRequired > inputInventory.getStackInSlot(0).stackSize)
             {
                 resultString = I18n.format("deconstructing.result.needMoreStacks", (amountRequired - inputInventory.getStackInSlot(0).stackSize));

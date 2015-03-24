@@ -2,7 +2,6 @@ package com.blogspot.jabelarminecraft.blocksmith.recipes;
 
 import java.util.List;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -10,43 +9,6 @@ import net.minecraft.item.crafting.IRecipe;
 
 public class DeconstructingManager 
 {	
-	public static int getStackSizeNeeded(ItemStack item)
-	{
-		List<?> crafts = CraftingManager.getInstance().getRecipeList();
-		for(int i = 0;i<crafts.size();i++)
-		{
-			IRecipe recipe = (IRecipe) crafts.get(i);
-			if(recipe != null)
-			{
-				ItemStack outputItemStack = recipe.getRecipeOutput();
-				if(outputItemStack!=null)
-				{
-					if(outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
-					{
-						if (       outputItemStack.getItem() == Items.oak_door
-								|| outputItemStack.getItem() == Items.spruce_door
-								|| outputItemStack.getItem() == Items.birch_door
-								|| outputItemStack.getItem() == Items.jungle_door
-								|| outputItemStack.getItem() == Items.acacia_door
-								|| outputItemStack.getItem() == Items.dark_oak_door
-								)
-						{
-							return 1;
-						}
-						// DEBUG
-						System.out.println("DeconstructingManager getStackSizeNeeded() needs stack size of "+outputItemStack.stackSize);
-						return outputItemStack.stackSize;
-					}
-				}
-				else
-				{
-//					// DEBUG
-//					System.out.println("DeconstructingManager getStackSizeNeeded can't find recipe matching input item");
-				}
-			}
-		}
-		return 1;
-	}
 	
 	public static ItemStack[] getDeconstructResults(ItemStack parItemStack)
 	{
