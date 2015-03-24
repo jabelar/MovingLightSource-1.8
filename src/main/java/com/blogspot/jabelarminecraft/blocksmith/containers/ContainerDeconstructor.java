@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingManager;
-import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingRecipeHandler;
 
 public class ContainerDeconstructor extends Container
 {
@@ -71,41 +70,35 @@ public class ContainerDeconstructor extends Container
     {
     	if(parInventory == inputInventory)
         {
-    		// If nothing in input slot
             if(inputInventory.getStackInSlot(0) == null)
             {
                 resultString = I18n.format("deconstructing.result.ready");
                 deconstructingState = State.READY;
                 return;
             }
-            
             ItemStack[] outputItemStackArray = DeconstructingManager.getDeconstructResults(inputInventory.getStackInSlot(0));
-            int amountRequired = DeconstructingRecipeHandler.getStackSizeNeeded(inputInventory.getStackInSlot(0));
-            // If not enough input to deconstruct
-            if (amountRequired > inputInventory.getStackInSlot(0).stackSize)
+            int amountRequired = DeconstructingManager.getStackSizeNeeded(inputInventory.getStackInSlot(0));
+            if(amountRequired > inputInventory.getStackInSlot(0).stackSize)
             {
                 resultString = I18n.format("deconstructing.result.needMoreStacks", (amountRequired - inputInventory.getStackInSlot(0).stackSize));
                 deconstructingState = State.ERROR;
                 return;
             }
-            
-            // Keep looping as long as there is enough in input slot to deconstruct more
             while(inputInventory.getStackInSlot(0) != null && amountRequired <= inputInventory.getStackInSlot(0).stackSize)
             {              
-            	if (outputItemStackArray == null)
+                if(outputItemStackArray == null)
                 {
-                    resultString = I18n.format("deconstructing.result.impossible");
+                    String r = I18n.format("deconstructing.result.impossible");
+                    resultString = r;
                     deconstructingState = State.ERROR;
                     return;
                 }
-                
-            	// If an enchanted item is in input slot and player is not in cretive mode
                 if(!playerInventory.player.capabilities.isCreativeMode && inputInventory.getStackInSlot(0).getItem().getItemEnchantability() > 0)
                 {
                     int count = 0;
-                    ItemStack inputItemStack = inputInventory.getStackInSlot(0);
+                    ItemStack s1 = inputInventory.getStackInSlot(0);
 
-                    int percent = (int) (((double) inputItemStack.getItemDamage() / (double) inputItemStack.getMaxDamage()) * 100);
+                    int percent = (int) (((double) s1.getItemDamage() / (double) s1.getMaxDamage()) * 100);
                     for(int i = 0; i < outputItemStackArray.length; i++ )
                     {
                         if(outputItemStackArray[i] != null)
@@ -129,17 +122,16 @@ public class ContainerDeconstructor extends Container
                     }
                 }
                 
-            	// If something already in output inventory, check to see if it should be moved out
-                if (!outputInventory.isEmpty())
+                if(!outputInventory.isEmpty())
                 {
-                    for (int i = 0; i < outputInventory.getSizeInventory(); i++ )
+                    for(int i = 0; i < outputInventory.getSizeInventory(); i++ )
                     {
                         ItemStack itemStackInOutputSlot = outputInventory.getStackInSlot(i);
-                        // if not the same thing in slot that you're putting into the slot
-                        if ((itemStackInOutputSlot != null && outputItemStackArray[i] != null && itemStackInOutputSlot.getItem() != outputItemStackArray[i].getItem()))
+                        // DEBUG
+                        System.out.println("Output item stack array has size = "+outputItemStackArray.length);
+                        if((itemStackInOutputSlot != null && outputItemStackArray[i] != null && itemStackInOutputSlot.getItem() != outputItemStackArray[i].getItem()))
                         {
-                        	// Try to put in player inventory, but if not drop as entity item
-                            if (!playerInventory.addItemStackToInventory(itemStackInOutputSlot))
+                            if(!playerInventory.addItemStackToInventory(itemStackInOutputSlot))
                             {
                                 EntityItem entityItem = playerInventory.player.entityDropItem(itemStackInOutputSlot, 0.5f);
                                 entityItem.posX = playerInventory.player.posX;
@@ -151,59 +143,48 @@ public class ContainerDeconstructor extends Container
                     }
                 }
 
-                // Now put the recipe results into the slots
                 for(int i = 0; i < outputItemStackArray.length; i++ )
                 {
-                    ItemStack stackToAdd = outputItemStackArray[i];
+                    ItemStack s = outputItemStackArray[i];
                     ItemStack currentStack = outputInventory.getStackInSlot(i);
-                    // If there is something to add to the slot
-                    if(stackToAdd != null)
+                    if(s != null)
                     {
-                        int metadata = stackToAdd.getItemDamage();
-                        if (metadata == 32767)
+                        int metadata = s.getItemDamage();
+                        if(metadata == 32767)
                         {
                             metadata = 0;
                         }
-                        ItemStack resultingStack = null;
-                        // If there is still room in the slot
-                        if (currentStack != null && stackToAdd.stackSize + currentStack.stackSize <= stackToAdd.getMaxStackSize())
+                        ItemStack newStack = null;
+                        if(currentStack != null && 1 + currentStack.stackSize <= s.getMaxStackSize())
                         {
-                            resultingStack = new ItemStack(stackToAdd.getItem(), stackToAdd.stackSize + currentStack.stackSize, metadata);
+                            newStack = new ItemStack(s.getItem(), 1 + currentStack.stackSize, metadata);
                         }
-                        else // Not enough room in the slot
+                        else
                         {
-                        	// Try to add to player inventory and if that fais drop what is in the stack as entity item
-                            if (currentStack != null && !playerInventory.addItemStackToInventory(currentStack))
+                            if(currentStack != null && !playerInventory.addItemStackToInventory(currentStack))
                             {
                                 EntityItem entityItem = playerInventory.player.entityDropItem(currentStack, 0.5f);
                                 entityItem.posX = playerInventory.player.posX;
                                 entityItem.posY = playerInventory.player.posY;
                                 entityItem.posZ = playerInventory.player.posZ;
                             }
-                            resultingStack = stackToAdd;
+                            newStack = new ItemStack(s.getItem(), 1, metadata);
                         }
-                        outputInventory.setInventorySlotContents(i, resultingStack);
+                        outputInventory.setInventorySlotContents(i, newStack);
                     }
-                    else // nothing to add so clear the slot
+                    else
                     {
                         outputInventory.setInventorySlotContents(i, null);
                     }
                 }
-                
                 playerInventory.player.addStat(BlockSmith.deconstructedItemsStat, amountRequired);
                 playerInventory.player.triggerAchievement(BlockSmith.deconstructAny);
                 
-                // Decrement the amount in the input slot
                 int i = inputInventory.getStackInSlot(0).stackSize - amountRequired;
                 ItemStack newStack = null;
                 if(i > 0)
                 {
-                    int metadata = inputInventory.getStackInSlot(0).getItemDamage();
-                    if (metadata == 32767)
-                    {
-                        metadata = 0;
-                    }
-                    newStack = new ItemStack(inputInventory.getStackInSlot(0).getItem(), i, metadata);
+                    newStack = new ItemStack(inputInventory.getStackInSlot(0).getItem(), i, 0);
                 }
                 inputInventory.setInventorySlotContents(0, newStack);
             }
