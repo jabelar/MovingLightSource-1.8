@@ -103,16 +103,22 @@ public class ContainerDeconstructor extends Container
                     for(int i = 0; i < outputInventory.getSizeInventory(); i++ )
                     {
                         ItemStack itemStackInOutputSlot = outputInventory.getStackInSlot(i);
-                        if((itemStackInOutputSlot != null && outputItemStackArray[i] != null && itemStackInOutputSlot.getItem() != outputItemStackArray[i].getItem()))
+
+                        if (itemStackInOutputSlot != null && outputItemStackArray[i] != null)
                         {
-                            if(!playerInventory.addItemStackToInventory(itemStackInOutputSlot))
-                            {
-                                EntityItem entityItem = playerInventory.player.entityDropItem(itemStackInOutputSlot, 0.5f);
-                                entityItem.posX = playerInventory.player.posX;
-                                entityItem.posY = playerInventory.player.posY;
-                                entityItem.posZ = playerInventory.player.posZ;
-                            }
-                            outputInventory.setInventorySlotContents(i, null);
+                            if (!itemStackInOutputSlot.isItemEqual(outputItemStackArray[i]))
+	                        {
+	                            // DEBUG
+	                            System.out.println("Item damage value doesn't match: output slot has damage value = "+itemStackInOutputSlot.getItemDamage()+", item output from recipe has damage value = "+outputItemStackArray[i].getItemDamage());
+	                            if(!playerInventory.addItemStackToInventory(itemStackInOutputSlot))
+	                            {
+	                                EntityItem entityItem = playerInventory.player.entityDropItem(itemStackInOutputSlot, 0.5f);
+	                                entityItem.posX = playerInventory.player.posX;
+	                                entityItem.posY = playerInventory.player.posY;
+	                                entityItem.posZ = playerInventory.player.posZ;
+	                            }
+	                            outputInventory.setInventorySlotContents(i, null);
+	                        }
                         }
                     }
                 }
