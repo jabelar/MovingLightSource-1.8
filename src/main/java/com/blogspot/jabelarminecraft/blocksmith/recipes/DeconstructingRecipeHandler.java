@@ -13,6 +13,8 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
+
 public final class DeconstructingRecipeHandler
 {
 	public static int divideByTwoCounter = 1;
@@ -232,19 +234,31 @@ public final class DeconstructingRecipeHandler
 			{
 				decrementDivideByThreeCounter();
 				return new ItemStack[] {
+						null, null, null,
 						new ItemStack(Items.stick, 1, 0),
 						new ItemStack(Items.stick, 1, 0), 
 						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null, null, null
+						null, null, null
 				};
 			}
-			else
+			else if (divideByThreeCounter == 1)
 			{
 				decrementDivideByThreeCounter();
 				return new ItemStack[] {
 						new ItemStack(Items.stick, 1, 0),
+						null,
 						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null, null, null, null
+						null, null, null, null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 2)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null, null,
+						new ItemStack(Items.stick, 1, 0),
+						null,
+						new ItemStack(Items.stick, 1, 0), 
 				};
 			}
 		}
@@ -281,6 +295,18 @@ public final class DeconstructingRecipeHandler
 						System.out.println("getStackSizeNeeded() found matching recipe");
 						// If recipe that needs adjustment
 						Item theItem = outputItemStack.getItem();
+						// prevent some deconstructions that aren't realistic (like paper into reeds)
+						if (BlockSmith.allowDeconstructAllCraftable)
+						{
+							if (theItem == Items.paper
+							|| theItem == Items.melon_seeds
+							|| theItem == Items.bread
+							|| theItem == Items.cake
+							)
+							{
+								return 0;
+							}
+						}
 						if (       theItem == Items.oak_door
 								|| theItem == Items.spruce_door
 								|| theItem == Items.birch_door

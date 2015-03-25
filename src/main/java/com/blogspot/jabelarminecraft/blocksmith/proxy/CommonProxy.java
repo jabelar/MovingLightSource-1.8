@@ -204,7 +204,7 @@ public class CommonProxy
     public void syncConfig()
     {
     	config.load();
-//        JnaeMod.configGiantIsHostile = config.get(Configuration.CATEGORY_GENERAL, "GiantIsHostile", true, "A friendly "+MagicBeansUtilities.stringToRainbow("Giant")+EnumChatFormatting.YELLOW+" is no challenge").getBoolean(true);
+        BlockSmith.allowDeconstructAllCraftable = config.get(Configuration.CATEGORY_GENERAL, "AllowDeconstructAllCraftable", false, "Allow unrealistic deconstruction").getBoolean(false);
 //        System.out.println("Giant is hostile = "+JnaeMod.configGiantIsHostile);
         
         // save is useful for the first run where config might not exist
