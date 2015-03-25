@@ -296,7 +296,7 @@ public final class DeconstructingRecipeHandler
 						// If recipe that needs adjustment
 						Item theItem = outputItemStack.getItem();
 						// prevent some deconstructions that aren't realistic (like paper into reeds)
-						if (BlockSmith.allowDeconstructAllCraftable)
+						if (!BlockSmith.allowDeconstructAllCraftable)
 						{
 							if (theItem == Items.paper
 							|| theItem == Items.melon_seeds
