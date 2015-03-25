@@ -15,6 +15,10 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public final class DeconstructingRecipeHandler
 {
+	public static int divideByTwoCounter = 1;
+	public static int divideByThreeCounter = 2;
+	public static int divideByFourCounter = 3;
+	
 	public static ItemStack[] getDeconstructResults(ItemStack parItemStack)
 	{
 		List<?> listAllRecipes = CraftingManager.getInstance().getRecipeList();
@@ -48,11 +52,11 @@ public final class DeconstructingRecipeHandler
 //						System.out.println("Recipe doesn't match item type");
 					}
 				}
-				else
-				{
-					// DEBUG
-					System.out.println("DeconstructingManager getDeconstructingResults() no recipe found for input item");
-				}
+//				else
+//				{
+//					// DEBUG
+//					System.out.println("DeconstructingManager getDeconstructingResults() no recipe found for input item");
+//				}
 			}
 		}
 		return null;
@@ -120,14 +124,14 @@ public final class DeconstructingRecipeHandler
 			{
 				if(shapelessArray.get(j) instanceof ItemStack)
 				{
-					// DEBUG
-					System.out.println("Ingredient in shapeless array slot "+j+" is an ItemStack");
+//					// DEBUG
+//					System.out.println("Ingredient in shapeless array slot "+j+" is an ItemStack");
 					resultItemStackArray[j] = (ItemStack) shapelessArray.get(j);
 				}
 				else if(shapelessArray.get(j) instanceof List)
 				{
-					// DEBUG
-					System.out.println("Ingredient in shapeless array slot "+j+" is a List");
+//					// DEBUG
+//					System.out.println("Ingredient in shapeless array slot "+j+" is a List");
 					Object o = ((List)shapelessArray.get(j)).get(0);
 					if(o instanceof ItemStack)
 					{
@@ -211,7 +215,7 @@ public final class DeconstructingRecipeHandler
 		if (parItem == Items.paper)
 		{
 			return new ItemStack[] {
-					new ItemStack(Items.wheat, 1, 0),
+					new ItemStack(Items.reeds, 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
@@ -222,8 +226,39 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null, null
 			};
 		}
+		if (parItem == Item.getItemFromBlock(Blocks.ladder))
+		{
+			if (divideByThreeCounter <= 0)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						new ItemStack(Items.stick, 1, 0),
+						new ItemStack(Items.stick, 1, 0), 
+						new ItemStack(Items.stick, 1, 0), 
+						null, null, null, null, null, null
+				};
+			}
+			else
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						new ItemStack(Items.stick, 1, 0),
+						new ItemStack(Items.stick, 1, 0), 
+						null, null, null, null, null, null, null
+				};
+			}
+		}
 		// else no adjustments needed
 		return parItemStackArray ;
+	}
+	
+	public static void decrementDivideByThreeCounter()
+	{
+		divideByThreeCounter--;
+		if (divideByThreeCounter<0)
+		{
+			divideByThreeCounter=2;
+		}				
 	}
 	
 	public static int getStackSizeNeeded(ItemStack parItemStack)
@@ -245,15 +280,17 @@ public final class DeconstructingRecipeHandler
 						// DEBUG
 						System.out.println("getStackSizeNeeded() found matching recipe");
 						// If recipe that needs adjustment
-						if (       outputItemStack.getItem() == Items.oak_door
-								|| outputItemStack.getItem() == Items.spruce_door
-								|| outputItemStack.getItem() == Items.birch_door
-								|| outputItemStack.getItem() == Items.jungle_door
-								|| outputItemStack.getItem() == Items.acacia_door
-								|| outputItemStack.getItem() == Items.dark_oak_door
-								|| outputItemStack.getItem() == Items.iron_door
-								|| outputItemStack.getItem() == Items.paper
-								|| outputItemStack.getItem() == Items.stick
+						Item theItem = outputItemStack.getItem();
+						if (       theItem == Items.oak_door
+								|| theItem == Items.spruce_door
+								|| theItem == Items.birch_door
+								|| theItem == Items.jungle_door
+								|| theItem == Items.acacia_door
+								|| theItem == Items.dark_oak_door
+								|| theItem == Items.iron_door
+								|| theItem == Items.paper
+								|| theItem == Items.stick
+								|| theItem == Item.getItemFromBlock(Blocks.ladder)
 								)
 						{
 							return 1;

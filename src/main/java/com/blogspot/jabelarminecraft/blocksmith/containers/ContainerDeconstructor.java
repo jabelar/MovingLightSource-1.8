@@ -81,22 +81,30 @@ public class ContainerDeconstructor extends Container
             int amountRequired = DeconstructingRecipeHandler.getStackSizeNeeded(inputInventory.getStackInSlot(0));
             // DEBUG
             System.out.println("Amount required = "+amountRequired);
+
             if(amountRequired > inputInventory.getStackInSlot(0).stackSize)
             {
                 resultString = I18n.format("deconstructing.result.needMoreStacks", (amountRequired - inputInventory.getStackInSlot(0).stackSize));
                 deconstructingState = State.ERROR;
                 return;
             }
+            
+            if (amountRequired <= 0)
+            {
+                resultString = I18n.format("deconstructing.result.impossible");
+                deconstructingState = State.ERROR;
+            }
+            
+            if(outputItemStackArray == null)
+            {
+                resultString = I18n.format("deconstructing.result.impossible");
+                deconstructingState = State.ERROR;
+                return;
+            }
+           
             // Loop while there is something in the input slot with sufficient amount
             while(inputInventory.getStackInSlot(0) != null && amountRequired > 0 && amountRequired <= inputInventory.getStackInSlot(0).stackSize)
             {              
-                if(outputItemStackArray == null)
-                {
-                    String r = I18n.format("deconstructing.result.impossible");
-                    resultString = r;
-                    deconstructingState = State.ERROR;
-                    return;
-                }
                 if(!playerInventory.player.capabilities.isCreativeMode && inputInventory.getStackInSlot(0).getItem().getItemEnchantability() > 0)
                 {
                     int count = 0;
