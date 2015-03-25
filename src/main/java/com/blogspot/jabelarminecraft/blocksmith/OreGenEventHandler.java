@@ -19,29 +19,25 @@
 
 package com.blogspot.jabelarminecraft.blocksmith;
 
-import net.minecraftforge.event.terraingen.OreGenEvent;
-import net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class OreGenEventHandler 
 {
-    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-    public void onEvent(GenerateMinable event)
-    {
-        
-    }
-    
-    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-    public void onEvent(OreGenEvent.Post event)
-    {
-        
-    }
-    
-    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-    public void onEvent(OreGenEvent.Pre event)
-    {
-        
-    }
-    
+//    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//    public void onEvent(GenerateMinable event)
+//    {
+//        
+//    }
+//    
+//    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//    public void onEvent(OreGenEvent.Post event)
+//    {
+//        
+//    }
+//    
+//    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//    public void onEvent(OreGenEvent.Pre event)
+//    {
+//        
+//    }
+//    
 }

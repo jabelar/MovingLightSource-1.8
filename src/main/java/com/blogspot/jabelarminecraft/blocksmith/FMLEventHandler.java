@@ -25,26 +25,11 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent.PostConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.MouseInputEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class FMLEventHandler 
@@ -61,58 +46,58 @@ public class FMLEventHandler
 	 * Game input events
 	 */
 
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(InputEvent event)
-	{
-		
-	}
-
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(KeyInputEvent event)
-	{
-
-	}
-
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(MouseInputEvent event)
-	{
-
-	}
-	
-	/*
-	 * Player events
-	 */
-
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(PlayerEvent event)
-	{
-		
-	}
-
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(ItemCraftedEvent event)
-	{
-		
-	}
-
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(ItemPickupEvent event)
-	{
-		
-	}
-
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(ItemSmeltedEvent event)
-	{
-		
-	}
-
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(PlayerChangedDimensionEvent event)
-	{
-		
-	}
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(InputEvent event)
+//	{
+//		
+//	}
+//
+//	@SideOnly(Side.CLIENT)
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(KeyInputEvent event)
+//	{
+//
+//	}
+//
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(MouseInputEvent event)
+//	{
+//
+//	}
+//	
+//	/*
+//	 * Player events
+//	 */
+//
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(PlayerEvent event)
+//	{
+//		
+//	}
+//
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(ItemCraftedEvent event)
+//	{
+//		
+//	}
+//
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(ItemPickupEvent event)
+//	{
+//		
+//	}
+//
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(ItemSmeltedEvent event)
+//	{
+//		
+//	}
+//
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(PlayerChangedDimensionEvent event)
+//	{
+//		
+//	}
 
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public void onEvent(PlayerLoggedInEvent event)
@@ -136,23 +121,23 @@ public class FMLEventHandler
 		
 	}
 
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(PlayerRespawnEvent event)
-	{
-		// DEBUG
-		System.out.println("The memories of past existences are but glints of light.");
-		
-	}
-
-	/*
-	 * Tick events
-	 */
-
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(ClientTickEvent event) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
-	{
-
-	}
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(PlayerRespawnEvent event)
+//	{
+//		// DEBUG
+//		System.out.println("The memories of past existences are but glints of light.");
+//		
+//	}
+//
+//	/*
+//	 * Tick events
+//	 */
+//
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(ClientTickEvent event) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+//	{
+//
+//	}
 
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public void onEvent(PlayerTickEvent event)
@@ -173,17 +158,17 @@ public class FMLEventHandler
 		
 	}
 
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(RenderTickEvent event)
-	{
-		
-	}
-
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(ServerTickEvent event)
-	{
-		
-	}
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(RenderTickEvent event)
+//	{
+//		
+//	}
+//
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(ServerTickEvent event)
+//	{
+//		
+//	}
 
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public void onEvent(OnConfigChangedEvent eventArgs) 
@@ -198,13 +183,13 @@ public class FMLEventHandler
 	    }
 	}
 
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(PostConfigChangedEvent eventArgs) 
-	{
-		// useful for doing something if another mod's config has changed
-		// if(eventArgs.modID.equals(MagicBeans.MODID))
-		// {
-		//		// do whatever here
-		// }
-	}
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(PostConfigChangedEvent eventArgs) 
+//	{
+//		// useful for doing something if another mod's config has changed
+//		// if(eventArgs.modID.equals(MagicBeans.MODID))
+//		// {
+//		//		// do whatever here
+//		// }
+//	}
 }

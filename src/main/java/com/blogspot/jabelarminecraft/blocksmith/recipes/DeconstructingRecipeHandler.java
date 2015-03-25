@@ -25,11 +25,21 @@ public final class DeconstructingRecipeHandler
 	{
 		// DEBUG
 		System.out.println("Looking for deconstructing a recipe for "+parItemStack.getUnlocalizedName());
+		
+		// Allow recipes for some vanilla items that normally don't have recipes
+		Item theItem = parItemStack.getItem();
+		if (
+				theItem == Items.enchanted_book
+				)
+		{
+			return getCraftingGrid(theItem);
+		}
+
+		// check all recipes for recipe for Itemstack
 		List<?> listAllRecipes = CraftingManager.getInstance().getRecipeList();
 //		// DEBUG
 //		System.out.println("DeconstructingManager getDeconstructResults() recipe list size = "+listAllRecipes.size());
 				
-		// check all recipes for recipe for Itemstack
 		for(int i = 0;i<listAllRecipes.size();i++)
 		{
 //			// DEBUG
@@ -65,6 +75,35 @@ public final class DeconstructingRecipeHandler
 		}
 		return null;
 	}	
+	
+	public static ItemStack[] getCraftingGrid(Item parItem)
+	{
+		// Initialize the result array
+		ItemStack[] resultItemStackArray = new ItemStack[9];
+		for(int j = 0;j<resultItemStackArray.length;j++)
+		{
+			resultItemStackArray[j] = null;
+		}
+		
+		if (
+				parItem == Items.enchanted_book
+				)
+		{
+			resultItemStackArray = new ItemStack[] {
+					null,
+					new ItemStack(Items.paper, 1, 0),
+					null,
+					null,
+					new ItemStack(Items.paper, 1, 0),
+					null,
+					null,
+					new ItemStack(Items.paper, 1, 0),
+					null
+			};
+			
+		}
+		return resultItemStackArray;
+	}
 	
 	public static ItemStack[] getCraftingGrid(IRecipe parRecipe)
 	{
@@ -264,6 +303,53 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
+		if (parItem == Item.getItemFromBlock(Blocks.oak_fence))
+		{
+			if (divideByThreeCounter <= 0)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
+						new ItemStack(Items.stick, 1, 0), 
+						null, null, null, null, null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 1)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null,
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
+						null, null, null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 2)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null,
+						new ItemStack(Items.stick, 1, 0), 
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
+						null, null, null
+				};
+			}
+		}
+		if (parItem == Items.enchanted_book)
+		{
+			return new ItemStack[] {
+					null, 
+					new ItemStack(Items.reeds, 1, 0),
+					null,
+					null, 
+					new ItemStack(Items.reeds, 1, 0),
+					null,
+					null, 
+					new ItemStack(Items.reeds, 1, 0),
+					null
+			};
+		}
+
 		// else no adjustments needed
 		return parItemStackArray ;
 	}
@@ -279,6 +365,14 @@ public final class DeconstructingRecipeHandler
 	
 	public static int getStackSizeNeeded(ItemStack parItemStack)
 	{
+		Item theItem = parItemStack.getItem();
+		// Create recipes for some things that don't normally have them
+		if (
+				theItem == Items.enchanted_book
+				)
+		{
+			return 1;
+		}
 		List<?> crafts = CraftingManager.getInstance().getRecipeList();
 		for(int i = 0;i<crafts.size();i++)
 		{
@@ -288,15 +382,13 @@ public final class DeconstructingRecipeHandler
 				ItemStack outputItemStack = recipe.getRecipeOutput();
 				// if found matching recipe
 				if (outputItemStack != null)
-				{
+				{					
 //					// DEBUG
 //					System.out.println("Checking if recipes match: "+outputItemStack.getUnlocalizedName()+" with "+parItemStack.getUnlocalizedName());
 					if (outputItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG
 						System.out.println("getStackSizeNeeded() found matching recipe");
-						// If recipe that needs adjustment
-						Item theItem = outputItemStack.getItem();
 						// prevent some deconstructions that aren't realistic (like paper into reeds)
 						if (!BlockSmith.allowDeconstructAllCraftable)
 						{
@@ -320,7 +412,8 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Items.stick
 								|| theItem == Item.getItemFromBlock(Blocks.ladder)
 								|| theItem == Items.enchanted_book					
-								))
+								|| theItem == Item.getItemFromBlock(Blocks.oak_fence)
+								)
 						{
 							return 1;
 						}
