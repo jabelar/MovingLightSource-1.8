@@ -1,4 +1,5 @@
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.init.Blocks;
@@ -112,21 +113,30 @@ public final class DeconstructingRecipeHandler
 		
 		if (parRecipe instanceof ShapelessOreRecipe)
 		{
+			ArrayList shapelessArray = ((ShapelessOreRecipe)parRecipe).getInput();
 			// DEBUG
-			System.out.println("getCraftingGrid for shapeless ore recipe");
-			ShapelessOreRecipe shapeless = (ShapelessOreRecipe)parRecipe;
-			for(int j = 0;j<shapeless.getInput().size();j++)
+			System.out.println("getCraftingGrid for shapeless ore recipe with input array size = "+shapelessArray.size());
+			for(int j = 0; j<shapelessArray.size(); j++)
 			{
-				if(shapeless.getInput().get(j) instanceof ItemStack)
+				if(shapelessArray.get(j) instanceof ItemStack)
 				{
-					resultItemStackArray[j] = (ItemStack) shapeless.getInput().get(j);
+					// DEBUG
+					System.out.println("Ingredient in shapeless array slot "+j+" is an ItemStack");
+					resultItemStackArray[j] = (ItemStack) shapelessArray.get(j);
 				}
-				else if(shapeless.getInput().get(j) instanceof List)
+				else if(shapelessArray.get(j) instanceof List)
 				{
-					Object o = ((List)shapeless.getInput().get(j)).get(0);
+					// DEBUG
+					System.out.println("Ingredient in shapeless array slot "+j+" is a List");
+					Object o = ((List)shapelessArray.get(j)).get(0);
 					if(o instanceof ItemStack)
 					{
 						resultItemStackArray[j] = (ItemStack)o;
+					}
+					else
+					{
+						// DEBUG
+						System.out.println("But list element is not an ItemStack");
 					}
 				}
 			}
@@ -216,7 +226,7 @@ public final class DeconstructingRecipeHandler
 		return parItemStackArray ;
 	}
 	
-	public static int getStackSizeNeeded(ItemStack item)
+	public static int getStackSizeNeeded(ItemStack parItemStack)
 	{
 		List<?> crafts = CraftingManager.getInstance().getRecipeList();
 		for(int i = 0;i<crafts.size();i++)
@@ -228,7 +238,9 @@ public final class DeconstructingRecipeHandler
 				// if found matching recipe
 				if (outputItemStack != null)
 				{
-					if (outputItemStack.getUnlocalizedName().equals(item.getItem().getUnlocalizedName()))
+//					// DEBUG
+//					System.out.println("Checking if recipes match: "+outputItemStack.getUnlocalizedName()+" with "+parItemStack.getUnlocalizedName());
+					if (outputItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG
 						System.out.println("getStackSizeNeeded() found matching recipe");
@@ -251,8 +263,15 @@ public final class DeconstructingRecipeHandler
 						return outputItemStack.stackSize;
 					}
 				}
+//				else
+//				{
+//					// DEBUG
+//					System.out.println("Recipe output stack is null!");
+//				}
 			}
 		}
+		// DEBUG
+		System.out.println("No matching recipe found!");
 		return 0; // no recipe found
 	}
 	
