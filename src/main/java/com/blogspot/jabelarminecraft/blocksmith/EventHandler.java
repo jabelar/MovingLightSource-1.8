@@ -105,11 +105,14 @@ import net.minecraftforge.fluids.FluidEvent.FluidFillingEvent;
 import net.minecraftforge.fluids.FluidEvent.FluidMotionEvent;
 import net.minecraftforge.fluids.FluidEvent.FluidSpilledEvent;
 import net.minecraftforge.fluids.FluidRegistry.FluidRegisterEvent;
+import net.minecraftforge.fml.client.GuiIngameModOptions;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
+
+import com.blogspot.jabelarminecraft.blocksmith.gui.GuiConfig;
 
 @SuppressWarnings("deprecation")
 public class EventHandler 
@@ -656,7 +659,11 @@ public class EventHandler
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     public void onEvent(GuiOpenEvent event)
     {
-        
+        if (event.gui instanceof GuiIngameModOptions)
+        {
+            System.out.println("GuiOpenEvent for GuiIngameModOptions");
+            event.gui = new GuiConfig(null);        
+        }
     }
 
     @SideOnly(Side.CLIENT)
