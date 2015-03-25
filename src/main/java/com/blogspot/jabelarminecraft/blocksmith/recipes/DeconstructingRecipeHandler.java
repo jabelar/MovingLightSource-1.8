@@ -348,33 +348,199 @@ public final class DeconstructingRecipeHandler
 		}
 		if (parItem == Item.getItemFromBlock(Blocks.oak_fence))
 		{
-			if (divideByThreeCounter <= 0)
+			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0);
+			if (divideByThreeCounter == 2)
 			{
 				decrementDivideByThreeCounter();
 				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
+						null, null, null,
+						planksItemStack,
 						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null, null, null, null
+						null, null, null, null
 				};
 			}
 			else if (divideByThreeCounter == 1)
 			{
 				decrementDivideByThreeCounter();
 				return new ItemStack[] {
-						null, null,
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
-						null, null, null, null, null
+						null, null, null, null, null, null, null,
+						new ItemStack(Items.stick, 1, 0), 
+						planksItemStack
 				};
 			}
-			else if (divideByThreeCounter == 2)
+			else if (divideByThreeCounter == 0)
 			{
 				decrementDivideByThreeCounter();
 				return new ItemStack[] {
-						null, null, null, null,
+						null, null, null, null, null,
+						planksItemStack,
+						planksItemStack,
+						null, null
+				};
+			}
+		}
+		if (parItem == Item.getItemFromBlock(Blocks.spruce_fence))
+		{
+			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1);
+			if (divideByThreeCounter == 2)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null,
+						planksItemStack,
 						new ItemStack(Items.stick, 1, 0), 
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
-						null, null, null
+						null, null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 1)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null, null, null,
+						new ItemStack(Items.stick, 1, 0), 
+						planksItemStack
+				};
+			}
+			else if (divideByThreeCounter == 0)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null,
+						planksItemStack,
+						planksItemStack,
+						null, null
+				};
+			}
+		}
+		if (parItem == Item.getItemFromBlock(Blocks.birch_fence))
+		{
+			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2);
+			if (divideByThreeCounter == 2)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null,
+						planksItemStack,
+						new ItemStack(Items.stick, 1, 0), 
+						null, null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 1)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null, null, null,
+						new ItemStack(Items.stick, 1, 0), 
+						planksItemStack
+				};
+			}
+			else if (divideByThreeCounter == 0)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null,
+						planksItemStack,
+						planksItemStack,
+						null, null
+				};
+			}
+		}
+		if (parItem == Item.getItemFromBlock(Blocks.jungle_fence))
+		{
+			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3);
+			if (divideByThreeCounter == 2)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null,
+						planksItemStack,
+						new ItemStack(Items.stick, 1, 0), 
+						null, null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 1)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null, null, null,
+						new ItemStack(Items.stick, 1, 0), 
+						planksItemStack
+				};
+			}
+			else if (divideByThreeCounter == 0)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null,
+						planksItemStack,
+						planksItemStack,
+						null, null
+				};
+			}
+		}
+		if (parItem == Item.getItemFromBlock(Blocks.acacia_fence))
+		{
+			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4);
+			if (divideByThreeCounter == 2)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null,
+						planksItemStack,
+						new ItemStack(Items.stick, 1, 0), 
+						null, null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 1)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null, null, null,
+						new ItemStack(Items.stick, 1, 0), 
+						planksItemStack
+				};
+			}
+			else if (divideByThreeCounter == 0)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null,
+						planksItemStack,
+						planksItemStack,
+						null, null
+				};
+			}
+		}
+		if (parItem == Item.getItemFromBlock(Blocks.dark_oak_fence))
+		{
+			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5);
+			if (divideByThreeCounter == 2)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null,
+						planksItemStack,
+						new ItemStack(Items.stick, 1, 0), 
+						null, null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 1)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null, null, null,
+						new ItemStack(Items.stick, 1, 0), 
+						planksItemStack
+				};
+			}
+			else if (divideByThreeCounter == 0)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, null, null, null,
+						planksItemStack,
+						planksItemStack,
+						null, null
 				};
 			}
 		}
@@ -456,6 +622,11 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.ladder)
 								|| theItem == Items.enchanted_book					
 								|| theItem == Item.getItemFromBlock(Blocks.oak_fence)
+								|| theItem == Item.getItemFromBlock(Blocks.spruce_fence)
+								|| theItem == Item.getItemFromBlock(Blocks.birch_fence)
+								|| theItem == Item.getItemFromBlock(Blocks.jungle_fence)
+								|| theItem == Item.getItemFromBlock(Blocks.acacia_fence)
+								|| theItem == Item.getItemFromBlock(Blocks.dark_oak_fence)
 								)
 						{
 							return 1;
