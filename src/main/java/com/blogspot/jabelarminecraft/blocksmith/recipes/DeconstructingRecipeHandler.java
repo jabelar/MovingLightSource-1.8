@@ -23,9 +23,11 @@ public final class DeconstructingRecipeHandler
 	
 	public static ItemStack[] getDeconstructResults(ItemStack parItemStack)
 	{
-		List<?> listAllRecipes = CraftingManager.getInstance().getRecipeList();
 		// DEBUG
-		System.out.println("DeconstructingManager getDeconstructResults() recipe list size = "+listAllRecipes.size());
+		System.out.println("Looking for deconstructing a recipe for "+parItemStack.getUnlocalizedName());
+		List<?> listAllRecipes = CraftingManager.getInstance().getRecipeList();
+//		// DEBUG
+//		System.out.println("DeconstructingManager getDeconstructResults() recipe list size = "+listAllRecipes.size());
 				
 		// check all recipes for recipe for Itemstack
 		for(int i = 0;i<listAllRecipes.size();i++)
@@ -317,7 +319,8 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Items.paper
 								|| theItem == Items.stick
 								|| theItem == Item.getItemFromBlock(Blocks.ladder)
-								)
+								|| theItem == Items.enchanted_book					
+								))
 						{
 							return 1;
 						}
