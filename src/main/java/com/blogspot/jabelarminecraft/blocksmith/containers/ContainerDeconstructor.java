@@ -89,51 +89,15 @@ public class ContainerDeconstructor extends Container
                 return;
             }
             
-            if (amountRequired <= 0)
+            if (amountRequired <= 0 || outputItemStackArray == null)
             {
                 resultString = I18n.format("deconstructing.result.impossible");
                 deconstructingState = State.ERROR;
-            }
-            
-            if(outputItemStackArray == null)
-            {
-                resultString = I18n.format("deconstructing.result.impossible");
-                deconstructingState = State.ERROR;
-                return;
             }
            
             // Loop while there is something in the input slot with sufficient amount
             while(inputInventory.getStackInSlot(0) != null && amountRequired > 0 && amountRequired <= inputInventory.getStackInSlot(0).stackSize)
-            {              
-                if(!playerInventory.player.capabilities.isCreativeMode && inputInventory.getStackInSlot(0).getItem().getItemEnchantability() > 0)
-                {
-                    int count = 0;
-                    ItemStack s1 = inputInventory.getStackInSlot(0);
-
-                    int percent = (int) (((double) s1.getItemDamage() / (double) s1.getMaxDamage()) * 100);
-                    for(int i = 0; i < outputItemStackArray.length; i++ )
-                    {
-                        if(outputItemStackArray[i] != null)
-                            count++ ;
-                    }
-                    int toRemove = Math.round(percent * count / 100f);
-                    if(toRemove > 0)
-                    {
-                        for(int i = 0; i < outputItemStackArray.length; i++ )
-                        {
-                            if(outputItemStackArray[i] != null)
-                            {
-                                toRemove-- ;
-                                outputItemStackArray[i] = null;
-                                if(toRemove <= 0)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                
+            {                              
                 if(!outputInventory.isEmpty())
                 {
                     for(int i = 0; i < outputInventory.getSizeInventory(); i++ )
@@ -155,19 +119,19 @@ public class ContainerDeconstructor extends Container
 
                 for(int i = 0; i < outputItemStackArray.length; i++ )
                 {
-                    ItemStack s = outputItemStackArray[i];
+                    ItemStack outputItemStack = outputItemStackArray[i];
                     ItemStack currentStack = outputInventory.getStackInSlot(i);
-                    if(s != null)
+                    if (outputItemStack != null)
                     {
-                        int metadata = s.getItemDamage();
+                        int metadata = outputItemStack.getItemDamage();
                         if(metadata == 32767)
                         {
                             metadata = 0;
                         }
                         ItemStack newStack = null;
-                        if(currentStack != null && 1 + currentStack.stackSize <= s.getMaxStackSize())
+                        if(currentStack != null && 1 + currentStack.stackSize <= outputItemStack.getMaxStackSize())
                         {
-                            newStack = new ItemStack(s.getItem(), 1 + currentStack.stackSize, metadata);
+                            newStack = new ItemStack(outputItemStack.getItem(), 1 + currentStack.stackSize, metadata);
                         }
                         else
                         {
@@ -178,13 +142,9 @@ public class ContainerDeconstructor extends Container
                                 entityItem.posY = playerInventory.player.posY;
                                 entityItem.posZ = playerInventory.player.posZ;
                             }
-                            newStack = new ItemStack(s.getItem(), 1, metadata);
+                            newStack = new ItemStack(outputItemStack.getItem(), 1, metadata);
                         }
                         outputInventory.setInventorySlotContents(i, newStack);
-                    }
-                    else
-                    {
-                        outputInventory.setInventorySlotContents(i, null);
                     }
                 }
                 playerInventory.player.addStat(BlockSmith.deconstructedItemsStat, amountRequired);
