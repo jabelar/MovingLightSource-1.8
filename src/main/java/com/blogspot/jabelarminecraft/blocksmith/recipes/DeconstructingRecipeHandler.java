@@ -30,6 +30,9 @@ public final class DeconstructingRecipeHandler
 		Item theItem = parItemStack.getItem();
 		if (
 				theItem == Items.enchanted_book
+				|| theItem == Items.iron_horse_armor
+				|| theItem == Items.golden_horse_armor
+				|| theItem == Items.diamond_horse_armor
 				)
 		{
 			return getCraftingGrid(theItem);
@@ -85,6 +88,7 @@ public final class DeconstructingRecipeHandler
 			resultItemStackArray[j] = null;
 		}
 		
+		// Create deconstructing recipes for things that don't have crafting recipes
 		if (parItem == Items.enchanted_book)
 		{
 			resultItemStackArray = new ItemStack[] {
@@ -97,6 +101,48 @@ public final class DeconstructingRecipeHandler
 					null,
 					new ItemStack(Items.paper, 1, 0),
 					null
+			};
+		}
+		if (parItem == Items.iron_horse_armor)
+		{
+			return new ItemStack[] {
+					null,
+					null,
+					new ItemStack(Items.iron_ingot, 1, 0),
+					new ItemStack(Items.iron_ingot, 1, 0),
+					new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, 15),
+					new ItemStack(Items.iron_ingot, 1, 0),
+					new ItemStack(Items.iron_ingot, 1, 0),
+					new ItemStack(Items.iron_ingot, 1, 0),
+					new ItemStack(Items.iron_ingot, 1, 0)
+			};
+		}
+		if (parItem == Items.golden_horse_armor)
+		{
+			return new ItemStack[] {
+					null,
+					null,
+					new ItemStack(Items.gold_ingot, 1, 0),
+					new ItemStack(Items.gold_ingot, 1, 0),
+					new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, 12),
+					new ItemStack(Items.gold_ingot, 1, 0),
+					new ItemStack(Items.gold_ingot, 1, 0),
+					new ItemStack(Items.gold_ingot, 1, 0),
+					new ItemStack(Items.gold_ingot, 1, 0)
+			};
+		}
+		if (parItem == Items.diamond_horse_armor)
+		{
+			return new ItemStack[] {
+					null,
+					null,
+					new ItemStack(Items.diamond, 1, 0),
+					new ItemStack(Items.diamond, 1, 0),
+					new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, 11),
+					new ItemStack(Items.diamond, 1, 0),
+					new ItemStack(Items.diamond, 1, 0),
+					new ItemStack(Items.diamond, 1, 0),
+					new ItemStack(Items.diamond, 1, 0)
 			};
 		}
 		return resultItemStackArray;
