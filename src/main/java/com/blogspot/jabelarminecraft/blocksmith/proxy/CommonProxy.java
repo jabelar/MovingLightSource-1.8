@@ -280,12 +280,48 @@ public class CommonProxy
         			"ABA",
         			"A A",
         			"CCC",
-        			'A', Items.stick, 'B', Item.getItemFromBlock(Blocks.stone), 'C', Item.getItemFromBlock(Blocks.cobblestone)
+        			'A', Items.stick, 'B', Blocks.stone, 'C', Blocks.cobblestone
         		});
-        GameRegistry.addShapedRecipe(new ItemStack(BlockSmith.blockDeconstructor), new Object[]
-        {
-                "SSS", "SXS", "SSS", 'X', Blocks.crafting_table, 'S', Blocks.cobblestone
-        });
+        GameRegistry.addShapedRecipe(new ItemStack(BlockSmith.blockDeconstructor), 
+        		new Object[]
+        		{
+                	"SSS", 
+                	"SXS", 
+                	"SSS", 
+                	'X', Blocks.crafting_table, 'S', Blocks.cobblestone
+        		});
+        GameRegistry.addShapedRecipe(new ItemStack(Items.iron_horse_armor), 
+        		new Object[]
+        		{
+        			"  S", 
+        			"SXS", 
+        			"SSS", 
+        			'X', Blocks.wool, 'S', Items.iron_ingot
+        		});
+        GameRegistry.addShapedRecipe(new ItemStack(Items.golden_horse_armor), 
+        		new Object[]
+        		{
+        			"  S", 
+        			"SXS", 
+        			"SSS", 
+        			'X', Blocks.wool, 'S', Items.gold_ingot
+        		});
+        GameRegistry.addShapedRecipe(new ItemStack(Items.diamond_horse_armor), 
+        		new Object[]
+        		{
+        			"  S", 
+        			"SXS", 
+        			"SSS", 
+        			'X', Blocks.wool, 'S', Items.diamond
+        		});
+        GameRegistry.addShapedRecipe(new ItemStack(Items.saddle), 
+        		new Object[]
+        		{
+        			"SSS", 
+        			"SXS", 
+        			"X X", 
+        			'X', Items.iron_ingot, 'S', Items.leather
+        		});
 
     }
 

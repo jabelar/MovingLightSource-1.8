@@ -85,9 +85,7 @@ public final class DeconstructingRecipeHandler
 			resultItemStackArray[j] = null;
 		}
 		
-		if (
-				parItem == Items.enchanted_book
-				)
+		if (parItem == Items.enchanted_book)
 		{
 			resultItemStackArray = new ItemStack[] {
 					null,
@@ -100,7 +98,6 @@ public final class DeconstructingRecipeHandler
 					new ItemStack(Items.paper, 1, 0),
 					null
 			};
-			
 		}
 		return resultItemStackArray;
 	}
