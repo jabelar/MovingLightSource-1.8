@@ -190,10 +190,25 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
+		if (parItem == Items.iron_door)
+		{
+			return new ItemStack[] {
+					new ItemStack(Items.iron_ingot, 1, 0),
+					new ItemStack(Items.iron_ingot, 1, 0),
+					null, null, null, null, null, null, null
+			};
+		}
 		if (parItem == Items.paper)
 		{
 			return new ItemStack[] {
 					new ItemStack(Items.wheat, 1, 0),
+					null, null, null, null, null, null, null, null
+			};
+		}
+		if (parItem == Items.stick)
+		{
+			return new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
@@ -224,7 +239,9 @@ public final class DeconstructingRecipeHandler
 								|| outputItemStack.getItem() == Items.jungle_door
 								|| outputItemStack.getItem() == Items.acacia_door
 								|| outputItemStack.getItem() == Items.dark_oak_door
+								|| outputItemStack.getItem() == Items.iron_door
 								|| outputItemStack.getItem() == Items.paper
+								|| outputItemStack.getItem() == Items.stick
 								)
 						{
 							return 1;
