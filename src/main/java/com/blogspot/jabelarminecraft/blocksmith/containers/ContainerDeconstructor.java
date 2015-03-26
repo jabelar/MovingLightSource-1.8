@@ -238,8 +238,8 @@ public class ContainerDeconstructor extends Container
     @Override
 	public ItemStack transferStackInSlot(EntityPlayer parPlayer, int parSlotIndex)
     {
-    	// DEBUG
-    	System.out.println("Shift-clicked on a slot");
+//    	// DEBUG
+//    	System.out.println("Shift-clicked on a slot");
         Slot slot = (Slot) inventorySlots.get(parSlotIndex);
         // If there is something in the stack to pick up
         if (slot != null && slot.getHasStack())

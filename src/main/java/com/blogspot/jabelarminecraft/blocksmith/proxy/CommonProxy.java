@@ -59,7 +59,6 @@ import com.blogspot.jabelarminecraft.blocksmith.items.SpawnEgg;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageSyncEntityToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToServer;
-import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingRecipeHandler;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 import com.google.common.base.Predicates;
@@ -267,9 +266,7 @@ public class CommonProxy
     {
         // DEBUG
         System.out.println("Registering recipes");
-        
-        BlockSmith.deconstructingRecipeHandler = new DeconstructingRecipeHandler();
-               
+                       
         // examples:
         //        GameRegistry.addRecipe(recipe);
         //        GameRegistry.addShapedRecipe(output, params);

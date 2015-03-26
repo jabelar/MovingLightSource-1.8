@@ -702,6 +702,75 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.golden_rail))
+		{
+			// DEBUG
+			System.out.println("Divide by two counter = "+divideByTwoCounter);
+			if (divideByTwoCounter == 1)
+			{
+				decrementDivideByTwoCounter();
+				return new ItemStack[] {
+						new ItemStack(Items.gold_ingot, 1, 0), null, null,
+						new ItemStack(Items.gold_ingot, 1, 0), new ItemStack(Items.stick, 1, 0), null,
+						new ItemStack(Items.gold_ingot, 1, 0), null, null
+				};
+			}
+			else if (divideByTwoCounter == 0)
+			{
+				decrementDivideByTwoCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Items.gold_ingot, 1, 0),
+						null, null, new ItemStack(Items.gold_ingot, 1, 0),
+						null, new ItemStack(Items.redstone), new ItemStack(Items.gold_ingot, 1, 0)
+				};
+			}
+		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.activator_rail))
+		{
+			// DEBUG
+			System.out.println("Divide by two counter = "+divideByTwoCounter);
+			if (divideByTwoCounter == 1)
+			{
+				decrementDivideByTwoCounter();
+				return new ItemStack[] {
+						new ItemStack(Items.iron_ingot, 1, 0), new ItemStack(Items.stick, 1, 0), null,
+						new ItemStack(Items.iron_ingot, 1, 0), null, null,
+						new ItemStack(Items.iron_ingot, 1, 0), null, null
+				};
+			}
+			else if (divideByTwoCounter == 0)
+			{
+				decrementDivideByTwoCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Items.iron_ingot, 1, 0),
+						null, new ItemStack(Item.getItemFromBlock(Blocks.redstone_torch), 1, 0), new ItemStack(Items.iron_ingot, 1, 0),
+						null, new ItemStack(Items.stick, 1, 0), new ItemStack(Items.iron_ingot, 1, 0)
+				};
+			}
+		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.detector_rail))
+		{
+			// DEBUG
+			System.out.println("Divide by two counter = "+divideByTwoCounter);
+			if (divideByTwoCounter == 1)
+			{
+				decrementDivideByTwoCounter();
+				return new ItemStack[] {
+						new ItemStack(Items.iron_ingot, 1, 0), null, null,
+						new ItemStack(Items.iron_ingot, 1, 0), new ItemStack(Item.getItemFromBlock(Blocks.stone_pressure_plate), 1, 0), null,
+						new ItemStack(Items.iron_ingot, 1, 0), null, null
+				};
+			}
+			else if (divideByTwoCounter == 0)
+			{
+				decrementDivideByTwoCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Items.iron_ingot, 1, 0),
+						null, null, new ItemStack(Items.iron_ingot, 1, 0),
+						null, new ItemStack(Items.redstone), new ItemStack(Items.iron_ingot, 1, 0)
+				};
+			}
+		}
 
 		// else no adjustments needed
 		return parOutputItemStackArray ;
