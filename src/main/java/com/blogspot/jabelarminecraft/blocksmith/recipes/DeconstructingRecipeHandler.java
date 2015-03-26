@@ -232,17 +232,19 @@ public final class DeconstructingRecipeHandler
 			}
 		}
 
-		return adjustOutputQuantities(resultItemStackArray, parRecipe.getRecipeOutput().getItem());
+		return adjustOutputQuantities(resultItemStackArray, parRecipe.getRecipeOutput());
 	}
 
 	/**
 	 * Adjust those cases where the recipe can be divided down (e.g. one door gives back two blocks)
-	 * @param parItemStackArray should hold the regular recipe output item stack array
-	 * @param parItem 
+	 * @param parOutputItemStackArray should hold the regular recipe output item stack array
+	 * @param theItem 
 	 */
-	private static ItemStack[] adjustOutputQuantities(ItemStack[] parItemStackArray, Item parItem) 
+	private static ItemStack[] adjustOutputQuantities(ItemStack[] parOutputItemStackArray, ItemStack parInputItemStack) 
 	{
-		if (parItem == Items.oak_door)
+		Item theInputItem = parInputItemStack.getItem();
+		int theInputDamageValue = parInputItemStack.getItemDamage();
+		if (theInputItem == Items.oak_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
@@ -250,7 +252,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Items.spruce_door)
+		if (theInputItem == Items.spruce_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
@@ -258,7 +260,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Items.birch_door)
+		if (theInputItem == Items.birch_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
@@ -266,7 +268,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Items.jungle_door)
+		if (theInputItem == Items.jungle_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
@@ -274,7 +276,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Items.acacia_door)
+		if (theInputItem == Items.acacia_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
@@ -282,7 +284,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Items.dark_oak_door)
+		if (theInputItem == Items.dark_oak_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
@@ -290,7 +292,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Items.iron_door)
+		if (theInputItem == Items.iron_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Items.iron_ingot, 1, 0),
@@ -298,21 +300,21 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Items.paper)
+		if (theInputItem == Items.paper)
 		{
 			return new ItemStack[] {
 					new ItemStack(Items.reeds, 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Items.stick)
+		if (theInputItem == Items.stick)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		if (parItem == Item.getItemFromBlock(Blocks.ladder))
+		if (theInputItem == Item.getItemFromBlock(Blocks.ladder))
 		{
 			if (divideByThreeCounter <= 0)
 			{
@@ -346,7 +348,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (parItem == Item.getItemFromBlock(Blocks.oak_fence))
+		if (theInputItem == Item.getItemFromBlock(Blocks.oak_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0);
 			if (divideByThreeCounter == 2)
@@ -379,7 +381,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (parItem == Item.getItemFromBlock(Blocks.spruce_fence))
+		if (theInputItem == Item.getItemFromBlock(Blocks.spruce_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1);
 			if (divideByThreeCounter == 2)
@@ -412,7 +414,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (parItem == Item.getItemFromBlock(Blocks.birch_fence))
+		if (theInputItem == Item.getItemFromBlock(Blocks.birch_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2);
 			if (divideByThreeCounter == 2)
@@ -445,7 +447,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (parItem == Item.getItemFromBlock(Blocks.jungle_fence))
+		if (theInputItem == Item.getItemFromBlock(Blocks.jungle_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3);
 			if (divideByThreeCounter == 2)
@@ -478,7 +480,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (parItem == Item.getItemFromBlock(Blocks.acacia_fence))
+		if (theInputItem == Item.getItemFromBlock(Blocks.acacia_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4);
 			if (divideByThreeCounter == 2)
@@ -511,7 +513,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (parItem == Item.getItemFromBlock(Blocks.dark_oak_fence))
+		if (theInputItem == Item.getItemFromBlock(Blocks.dark_oak_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5);
 			if (divideByThreeCounter == 2)
@@ -544,7 +546,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (parItem == Items.enchanted_book)
+		if (theInputItem == Items.enchanted_book)
 		{
 			return new ItemStack[] {
 					null, 
@@ -558,9 +560,24 @@ public final class DeconstructingRecipeHandler
 					null
 			};
 		}
+		if (theInputItem == Item.getItemFromBlock(Blocks.nether_brick_fence))
+		{
+			return new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.nether_brick), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
+		}
+		if (theInputItem == Item.getItemFromBlock(Blocks.wooden_slab))
+		{
+			return new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theInputItem.getMetadata(parInputItemStack)),
+					null, null, null, null, null, null, null, null
+			};
+		}
+
 
 		// else no adjustments needed
-		return parItemStackArray ;
+		return parOutputItemStackArray ;
 	}
 	
 	public static void decrementDivideByThreeCounter()
@@ -627,9 +644,16 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.jungle_fence)
 								|| theItem == Item.getItemFromBlock(Blocks.acacia_fence)
 								|| theItem == Item.getItemFromBlock(Blocks.dark_oak_fence)
+								|| theItem == Item.getItemFromBlock(Blocks.nether_brick_fence)
 								)
 						{
 							return 1;
+						}
+						if (theItem == Items.paper
+								|| theItem == Item.getItemFromBlock(Blocks.wooden_slab)
+								)
+						{
+							return 2;
 						}
 						// DEBUG
 						System.out.println("No adjustment needed to recipe amount");
