@@ -845,17 +845,19 @@ public final class DeconstructingRecipeHandler
 						// prevent some deconstructions that aren't realistic (like paper into reeds)
 						if (!BlockSmith.allowDeconstructAllCraftable)
 						{
-							if (theItem == Items.paper
-							|| theItem == Items.melon_seeds
-							|| theItem == Items.bread
-							|| theItem == Items.cake
-							|| (!BlockSmith.allowHorseArmorCrafting
-							&& (   theItem == Items.saddle
-								|| theItem == Items.iron_horse_armor
-								|| theItem == Items.golden_horse_armor
-								|| theItem == Items.diamond_horse_armor
-								))
-							)
+							if (     theItem == Items.paper 
+							      || theItem == Items.melon_seeds
+								  || theItem == Items.pumpkin_seeds
+								  || theItem == Items.bread
+								  || theItem == Items.cake
+								  || (!BlockSmith.allowHorseArmorCrafting
+								        && (     theItem == Items.saddle
+								              || theItem == Items.iron_horse_armor
+										      || theItem == Items.golden_horse_armor
+										      || theItem == Items.diamond_horse_armor
+											)
+									  )
+								)
 							{
 								return 0;
 							}
