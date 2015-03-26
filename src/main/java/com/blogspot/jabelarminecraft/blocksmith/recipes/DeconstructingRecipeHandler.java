@@ -789,6 +789,54 @@ public final class DeconstructingRecipeHandler
 					new ItemStack(Item.getItemFromBlock(Blocks.stained_glass), 1, theInputItem.getMetadata(parInputItemStack))
 			};
 		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.cobblestone_wall)) 
+		{
+			return new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.cobblestone), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
+		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.quartz_block)) 
+		{
+			int quartzBlockType = theInputItem.getMetadata(parInputItemStack);
+			if (quartzBlockType == 0) // regular quartz block
+			{
+				return new ItemStack[] {
+						null, null, null,
+						new ItemStack(Items.quartz, 1, 0), new ItemStack(Items.quartz, 1, 0), null,
+						new ItemStack(Items.quartz, 1, 0), new ItemStack(Items.quartz, 1, 0), null
+				};
+			}
+			else if (quartzBlockType == 1) // chizeled quartz block
+			{
+				return new ItemStack[] {
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.stone_slab), 1, 7), null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.stone_slab), 1, 7), null
+				};
+			}
+			else if (quartzBlockType == 2 || quartzBlockType == 3 || quartzBlockType == 4) // pillar quartz block, any orientation
+			{
+				if (divideByTwoCounter == 1)
+				{
+					decrementDivideByTwoCounter();
+					return new ItemStack[] {
+							null, null, null,
+							null, null, null,
+							null, new ItemStack(Item.getItemFromBlock(Blocks.quartz_block), 1, 0), null
+					};
+				}
+				else if (divideByTwoCounter == 0)
+				{
+					decrementDivideByTwoCounter();
+					return new ItemStack[] {
+							null, null, null,
+							null, new ItemStack(Item.getItemFromBlock(Blocks.quartz_block), 1, 0), null,
+							null, null, null
+					};
+				}
+			}
+		}
 
 		// else no adjustments needed
 		return parOutputItemStackArray ;
@@ -882,6 +930,8 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.nether_brick_fence)
 								|| theItem == Items.sign
 								|| theItem == Items.glass_bottle
+								|| theItem == Item.getItemFromBlock(Blocks.cobblestone_wall)
+								|| theItem == Item.getItemFromBlock(Blocks.quartz_block)
 								)
 						{
 							return 1;
