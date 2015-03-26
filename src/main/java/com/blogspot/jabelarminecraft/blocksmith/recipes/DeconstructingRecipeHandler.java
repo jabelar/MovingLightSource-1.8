@@ -17,11 +17,16 @@ import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 
 public final class DeconstructingRecipeHandler
 {
-	public static int divideByTwoCounter = 1;
-	public static int divideByThreeCounter = 2;
-	public static int divideByFourCounter = 3;
+	public int divideByTwoCounter = 1;
+	public int divideByThreeCounter = 2;
+	public int divideByFourCounter = 3;
 	
-	public static ItemStack[] getDeconstructResults(ItemStack parItemStack)
+	public DeconstructingRecipeHandler()
+	{
+		
+	}
+	
+	public ItemStack[] getDeconstructResults(ItemStack parItemStack)
 	{
 		// DEBUG
 		System.out.println("Looking for deconstructing a recipe for "+parItemStack.getUnlocalizedName());
@@ -29,7 +34,7 @@ public final class DeconstructingRecipeHandler
 		// Allow recipes for some vanilla items that normally don't have recipes
 		Item theItem = parItemStack.getItem();
 		if (
-				theItem == Items.enchanted_book
+				   theItem == Items.enchanted_book
 				|| theItem == Items.iron_horse_armor // even though there is recipe, want to adjust wool color
 				|| theItem == Items.golden_horse_armor // even though there is recipe, want to adjust wool color
 				|| theItem == Items.diamond_horse_armor // even though there is recipe, want to adjust wool color
@@ -79,7 +84,7 @@ public final class DeconstructingRecipeHandler
 		return null;
 	}	
 	
-	public static ItemStack[] getCraftingGrid(Item parItem)
+	public ItemStack[] getCraftingGrid(Item parItem)
 	{
 		// Initialize the result array
 		ItemStack[] resultItemStackArray = new ItemStack[9];
@@ -140,17 +145,10 @@ public final class DeconstructingRecipeHandler
 					new ItemStack(Items.diamond, 1, 0)
 			};
 		}
-		else if (parItem == Items.potionitem)
-		{
-			resultItemStackArray = new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0),
-					null, null, null, null, null, null, null, null
-			};
-		}
 		return resultItemStackArray;
 	}
 	
-	public static ItemStack[] getCraftingGrid(IRecipe parRecipe)
+	public ItemStack[] getCraftingGrid(IRecipe parRecipe)
 	{
 		// Initialize the result array
 		ItemStack[] resultItemStackArray = new ItemStack[9];
@@ -242,10 +240,9 @@ public final class DeconstructingRecipeHandler
 	 * @param parOutputItemStackArray should hold the regular recipe output item stack array
 	 * @param theItem 
 	 */
-	private static ItemStack[] adjustOutputQuantities(ItemStack[] parOutputItemStackArray, ItemStack parInputItemStack) 
+	private ItemStack[] adjustOutputQuantities(ItemStack[] parOutputItemStackArray, ItemStack parInputItemStack) 
 	{
 		Item theInputItem = parInputItemStack.getItem();
-		int theInputDamageValue = parInputItemStack.getItemDamage();
 		if (theInputItem == Items.oak_door)
 		{
 			return new ItemStack[] {
@@ -682,12 +679,48 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null, null
 			};
 		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.rail))
+		{
+			// DEBUG
+			System.out.println("Divide by two counter = "+divideByTwoCounter);
+			if (divideByTwoCounter == 1)
+			{
+				decrementDivideByTwoCounter();
+				return new ItemStack[] {
+						new ItemStack(Items.iron_ingot, 1, 0), null, null,
+						new ItemStack(Items.iron_ingot, 1, 0), null, null,
+						new ItemStack(Items.iron_ingot, 1, 0), null, null
+				};
+			}
+			else if (divideByTwoCounter == 0)
+			{
+				decrementDivideByTwoCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Items.iron_ingot, 1, 0),
+						null, new ItemStack(Items.stick, 1, 0), new ItemStack(Items.iron_ingot, 1, 0),
+						null, null, new ItemStack(Items.iron_ingot, 1, 0)
+				};
+			}
+		}
 
 		// else no adjustments needed
 		return parOutputItemStackArray ;
 	}
 	
-	public static void decrementDivideByThreeCounter()
+	public void decrementDivideByTwoCounter()
+	{
+		// DEBUG
+		System.out.println("Decrementing divide by two counter with counter starting at "+divideByTwoCounter);
+		divideByTwoCounter--;
+		if (divideByTwoCounter<0)
+		{
+			divideByTwoCounter=1;
+		}				
+		// DEBUG
+		System.out.println("Decrementing divide by two counter with counter resulting in "+divideByTwoCounter);
+	}
+	
+	public void decrementDivideByThreeCounter()
 	{
 		divideByThreeCounter--;
 		if (divideByThreeCounter<0)
@@ -696,8 +729,8 @@ public final class DeconstructingRecipeHandler
 		}				
 	}
 	
-	public static int getStackSizeNeeded(ItemStack parItemStack)
-	{
+	public int getStackSizeNeeded(ItemStack parItemStack)
+	{		
 		Item theItem = parItemStack.getItem();
 		// Create recipes for some things that don't normally have them
 		if (
@@ -760,7 +793,6 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.nether_brick_fence)
 								|| theItem == Items.sign
 								|| theItem == Items.glass_bottle
-								|| theItem == Items.potionitem
 								)
 						{
 							return 1;
@@ -772,6 +804,15 @@ public final class DeconstructingRecipeHandler
 								)
 						{
 							return 2;
+						}
+						if (       theItem == Item.getItemFromBlock(Blocks.iron_bars)
+								|| theItem == Item.getItemFromBlock(Blocks.rail)
+								|| theItem == Item.getItemFromBlock(Blocks.golden_rail)
+								|| theItem == Item.getItemFromBlock(Blocks.activator_rail)
+								|| theItem == Item.getItemFromBlock(Blocks.detector_rail)
+								)
+						{
+							return 8;
 						}
 						// DEBUG
 						System.out.println("No adjustment needed to recipe amount");

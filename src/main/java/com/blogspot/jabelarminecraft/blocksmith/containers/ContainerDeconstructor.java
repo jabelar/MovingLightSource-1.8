@@ -25,6 +25,7 @@ public class ContainerDeconstructor extends Container
     public InventoryCrafting inputInventory = new InventoryCrafting(this, 1, 1);
     public int inputSlotNumber;
     public InventoryDeconstructResult outputInventory = new InventoryDeconstructResult();
+    public DeconstructingRecipeHandler deconstructingRecipeHandler;
     private final World worldObj;
     public InventoryPlayer playerInventory;
     public String resultString = I18n.format("deconstructing.result.ready");
@@ -39,6 +40,8 @@ public class ContainerDeconstructor extends Container
         y = parY;
         z = parZ;
         worldObj = parWorld;
+        
+        deconstructingRecipeHandler = new DeconstructingRecipeHandler();
         
         for(int outputSlotIndexX = 0; outputSlotIndexX < 3; ++outputSlotIndexX)
         {
@@ -77,8 +80,7 @@ public class ContainerDeconstructor extends Container
                 deconstructingState = State.READY;
                 return;
             }
-            ItemStack[] outputItemStackArray = DeconstructingRecipeHandler.getDeconstructResults(inputInventory.getStackInSlot(0));
-            int amountRequired = DeconstructingRecipeHandler.getStackSizeNeeded(inputInventory.getStackInSlot(0));
+            int amountRequired = deconstructingRecipeHandler.getStackSizeNeeded(inputInventory.getStackInSlot(0));
             // DEBUG
             System.out.println("Amount required = "+amountRequired);
 
@@ -89,10 +91,20 @@ public class ContainerDeconstructor extends Container
                 return;
             }
             
-            if (amountRequired <= 0 || outputItemStackArray == null)
+            if (amountRequired <= 0)
             {
                 resultString = I18n.format("deconstructing.result.impossible");
                 deconstructingState = State.ERROR;
+                return;
+            }
+            
+            ItemStack[] outputItemStackArray = deconstructingRecipeHandler.getDeconstructResults(inputInventory.getStackInSlot(0));
+
+            if (outputItemStackArray == null)
+            {
+                resultString = I18n.format("deconstructing.result.impossible");
+                deconstructingState = State.ERROR;
+                return;
             }
            
             // Loop while there is something in the input slot with sufficient amount

@@ -47,6 +47,7 @@ import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
 import com.blogspot.jabelarminecraft.blocksmith.materials.MaterialTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.proxy.CommonProxy;
+import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingRecipeHandler;
 
 @Mod(modid = 
       BlockSmith.MODID, 
@@ -117,10 +118,11 @@ public class BlockSmith
     }
     
     public static StatBasic deconstructedItemsStat;
+    
+    public static DeconstructingRecipeHandler deconstructingRecipeHandler;
 
     // instantiate the mod
     @Instance(MODID)
-    
     public static BlockSmith instance;
     
     // create custom creativetab for mod items

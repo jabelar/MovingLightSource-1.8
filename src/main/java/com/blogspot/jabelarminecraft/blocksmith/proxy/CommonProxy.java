@@ -59,6 +59,7 @@ import com.blogspot.jabelarminecraft.blocksmith.items.SpawnEgg;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageSyncEntityToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToServer;
+import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingRecipeHandler;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 import com.google.common.base.Predicates;
@@ -87,8 +88,6 @@ public class CommonProxy
 //        VillagerRegistry.instance().registerVillagerId(10);
 //		VillagerRegistry.instance().registerVillageTradeHandler(10, new VillageTradeHandlerMagicBeans());
 //		VillagerRegistry.getRegisteredVillagers();
-        registerDeconstructingPreInit(event);
-
     }
 
 	public void fmlLifeCycleEvent(FMLInitializationEvent event)
@@ -268,6 +267,8 @@ public class CommonProxy
     {
         // DEBUG
         System.out.println("Registering recipes");
+        
+        BlockSmith.deconstructingRecipeHandler = new DeconstructingRecipeHandler();
                
         // examples:
         //        GameRegistry.addRecipe(recipe);
@@ -467,17 +468,4 @@ public class CommonProxy
         BlockSmith.deconstructedItemsStat = (StatBasic) (new StatBasic("stat.deconstructeditems", new ChatComponentTranslation("stat.deconstructeditems", new Object[0])).registerStat());
 		
 	}
-
-	protected void registerDeconstructingPreInit(FMLPreInitializationEvent event)
-	{
-        BlockSmith.config = new Configuration(event.getSuggestedConfigurationFile());
-        BlockSmith.config.load();
-        BlockSmith.config.save();
-
-    }
-	
-//	protected void registerDeconstructingInit(FMLInitializationEvent event)
-//	{
-//        DeconstructingRecipeHandlers.load();
-//	}
 }
