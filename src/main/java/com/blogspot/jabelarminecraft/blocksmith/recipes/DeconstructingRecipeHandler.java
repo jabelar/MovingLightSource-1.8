@@ -92,15 +92,9 @@ public final class DeconstructingRecipeHandler
 		if (parItem == Items.enchanted_book)
 		{
 			resultItemStackArray = new ItemStack[] {
-					null,
-					new ItemStack(Items.paper, 1, 0),
-					null,
-					null,
-					new ItemStack(Items.paper, 1, 0),
-					null,
-					null,
-					new ItemStack(Items.paper, 1, 0),
-					null
+					null, new ItemStack(Items.leather, 1, 0), null,
+					new ItemStack(Items.paper, 1, 0), new ItemStack(Items.paper, 1, 0),	new ItemStack(Items.paper, 1, 0),
+					null, null, null
 			};
 		}
 		else if (parItem == Items.iron_horse_armor)
@@ -642,6 +636,37 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null, null
 			};
 		}
+		else if (theInputItem == Items.sign)
+		{
+			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0);
+			if (divideByThreeCounter == 2)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						planksItemStack, null, null,
+						planksItemStack, null, null, 
+						null, null, null
+				};
+			}
+			else if (divideByThreeCounter == 0)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, planksItemStack, null, 
+						null, planksItemStack, null, 
+						null, new ItemStack(Items.stick, 1, 0), null
+				};
+			}
+			else if (divideByThreeCounter == 1)
+			{
+				decrementDivideByThreeCounter();
+				return new ItemStack[] {
+						null, null, planksItemStack, 
+						null, null, planksItemStack,
+						null, null, null
+				};
+			}
+		}
 
 		// else no adjustments needed
 		return parOutputItemStackArray ;
@@ -718,6 +743,7 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.acacia_fence)
 								|| theItem == Item.getItemFromBlock(Blocks.dark_oak_fence)
 								|| theItem == Item.getItemFromBlock(Blocks.nether_brick_fence)
+								|| theItem == Items.sign
 								)
 						{
 							return 1;

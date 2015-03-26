@@ -206,7 +206,6 @@ public class CommonProxy
     	config.load();
         BlockSmith.allowDeconstructAllCraftable = config.get(Configuration.CATEGORY_GENERAL, "AllowDeconstructAllCraftable", false, "Allow unrealistic deconstruction").getBoolean(false);
         BlockSmith.allowHorseArmorCrafting = config.get(Configuration.CATEGORY_GENERAL, "AllowHorseArmorCrafting", true, "Allow crafting of horse armor and saddles").getBoolean(true);
-//        System.out.println("Giant is hostile = "+JnaeMod.configGiantIsHostile);
         
         // save is useful for the first run where config might not exist
         config.save();
