@@ -30,9 +30,9 @@ public final class DeconstructingRecipeHandler
 		Item theItem = parItemStack.getItem();
 		if (
 				theItem == Items.enchanted_book
-				|| theItem == Items.iron_horse_armor
-				|| theItem == Items.golden_horse_armor
-				|| theItem == Items.diamond_horse_armor
+				|| theItem == Items.iron_horse_armor // even though there is recipe, want to adjust wool color
+				|| theItem == Items.golden_horse_armor // even though there is recipe, want to adjust wool color
+				|| theItem == Items.diamond_horse_armor // even though there is recipe, want to adjust wool color
 				)
 		{
 			return getCraftingGrid(theItem);
@@ -97,6 +97,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null
 			};
 		}
+		// Even though horse armor has recipe, need to adjust the wool color when deconstructed
 		else if (parItem == Items.iron_horse_armor)
 		{
 			return new ItemStack[] {
@@ -137,6 +138,13 @@ public final class DeconstructingRecipeHandler
 					new ItemStack(Items.diamond, 1, 0),
 					new ItemStack(Items.diamond, 1, 0),
 					new ItemStack(Items.diamond, 1, 0)
+			};
+		}
+		else if (parItem == Items.potionitem)
+		{
+			resultItemStackArray = new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0),
+					null, null, null, null, null, null, null, null
 			};
 		}
 		return resultItemStackArray;
@@ -667,6 +675,13 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
+		else if (theInputItem == Items.glass_bottle)
+		{
+			return new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
+		}
 
 		// else no adjustments needed
 		return parOutputItemStackArray ;
@@ -744,6 +759,8 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.dark_oak_fence)
 								|| theItem == Item.getItemFromBlock(Blocks.nether_brick_fence)
 								|| theItem == Items.sign
+								|| theItem == Items.glass_bottle
+								|| theItem == Items.potionitem
 								)
 						{
 							return 1;
