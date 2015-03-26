@@ -17,10 +17,15 @@ import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 
 public final class DeconstructingRecipeHandler
 {
+	// Counters to allow fractional deconstruction
 	public int divideByTwoCounter = 1;
 	public int divideByThreeCounter = 2;
 	public int divideByFourCounter = 3;
 	public int divideByEightCounter = 7;
+	
+	// The item and meta data input to deconstructor
+	public Item theItem = null;
+	public int theMetadata = 0;
 	
 	public DeconstructingRecipeHandler()
 	{
@@ -33,7 +38,7 @@ public final class DeconstructingRecipeHandler
 		System.out.println("Looking for deconstructing a recipe for "+parItemStack.getUnlocalizedName());
 		
 		// Allow recipes for some vanilla items that normally don't have recipes
-		Item theItem = parItemStack.getItem();
+		theItem = parItemStack.getItem();
 		if (
 				   theItem == Items.enchanted_book
 				|| theItem == Items.iron_horse_armor // even though there is recipe, want to adjust wool color
@@ -243,9 +248,9 @@ public final class DeconstructingRecipeHandler
 	 */
 	private ItemStack[] adjustOutputQuantities(ItemStack[] parOutputItemStackArray, ItemStack parInputItemStack) 
 	{
-		Item theInputItem = parInputItemStack.getItem();
-		int theMetadata = theInputItem.getMetadata(parInputItemStack);
-		if (theInputItem == Items.oak_door)
+		theItem = parInputItemStack.getItem();
+		theMetadata = theItem.getMetadata(parInputItemStack);
+		if (theItem == Items.oak_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
@@ -253,7 +258,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Items.spruce_door)
+		if (theItem == Items.spruce_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
@@ -261,7 +266,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Items.birch_door)
+		else if (theItem == Items.birch_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
@@ -269,7 +274,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Items.jungle_door)
+		else if (theItem == Items.jungle_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
@@ -277,7 +282,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Items.acacia_door)
+		else if (theItem == Items.acacia_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
@@ -285,7 +290,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Items.dark_oak_door)
+		else if (theItem == Items.dark_oak_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
@@ -293,7 +298,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Items.iron_door)
+		else if (theItem == Items.iron_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Items.iron_ingot, 1, 0),
@@ -301,21 +306,21 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Items.paper)
+		else if (theItem == Items.paper)
 		{
 			return new ItemStack[] {
 					new ItemStack(Items.reeds, 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Items.stick)
+		else if (theItem == Items.stick)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.ladder))
+		else if (theItem == Item.getItemFromBlock(Blocks.ladder))
 		{
 			if (divideByThreeCounter <= 0)
 			{
@@ -349,7 +354,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.oak_fence))
+		else if (theItem == Item.getItemFromBlock(Blocks.oak_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0);
 			if (divideByThreeCounter == 2)
@@ -382,7 +387,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.spruce_fence))
+		else if (theItem == Item.getItemFromBlock(Blocks.spruce_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1);
 			if (divideByThreeCounter == 2)
@@ -415,7 +420,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.birch_fence))
+		else if (theItem == Item.getItemFromBlock(Blocks.birch_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2);
 			if (divideByThreeCounter == 2)
@@ -448,7 +453,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.jungle_fence))
+		else if (theItem == Item.getItemFromBlock(Blocks.jungle_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3);
 			if (divideByThreeCounter == 2)
@@ -481,7 +486,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.acacia_fence))
+		else if (theItem == Item.getItemFromBlock(Blocks.acacia_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4);
 			if (divideByThreeCounter == 2)
@@ -514,7 +519,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.dark_oak_fence))
+		else if (theItem == Item.getItemFromBlock(Blocks.dark_oak_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5);
 			if (divideByThreeCounter == 2)
@@ -547,7 +552,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Items.enchanted_book)
+		else if (theItem == Items.enchanted_book)
 		{
 			return new ItemStack[] {
 					null, 
@@ -561,21 +566,21 @@ public final class DeconstructingRecipeHandler
 					null
 			};
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.nether_brick_fence))
+		else if (theItem == Item.getItemFromBlock(Blocks.nether_brick_fence))
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.nether_brick), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.wooden_slab))
+		else if (theItem == Item.getItemFromBlock(Blocks.wooden_slab))
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.stone_slab))
+		else if (theItem == Item.getItemFromBlock(Blocks.stone_slab))
 		{
 			// Need to handle all the various subtypes
 			// Also need to handle upper and lower slabs (this is why I do bitwise mask with 7)
@@ -636,14 +641,14 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.stone_slab2)) // this is red sandstone slab
+		else if (theItem == Item.getItemFromBlock(Blocks.stone_slab2)) // this is red sandstone slab
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.red_sandstone), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Items.sign)
+		else if (theItem == Items.sign)
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0);
 			if (divideByThreeCounter == 2)
@@ -674,14 +679,14 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Items.glass_bottle)
+		else if (theItem == Items.glass_bottle)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.rail))
+		else if (theItem == Item.getItemFromBlock(Blocks.rail))
 		{
 			// DEBUG
 			System.out.println("Divide by two counter = "+divideByTwoCounter);
@@ -704,7 +709,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.golden_rail))
+		else if (theItem == Item.getItemFromBlock(Blocks.golden_rail))
 		{
 			// DEBUG
 			System.out.println("Divide by two counter = "+divideByTwoCounter);
@@ -727,7 +732,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.activator_rail))
+		else if (theItem == Item.getItemFromBlock(Blocks.activator_rail))
 		{
 			// DEBUG
 			System.out.println("Divide by two counter = "+divideByTwoCounter);
@@ -750,7 +755,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.detector_rail))
+		else if (theItem == Item.getItemFromBlock(Blocks.detector_rail))
 		{
 			// DEBUG
 			System.out.println("Divide by two counter = "+divideByTwoCounter);
@@ -773,7 +778,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.glass_pane))
+		else if (theItem == Item.getItemFromBlock(Blocks.glass_pane))
 		{
 			return new ItemStack[] {
 					null, null, null, null, null, null,
@@ -782,7 +787,7 @@ public final class DeconstructingRecipeHandler
 					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0)
 			};
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.stained_glass_pane))
+		else if (theItem == Item.getItemFromBlock(Blocks.stained_glass_pane))
 		{
 			return new ItemStack[] {
 					null, null, null, null, null, null,
@@ -791,14 +796,14 @@ public final class DeconstructingRecipeHandler
 					new ItemStack(Item.getItemFromBlock(Blocks.stained_glass), 1, theMetadata)
 			};
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.cobblestone_wall)) 
+		else if (theItem == Item.getItemFromBlock(Blocks.cobblestone_wall)) 
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.cobblestone), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.quartz_block)) 
+		else if (theItem == Item.getItemFromBlock(Blocks.quartz_block)) 
 		{
 			if (theMetadata == 0) // regular quartz block
 			{
@@ -838,9 +843,9 @@ public final class DeconstructingRecipeHandler
 				}
 			}
 		}
-		else if (theInputItem == Item.getItemFromBlock(Blocks.stained_hardened_clay))
+		else if (theItem == Item.getItemFromBlock(Blocks.stained_hardened_clay))
 		{
-			if (divideByFourCounter != 3)
+			if (divideByEightCounter != 3) 
 			{
 				decrementDivideByEightCounter();
 				return new ItemStack[] {
@@ -851,9 +856,11 @@ public final class DeconstructingRecipeHandler
 			}
 			else 
 			{
+				// DEBUG
+				System.out.println("Should output a dye");
 				decrementDivideByEightCounter();
 				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.clay), 1, 0), new ItemStack(Items.dye, 1, theMetadata), null,
+						new ItemStack(Item.getItemFromBlock(Blocks.clay), 1, 0), new ItemStack(Items.dye, 1, convertClayMetaToDyeMeta(theMetadata)), null,
 						null, null, null,
 						null, null, null
 				};
@@ -864,7 +871,13 @@ public final class DeconstructingRecipeHandler
 		return parOutputItemStackArray ;
 	}
 	
-	public void decrementDivideByTwoCounter()
+	private int convertClayMetaToDyeMeta(int parClayMeta)
+	{
+		// for some reason dye and clay have reversed sequence of meta data values
+		return 15-parClayMeta;
+	}
+	
+	private void decrementDivideByTwoCounter()
 	{
 		divideByTwoCounter--;
 		if (divideByTwoCounter<0)
@@ -873,7 +886,7 @@ public final class DeconstructingRecipeHandler
 		}				
 	}
 	
-	public void decrementDivideByThreeCounter()
+	private void decrementDivideByThreeCounter()
 	{
 		divideByThreeCounter--;
 		if (divideByThreeCounter<0)
@@ -882,7 +895,7 @@ public final class DeconstructingRecipeHandler
 		}				
 	}
 	
-	public void decrementDivideByFourCounter()
+	private void decrementDivideByFourCounter()
 	{
 		divideByFourCounter--;
 		if (divideByFourCounter<0)
