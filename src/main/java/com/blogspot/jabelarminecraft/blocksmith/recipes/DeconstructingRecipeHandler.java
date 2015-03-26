@@ -771,6 +771,24 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.glass_pane))
+		{
+			return new ItemStack[] {
+					null, null, null, null, null, null,
+					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0), 
+					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0), 
+					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0)
+			};
+		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.stained_glass_pane))
+		{
+			return new ItemStack[] {
+					null, null, null, null, null, null,
+					new ItemStack(Item.getItemFromBlock(Blocks.stained_glass), 1, theInputItem.getMetadata(parInputItemStack)), 
+					new ItemStack(Item.getItemFromBlock(Blocks.stained_glass), 1, theInputItem.getMetadata(parInputItemStack)), 
+					new ItemStack(Item.getItemFromBlock(Blocks.stained_glass), 1, theInputItem.getMetadata(parInputItemStack))
+			};
+		}
 
 		// else no adjustments needed
 		return parOutputItemStackArray ;
@@ -879,6 +897,8 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.golden_rail)
 								|| theItem == Item.getItemFromBlock(Blocks.activator_rail)
 								|| theItem == Item.getItemFromBlock(Blocks.detector_rail)
+								|| theItem == Item.getItemFromBlock(Blocks.glass_pane)
+								|| theItem == Item.getItemFromBlock(Blocks.stained_glass_pane)
 								)
 						{
 							return 8;
