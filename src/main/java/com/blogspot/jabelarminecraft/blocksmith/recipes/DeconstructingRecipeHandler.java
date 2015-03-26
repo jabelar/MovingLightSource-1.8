@@ -689,6 +689,12 @@ public final class DeconstructingRecipeHandler
 							|| theItem == Items.melon_seeds
 							|| theItem == Items.bread
 							|| theItem == Items.cake
+							|| (!BlockSmith.allowHorseArmorCrafting
+							&& (   theItem == Items.saddle
+								|| theItem == Items.iron_horse_armor
+								|| theItem == Items.golden_horse_armor
+								|| theItem == Items.diamond_horse_armor
+								))
 							)
 							{
 								return 0;

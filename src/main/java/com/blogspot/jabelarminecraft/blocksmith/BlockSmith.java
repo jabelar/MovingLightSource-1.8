@@ -77,7 +77,8 @@ public class BlockSmith
     // set up configuration properties (will be read from config file in preInit)
     public static File configFile;
     public static Configuration config;
-    public static Boolean allowDeconstructAllCraftable = false;
+    public static boolean allowDeconstructAllCraftable = false;
+    public static boolean allowHorseArmorCrafting = true;
     
     // instantiate materials
     public final static MaterialTanningRack materialTanningRack = new MaterialTanningRack();
