@@ -103,7 +103,7 @@ public final class DeconstructingRecipeHandler
 					null
 			};
 		}
-		if (parItem == Items.iron_horse_armor)
+		else if (parItem == Items.iron_horse_armor)
 		{
 			return new ItemStack[] {
 					null,
@@ -117,7 +117,7 @@ public final class DeconstructingRecipeHandler
 					new ItemStack(Items.iron_ingot, 1, 0)
 			};
 		}
-		if (parItem == Items.golden_horse_armor)
+		else if (parItem == Items.golden_horse_armor)
 		{
 			return new ItemStack[] {
 					null,
@@ -131,7 +131,7 @@ public final class DeconstructingRecipeHandler
 					new ItemStack(Items.gold_ingot, 1, 0)
 			};
 		}
-		if (parItem == Items.diamond_horse_armor)
+		else if (parItem == Items.diamond_horse_armor)
 		{
 			return new ItemStack[] {
 					null,
@@ -260,7 +260,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Items.birch_door)
+		else if (theInputItem == Items.birch_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
@@ -268,7 +268,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Items.jungle_door)
+		else if (theInputItem == Items.jungle_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
@@ -276,7 +276,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Items.acacia_door)
+		else if (theInputItem == Items.acacia_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
@@ -284,7 +284,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Items.dark_oak_door)
+		else if (theInputItem == Items.dark_oak_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
@@ -292,7 +292,7 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Items.iron_door)
+		else if (theInputItem == Items.iron_door)
 		{
 			return new ItemStack[] {
 					new ItemStack(Items.iron_ingot, 1, 0),
@@ -300,21 +300,21 @@ public final class DeconstructingRecipeHandler
 					null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Items.paper)
+		else if (theInputItem == Items.paper)
 		{
 			return new ItemStack[] {
 					new ItemStack(Items.reeds, 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Items.stick)
+		else if (theInputItem == Items.stick)
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.ladder))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.ladder))
 		{
 			if (divideByThreeCounter <= 0)
 			{
@@ -348,7 +348,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.oak_fence))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.oak_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0);
 			if (divideByThreeCounter == 2)
@@ -381,7 +381,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.spruce_fence))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.spruce_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1);
 			if (divideByThreeCounter == 2)
@@ -414,7 +414,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.birch_fence))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.birch_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2);
 			if (divideByThreeCounter == 2)
@@ -447,7 +447,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.jungle_fence))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.jungle_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3);
 			if (divideByThreeCounter == 2)
@@ -480,7 +480,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.acacia_fence))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.acacia_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4);
 			if (divideByThreeCounter == 2)
@@ -513,7 +513,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.dark_oak_fence))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.dark_oak_fence))
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5);
 			if (divideByThreeCounter == 2)
@@ -546,7 +546,7 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
-		if (theInputItem == Items.enchanted_book)
+		else if (theInputItem == Items.enchanted_book)
 		{
 			return new ItemStack[] {
 					null, 
@@ -560,21 +560,21 @@ public final class DeconstructingRecipeHandler
 					null
 			};
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.nether_brick_fence))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.nether_brick_fence))
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.nether_brick), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.wooden_slab))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.wooden_slab))
 		{
 			return new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theInputItem.getMetadata(parInputItemStack)),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		if (theInputItem == Item.getItemFromBlock(Blocks.stone_slab))
+		else if (theInputItem == Item.getItemFromBlock(Blocks.stone_slab))
 		{
 			// Need to handle all the various subtypes
 			// Also need to handle upper and lower slabs (this is why I do bitwise mask with 7)
@@ -635,6 +635,14 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
+		else if (theInputItem == Item.getItemFromBlock(Blocks.stone_slab2)) // this is red sandstone slab
+		{
+			return new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.red_sandstone), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
+		}
+
 		// else no adjustments needed
 		return parOutputItemStackArray ;
 	}
@@ -711,6 +719,7 @@ public final class DeconstructingRecipeHandler
 						if (theItem == Items.paper
 								|| theItem == Item.getItemFromBlock(Blocks.wooden_slab)
 								|| theItem == Item.getItemFromBlock(Blocks.stone_slab)
+								|| theItem == Item.getItemFromBlock(Blocks.stone_slab2)
 								)
 						{
 							return 2;
