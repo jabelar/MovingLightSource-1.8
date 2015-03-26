@@ -153,17 +153,11 @@ public class ContainerDeconstructor extends Container
                         outputInventory.setInventorySlotContents(i, newStack);
                     }
                 }
+
                 playerInventory.player.addStat(BlockSmith.deconstructedItemsStat, amountRequired);
                 playerInventory.player.triggerAchievement(BlockSmith.deconstructAny);
                 
-//                int i = inputInventory.getStackInSlot(0).stackSize - amountRequired;
                 inputInventory.decrStackSize(0, amountRequired);
-//                ItemStack newStack = null;
-//                if(i > 0)
-//                {
-//                    newStack = new ItemStack(inputInventory.getStackInSlot(0).getItem(), i, 0);
-//                }
-//                inputInventory.setInventorySlotContents(0, newStack);
             }
         }
         else
