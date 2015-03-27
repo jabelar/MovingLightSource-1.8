@@ -866,6 +866,246 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
+		else if (theItem == Item.getItemFromBlock(Blocks.oak_stairs))
+		{
+			theMetadata = 0;
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.spruce_stairs))
+		{
+			theMetadata = 1;
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.birch_stairs))
+		{
+			theMetadata = 2;
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.jungle_stairs))
+		{
+			theMetadata = 3;
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.acacia_stairs))
+		{
+			theMetadata = 4;
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.dark_oak_stairs))
+		{
+			theMetadata = 5;
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
+				};
+			}
+		}
 
 		// else no adjustments needed
 		return parOutputItemStackArray ;
@@ -933,8 +1173,6 @@ public final class DeconstructingRecipeHandler
 				// if found matching recipe
 				if (outputItemStack != null)
 				{					
-//					// DEBUG
-//					System.out.println("Checking if recipes match: "+outputItemStack.getUnlocalizedName()+" with "+parItemStack.getUnlocalizedName());
 					if (outputItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG
@@ -982,6 +1220,12 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.cobblestone_wall)
 								|| theItem == Item.getItemFromBlock(Blocks.quartz_block)
 								|| theItem == Item.getItemFromBlock(Blocks.stained_hardened_clay)
+								|| theItem == Item.getItemFromBlock(Blocks.oak_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.spruce_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.birch_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.jungle_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.acacia_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.dark_oak_stairs)
 								)
 						{
 							return 1;
@@ -1005,16 +1249,9 @@ public final class DeconstructingRecipeHandler
 						{
 							return 8;
 						}
-						// DEBUG
-						System.out.println("No adjustment needed to recipe amount");
 						return outputItemStack.stackSize;
 					}
 				}
-//				else
-//				{
-//					// DEBUG
-//					System.out.println("Recipe output stack is null!");
-//				}
 			}
 		}
 		// DEBUG
