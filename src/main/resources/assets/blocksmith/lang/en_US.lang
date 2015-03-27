@@ -7,6 +7,6 @@ container.compactor=Compactor
 item.cowhide.name=Cow Hide
 achievement.tanningahide=Tanned A Hide
 deconstructing.result.ready=
-deconstructing.result.impossible=No Recipe For This
+deconstructing.result.impossible=Cannot Deconstruct This
 deconstructing.result.needMoreStacks=Need %1$s more item(s).
 
