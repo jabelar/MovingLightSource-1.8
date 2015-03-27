@@ -1106,6 +1106,246 @@ public final class DeconstructingRecipeHandler
 				};
 			}
 		}
+		else if (theItem == Item.getItemFromBlock(Blocks.sandstone_stairs))
+		{
+			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.sandstone));
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, theItemStack,
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, theItemStack, theItemStack,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, theItemStack
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						theItemStack, theItemStack, null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.stone_stairs))
+		{
+			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.cobblestone));
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, theItemStack,
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, theItemStack, theItemStack,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, theItemStack
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						theItemStack, theItemStack, null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.nether_brick_stairs))
+		{
+			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.nether_brick));
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, theItemStack,
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, theItemStack, theItemStack,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, theItemStack
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						theItemStack, theItemStack, null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.red_sandstone_stairs))
+		{
+			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.red_sandstone));
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, theItemStack,
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, theItemStack, theItemStack,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, theItemStack
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						theItemStack, theItemStack, null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.stone_brick_stairs))
+		{
+			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.stonebrick));
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, theItemStack,
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, theItemStack, theItemStack,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, theItemStack
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						theItemStack, theItemStack, null
+				};
+			}
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.quartz_stairs))
+		{
+			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.quartz_block));
+			if (divideByFourCounter == 0) 
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, theItemStack,
+						null, null, null,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 1)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, theItemStack, theItemStack,
+						null, null, null
+				};
+			}
+			else if (divideByFourCounter == 2)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, null, theItemStack
+				};
+			}
+			else if (divideByFourCounter == 3)
+			{
+				decrementDivideByFourCounter();
+				return new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						theItemStack, theItemStack, null
+				};
+			}
+		}
 
 		// else no adjustments needed
 		return parOutputItemStackArray ;
@@ -1226,6 +1466,13 @@ public final class DeconstructingRecipeHandler
 								|| theItem == Item.getItemFromBlock(Blocks.jungle_stairs)
 								|| theItem == Item.getItemFromBlock(Blocks.acacia_stairs)
 								|| theItem == Item.getItemFromBlock(Blocks.dark_oak_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.stone_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.sandstone_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.nether_brick_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.red_sandstone_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.quartz_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.stone_brick_stairs)
+								|| theItem == Item.getItemFromBlock(Blocks.brick_stairs)
 								)
 						{
 							return 1;
