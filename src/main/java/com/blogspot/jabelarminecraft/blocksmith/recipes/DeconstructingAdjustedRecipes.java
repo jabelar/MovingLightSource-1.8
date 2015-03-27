@@ -16,6 +16,7 @@
 
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -51,54 +52,12 @@ public class DeconstructingAdjustedRecipes
 	{
 		theItem = parInputItemStack.getItem();
 		theMetadata = theItem.getMetadata(parInputItemStack);
-		if (theItem == Items.oak_door)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1),
-					null, null, null, null, null, null, null
-			};
-		}
-		if (theItem == Items.spruce_door)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1),
-					null, null, null, null, null, null, null
-			};
-		}
-		else if (theItem == Items.birch_door)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2),
-					null, null, null, null, null, null, null
-			};
-		}
-		else if (theItem == Items.jungle_door)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3),
-					null, null, null, null, null, null, null
-			};
-		}
-		else if (theItem == Items.acacia_door)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4),
-					null, null, null, null, null, null, null
-			};
-		}
-		else if (theItem == Items.dark_oak_door)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5),
-					null, null, null, null, null, null, null
-			};
-		}
+		if (theItem == Items.oak_door) return outputForWoodenDoor(0);
+		if (theItem == Items.spruce_door) return outputForWoodenDoor(1);
+		else if (theItem == Items.birch_door) return outputForWoodenDoor(2);
+		else if (theItem == Items.jungle_door) return outputForWoodenDoor(3);
+		else if (theItem == Items.acacia_door) return outputForWoodenDoor(4);
+		else if (theItem == Items.dark_oak_door) return outputForWoodenDoor(5);
 		else if (theItem == Items.iron_door)
 		{
 			return new ItemStack[] {
@@ -107,20 +66,8 @@ public class DeconstructingAdjustedRecipes
 					null, null, null, null, null, null, null
 			};
 		}
-		else if (theItem == Items.paper)
-		{
-			return new ItemStack[] {
-					new ItemStack(Items.reeds, 1, 0),
-					null, null, null, null, null, null, null, null
-			};
-		}
-		else if (theItem == Items.stick)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0),
-					null, null, null, null, null, null, null, null
-			};
-		}
+		else if (theItem == Items.paper) return outputSingle(Items.reeds);
+		else if (theItem == Items.stick) return outputSingle(Blocks.planks);
 		else if (theItem == Item.getItemFromBlock(Blocks.ladder))
 		{
 			if (divideByThreeCounter <= 0)
@@ -155,204 +102,12 @@ public class DeconstructingAdjustedRecipes
 				};
 			}
 		}
-		else if (theItem == Item.getItemFromBlock(Blocks.oak_fence))
-		{
-			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0);
-			if (divideByThreeCounter == 2)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null,
-						planksItemStack,
-						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null
-				};
-			}
-			else if (divideByThreeCounter == 1)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null, null, null,
-						new ItemStack(Items.stick, 1, 0), 
-						planksItemStack
-				};
-			}
-			else if (divideByThreeCounter == 0)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null,
-						planksItemStack,
-						planksItemStack,
-						null, null
-				};
-			}
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.spruce_fence))
-		{
-			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1);
-			if (divideByThreeCounter == 2)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null,
-						planksItemStack,
-						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null
-				};
-			}
-			else if (divideByThreeCounter == 1)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null, null, null,
-						new ItemStack(Items.stick, 1, 0), 
-						planksItemStack
-				};
-			}
-			else if (divideByThreeCounter == 0)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null,
-						planksItemStack,
-						planksItemStack,
-						null, null
-				};
-			}
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.birch_fence))
-		{
-			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2);
-			if (divideByThreeCounter == 2)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null,
-						planksItemStack,
-						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null
-				};
-			}
-			else if (divideByThreeCounter == 1)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null, null, null,
-						new ItemStack(Items.stick, 1, 0), 
-						planksItemStack
-				};
-			}
-			else if (divideByThreeCounter == 0)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null,
-						planksItemStack,
-						planksItemStack,
-						null, null
-				};
-			}
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.jungle_fence))
-		{
-			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3);
-			if (divideByThreeCounter == 2)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null,
-						planksItemStack,
-						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null
-				};
-			}
-			else if (divideByThreeCounter == 1)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null, null, null,
-						new ItemStack(Items.stick, 1, 0), 
-						planksItemStack
-				};
-			}
-			else if (divideByThreeCounter == 0)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null,
-						planksItemStack,
-						planksItemStack,
-						null, null
-				};
-			}
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.acacia_fence))
-		{
-			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4);
-			if (divideByThreeCounter == 2)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null,
-						planksItemStack,
-						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null
-				};
-			}
-			else if (divideByThreeCounter == 1)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null, null, null,
-						new ItemStack(Items.stick, 1, 0), 
-						planksItemStack
-				};
-			}
-			else if (divideByThreeCounter == 0)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null,
-						planksItemStack,
-						planksItemStack,
-						null, null
-				};
-			}
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.dark_oak_fence))
-		{
-			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5);
-			if (divideByThreeCounter == 2)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null,
-						planksItemStack,
-						new ItemStack(Items.stick, 1, 0), 
-						null, null, null, null
-				};
-			}
-			else if (divideByThreeCounter == 1)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null, null, null,
-						new ItemStack(Items.stick, 1, 0), 
-						planksItemStack
-				};
-			}
-			else if (divideByThreeCounter == 0)
-			{
-				decrementDivideByThreeCounter();
-				return new ItemStack[] {
-						null, null, null, null, null,
-						planksItemStack,
-						planksItemStack,
-						null, null
-				};
-			}
-		}
+		else if (theItem == Item.getItemFromBlock(Blocks.oak_fence)) return outputForWoodenFence(0);
+		else if (theItem == Item.getItemFromBlock(Blocks.spruce_fence)) return outputForWoodenFence(1);
+		else if (theItem == Item.getItemFromBlock(Blocks.birch_fence)) return outputForWoodenFence(2);
+		else if (theItem == Item.getItemFromBlock(Blocks.jungle_fence)) return outputForWoodenFence(3);
+		else if (theItem == Item.getItemFromBlock(Blocks.acacia_fence)) return outputForWoodenFence(4);
+		else if (theItem == Item.getItemFromBlock(Blocks.dark_oak_fence)) return outputForWoodenFence(5);
 		else if (theItem == Items.enchanted_book)
 		{
 			return new ItemStack[] {
@@ -367,88 +122,10 @@ public class DeconstructingAdjustedRecipes
 					null
 			};
 		}
-		else if (theItem == Item.getItemFromBlock(Blocks.nether_brick_fence))
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.nether_brick), 1, 0),
-					null, null, null, null, null, null, null, null
-			};
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.wooden_slab))
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-					null, null, null, null, null, null, null, null
-			};
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.stone_slab))
-		{
-			// Need to handle all the various subtypes
-			// Also need to handle upper and lower slabs (this is why I do bitwise mask with 7)
-			if ((theMetadata&7) == 0)
-			{
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.stone), 1, 0),
-						null, null, null, null, null, null, null, null
-				};
-			}
-			else if ((theMetadata&7) == 1)
-			{
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.sandstone), 1, 0),
-						null, null, null, null, null, null, null, null
-				};
-			}
-			else if ((theMetadata&7) == 2) // this is supposed to be "(stone) wooden slab" which I don't know what that is
-			{
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.stone), 1, 0),
-						null, null, null, null, null, null, null, null
-				};
-			}
-			else if ((theMetadata&7) == 3)
-			{
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.cobblestone), 1, 0),
-						null, null, null, null, null, null, null, null
-				};
-			}
-			else if ((theMetadata&7) == 4)
-			{
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.brick_block), 1, 0),
-						null, null, null, null, null, null, null, null
-				};
-			}
-			else if ((theMetadata&7) == 5)
-			{
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.stonebrick), 1, 0),
-						null, null, null, null, null, null, null, null
-				};
-			}
-			else if ((theMetadata&7) == 6)
-			{
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.nether_brick), 1, 0),
-						null, null, null, null, null, null, null, null
-				};
-			}
-			else if ((theMetadata&7) == 7)
-			{
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.quartz_block), 1, 0),
-						null, null, null, null, null, null, null, null
-				};
-			}
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.stone_slab2)) // this is red sandstone slab
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.red_sandstone), 1, 0),
-					null, null, null, null, null, null, null, null
-			};
-		}
+		else if (theItem == Item.getItemFromBlock(Blocks.nether_brick_fence)) return outputSingle(Blocks.nether_brick);
+		else if (theItem == Item.getItemFromBlock(Blocks.wooden_slab)) return outputSingle(Blocks.planks, theMetadata);
+		else if (theItem == Item.getItemFromBlock(Blocks.stone_slab)) return outputForStoneSlab();
+		else if (theItem == Item.getItemFromBlock(Blocks.stone_slab2)) return outputSingle(Blocks.red_sandstone);
 		else if (theItem == Items.sign)
 		{
 			ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0);
@@ -480,13 +157,7 @@ public class DeconstructingAdjustedRecipes
 				};
 			}
 		}
-		else if (theItem == Items.glass_bottle)
-		{
-			return new ItemStack[] {
-					new ItemStack(Item.getItemFromBlock(Blocks.glass), 1, 0),
-					null, null, null, null, null, null, null, null
-			};
-		}
+		else if (theItem == Items.glass_bottle) return outputSingle(Blocks.glass);
 		else if (theItem == Item.getItemFromBlock(Blocks.rail))
 		{
 			// DEBUG
@@ -597,131 +268,236 @@ public class DeconstructingAdjustedRecipes
 					new ItemStack(Item.getItemFromBlock(Blocks.stained_glass), 1, theMetadata)
 			};
 		}
-		else if (theItem == Item.getItemFromBlock(Blocks.cobblestone_wall)) 
+		else if (theItem == Item.getItemFromBlock(Blocks.cobblestone_wall)) return outputSingle(Blocks.cobblestone);
+		else if (theItem == Item.getItemFromBlock(Blocks.quartz_block)) return outputForQuartz();
+		else if (theItem == Item.getItemFromBlock(Blocks.stained_hardened_clay)) return outputForHardenedClay();
+		// Wooden stairs
+		else if (theItem == Item.getItemFromBlock(Blocks.oak_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0));
+		else if (theItem == Item.getItemFromBlock(Blocks.spruce_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1));
+		else if (theItem == Item.getItemFromBlock(Blocks.birch_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2));
+		else if (theItem == Item.getItemFromBlock(Blocks.jungle_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3));
+		else if (theItem == Item.getItemFromBlock(Blocks.acacia_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4));
+		else if (theItem == Item.getItemFromBlock(Blocks.dark_oak_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5));
+		// Stone stairs
+		else if (theItem == Item.getItemFromBlock(Blocks.sandstone_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.sandstone)));
+		else if (theItem == Item.getItemFromBlock(Blocks.stone_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.cobblestone)));
+		else if (theItem == Item.getItemFromBlock(Blocks.brick_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.brick_block)));
+		else if (theItem == Item.getItemFromBlock(Blocks.nether_brick_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.nether_brick)));
+		else if (theItem == Item.getItemFromBlock(Blocks.red_sandstone_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.red_sandstone)));
+		else if (theItem == Item.getItemFromBlock(Blocks.stone_brick_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.stonebrick)));
+		else if (theItem == Item.getItemFromBlock(Blocks.quartz_stairs)) return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.quartz_block)));
+
+		// else no adjustments needed
+		return parOutputItemStackArray ;
+	}
+	
+	private ItemStack[] outputSingle(Block parBlock)
+	{
+		return new ItemStack[] {
+				new ItemStack(Item.getItemFromBlock(parBlock)),
+				null, null, null, null, null, null, null, null
+		};
+	}
+
+	private ItemStack[] outputSingle(Item parItem)
+	{
+		return new ItemStack[] {
+				new ItemStack(parItem),
+				null, null, null, null, null, null, null, null
+		};
+	}
+		
+	private ItemStack[] outputSingle(Block parBlock, int parMetadata)
+	{
+		return new ItemStack[] {
+				new ItemStack(Item.getItemFromBlock(parBlock), 1, parMetadata),
+				null, null, null, null, null, null, null, null
+		};
+	}
+
+	private ItemStack[] outputSingle(Item parItem, int parMetadata)
+	{
+		return new ItemStack[] {
+				new ItemStack(parItem, 1, parMetadata),
+				null, null, null, null, null, null, null, null
+		};
+	}
+
+	private ItemStack[] outputForWoodenDoor(int parMetadata)
+	{
+		return new ItemStack[] {
+				new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, parMetadata),
+				new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, parMetadata),
+				null, null, null, null, null, null, null
+		};
+	}
+
+	private ItemStack[] outputForWoodenFence(int parMetadata)
+	{
+		ItemStack[] resultItemStackArray = initItemStackArray();
+		ItemStack planksItemStack = new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, parMetadata);
+		if (divideByThreeCounter == 2)
 		{
-			return new ItemStack[] {
+			decrementDivideByThreeCounter();
+			resultItemStackArray = new ItemStack[] {
+					null, null, null,
+					planksItemStack,
+					new ItemStack(Items.stick, 1, 0), 
+					null, null, null, null
+			};
+		}
+		else if (divideByThreeCounter == 1)
+		{
+			decrementDivideByThreeCounter();
+			resultItemStackArray = new ItemStack[] {
+					null, null, null, null, null, null, null,
+					new ItemStack(Items.stick, 1, 0), 
+					planksItemStack
+			};
+		}
+		else if (divideByThreeCounter == 0)
+		{
+			decrementDivideByThreeCounter();
+			resultItemStackArray = new ItemStack[] {
+					null, null, null, null, null,
+					planksItemStack,
+					planksItemStack,
+					null, null
+			};
+		}
+		return resultItemStackArray;
+	}
+
+	
+	private ItemStack[] outputForStoneSlab()
+	{
+		ItemStack[] resultItemStackArray = initItemStackArray();
+		// Need to handle all the various subtypes
+		// Also need to handle upper and lower slabs (this is why I do bitwise mask with 7)
+		if ((theMetadata&7) == 0)
+		{
+			resultItemStackArray = new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.stone), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
+		}
+		else if ((theMetadata&7) == 1)
+		{
+			resultItemStackArray = new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.sandstone), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
+		}
+		else if ((theMetadata&7) == 2) // this is supposed to be "(stone) wooden slab" which I don't know what that is
+		{
+			resultItemStackArray = new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.stone), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
+		}
+		else if ((theMetadata&7) == 3)
+		{
+			resultItemStackArray = new ItemStack[] {
 					new ItemStack(Item.getItemFromBlock(Blocks.cobblestone), 1, 0),
 					null, null, null, null, null, null, null, null
 			};
 		}
-		else if (theItem == Item.getItemFromBlock(Blocks.quartz_block)) 
+		else if ((theMetadata&7) == 4)
 		{
-			if (theMetadata == 0) // regular quartz block
-			{
-				return new ItemStack[] {
-						null, null, null,
-						new ItemStack(Items.quartz, 1, 0), new ItemStack(Items.quartz, 1, 0), null,
-						new ItemStack(Items.quartz, 1, 0), new ItemStack(Items.quartz, 1, 0), null
-				};
-			}
-			else if (theMetadata == 1) // chizeled quartz block
-			{
-				return new ItemStack[] {
-						null, null, null,
-						null, new ItemStack(Item.getItemFromBlock(Blocks.stone_slab), 1, 7), null,
-						null, new ItemStack(Item.getItemFromBlock(Blocks.stone_slab), 1, 7), null
-				};
-			}
-			else if (theMetadata == 2 || theMetadata == 3 || theMetadata == 4) // pillar quartz block, any orientation
-			{
-				if (divideByTwoCounter == 1)
-				{
-					decrementDivideByTwoCounter();
-					return new ItemStack[] {
-							null, null, null,
-							null, null, null,
-							null, new ItemStack(Item.getItemFromBlock(Blocks.quartz_block), 1, 0), null
-					};
-				}
-				else if (divideByTwoCounter == 0)
-				{
-					decrementDivideByTwoCounter();
-					return new ItemStack[] {
-							null, null, null,
-							null, new ItemStack(Item.getItemFromBlock(Blocks.quartz_block), 1, 0), null,
-							null, null, null
-					};
-				}
-			}
+			resultItemStackArray = new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.brick_block), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
 		}
-		else if (theItem == Item.getItemFromBlock(Blocks.stained_hardened_clay))
+		else if ((theMetadata&7) == 5)
 		{
-			if (divideByEightCounter != 3) 
-			{
-				decrementDivideByEightCounter();
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.clay), 1, 0), null, null,
-						null, null, null,
-						null, null, null
-				};
-			}
-			else 
-			{
-				// DEBUG
-				System.out.println("Should output a dye");
-				decrementDivideByEightCounter();
-				return new ItemStack[] {
-						new ItemStack(Item.getItemFromBlock(Blocks.clay), 1, 0), new ItemStack(Items.dye, 1, convertClayMetaToDyeMeta(theMetadata)), null,
-						null, null, null,
-						null, null, null
-				};
-			}
+			resultItemStackArray = new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.stonebrick), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
 		}
-		else if (theItem == Item.getItemFromBlock(Blocks.oak_stairs))
+		else if ((theMetadata&7) == 6)
 		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0));
+			resultItemStackArray = new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.nether_brick), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
 		}
-		else if (theItem == Item.getItemFromBlock(Blocks.spruce_stairs))
+		else if ((theMetadata&7) == 7)
 		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1));
+			resultItemStackArray = new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.quartz_block), 1, 0),
+					null, null, null, null, null, null, null, null
+			};
 		}
-		else if (theItem == Item.getItemFromBlock(Blocks.birch_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.jungle_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.acacia_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.dark_oak_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.sandstone_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.sandstone)));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.stone_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.cobblestone)));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.brick_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.brick_block)));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.nether_brick_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.nether_brick)));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.red_sandstone_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.red_sandstone)));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.stone_brick_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.stonebrick)));
-		}
-		else if (theItem == Item.getItemFromBlock(Blocks.quartz_stairs))
-		{
-			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.quartz_block)));
-		}
+		return resultItemStackArray;
+	}
 
-		// else no adjustments needed
-		return parOutputItemStackArray ;
+	private ItemStack[] outputForQuartz()
+	{
+		ItemStack[] resultItemStackArray = initItemStackArray();
+		if (theMetadata == 0) // regular quartz block
+		{
+			resultItemStackArray = new ItemStack[] {
+					null, null, null,
+					new ItemStack(Items.quartz, 1, 0), new ItemStack(Items.quartz, 1, 0), null,
+					new ItemStack(Items.quartz, 1, 0), new ItemStack(Items.quartz, 1, 0), null
+			};
+		}
+		else if (theMetadata == 1) // chizeled quartz block
+		{
+			resultItemStackArray = new ItemStack[] {
+					null, null, null,
+					null, new ItemStack(Item.getItemFromBlock(Blocks.stone_slab), 1, 7), null,
+					null, new ItemStack(Item.getItemFromBlock(Blocks.stone_slab), 1, 7), null
+			};
+		}
+		else if (theMetadata == 2 || theMetadata == 3 || theMetadata == 4) // pillar quartz block, any orientation
+		{
+			if (divideByTwoCounter == 1)
+			{
+				decrementDivideByTwoCounter();
+				resultItemStackArray = new ItemStack[] {
+						null, null, null,
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.quartz_block), 1, 0), null
+				};
+			}
+			else if (divideByTwoCounter == 0)
+			{
+				decrementDivideByTwoCounter();
+				resultItemStackArray = new ItemStack[] {
+						null, null, null,
+						null, new ItemStack(Item.getItemFromBlock(Blocks.quartz_block), 1, 0), null,
+						null, null, null
+				};
+			}
+		}
+		return resultItemStackArray;
+	}
+
+	private ItemStack[] outputForHardenedClay()
+	{
+		if (divideByEightCounter != 3) 
+		{
+			decrementDivideByEightCounter();
+			return new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.clay), 1, 0), null, null,
+					null, null, null,
+					null, null, null
+			};
+		}
+		else 
+		{
+			// DEBUG
+			System.out.println("Should output a dye");
+			decrementDivideByEightCounter();
+			return new ItemStack[] {
+					new ItemStack(Item.getItemFromBlock(Blocks.clay), 1, 0), new ItemStack(Items.dye, 1, convertClayMetaToDyeMeta(theMetadata)), null,
+					null, null, null,
+					null, null, null
+			};
+		}
 	}
 	
 	private ItemStack[] outputForStairs(ItemStack parOutputItemStack)
