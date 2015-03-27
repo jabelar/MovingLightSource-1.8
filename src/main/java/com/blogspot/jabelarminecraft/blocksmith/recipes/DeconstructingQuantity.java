@@ -16,9 +16,14 @@
 
 package com.blogspot.jabelarminecraft.blocksmith.recipes;
 
+import java.util.List;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 
@@ -28,6 +33,40 @@ import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
  */
 public class DeconstructingQuantity 
 {
+	public static int getStackSizeNeeded(ItemStack parItemStack)
+	{		
+		Item theItem = parItemStack.getItem();
+		// Create recipes for some things that don't normally have them
+		if (
+				theItem == Items.enchanted_book
+				)
+		{
+			return 1;
+		}
+		List<?> crafts = CraftingManager.getInstance().getRecipeList();
+		for(int i = 0;i<crafts.size();i++)
+		{
+			IRecipe recipe = (IRecipe) crafts.get(i);
+			if(recipe != null)
+			{
+				ItemStack outputItemStack = recipe.getRecipeOutput();
+				// if found matching recipe
+				if (outputItemStack != null)
+				{					
+					if (outputItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
+					{
+						// DEBUG
+						System.out.println("getStackSizeNeeded() found matching recipe");
+						return adjustQuantity(theItem, outputItemStack.stackSize);
+					}
+				}
+			}
+		}
+		// DEBUG
+		System.out.println("No matching recipe found!");
+		return 0; // no recipe found
+	}
+
 	public static int adjustQuantity(Item theItem, int parDefaultQuantity)
 	{
 		// prevent some deconstructions that aren't realistic (like paper into reeds)

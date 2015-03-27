@@ -37,34 +37,22 @@ public final class DeconstructingRecipeHandler
 		
 		// Allow recipes for some vanilla items that normally don't have recipes
 		theItem = parItemStack.getItem();
-		if (
-				   theItem == Items.enchanted_book
-				|| theItem == Items.iron_horse_armor // even though there is recipe, want to adjust wool color
-				|| theItem == Items.golden_horse_armor // even though there is recipe, want to adjust wool color
-				|| theItem == Items.diamond_horse_armor // even though there is recipe, want to adjust wool color
-				)
+		if (DeconstructingAddedRecipes.shouldAddRecipe(theItem))
 		{
-			return getCraftingGrid(theItem);
+			return DeconstructingAddedRecipes.getCraftingGrid(theItem);
 		}
 
 		// check all recipes for recipe for Itemstack
 		List<?> listAllRecipes = CraftingManager.getInstance().getRecipeList();
-//		// DEBUG
-//		System.out.println("DeconstructingManager getDeconstructResults() recipe list size = "+listAllRecipes.size());
 				
 		for(int i = 0;i<listAllRecipes.size();i++)
 		{
-//			// DEBUG
-//			System.out.println("Checking recipe number = "+i);
-			
 			IRecipe recipe = (IRecipe) listAllRecipes.get(i);
 			if(recipe != null)
 			{
 				ItemStack recipeKeyItemStack = recipe.getRecipeOutput();
 				if(recipeKeyItemStack!=null)
 				{
-//					// DEBUG
-//					System.out.println("Comparing with a recipe for "+recipeKeyItemStack.getUnlocalizedName()+" with input item = "+parItemStack.getUnlocalizedName());
 					if (recipeKeyItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
 					{
 						// DEBUG
@@ -72,86 +60,12 @@ public final class DeconstructingRecipeHandler
 						System.out.println("Recipe class is "+recipe.getClass().toString()+", adding crafting grid to list");
 						return getCraftingGrid(recipe);
 					}
-					else
-					{
-//						// DEBUG
-//						System.out.println("Recipe doesn't match item type");
-					}
 				}
-//				else
-//				{
-//					// DEBUG
-//					System.out.println("DeconstructingManager getDeconstructingResults() no recipe found for input item");
-//				}
 			}
 		}
 		return null;
 	}	
-	
-	public ItemStack[] getCraftingGrid(Item parItem)
-	{
-		// Initialize the result array
-		ItemStack[] resultItemStackArray = new ItemStack[9];
-		for(int j = 0;j<resultItemStackArray.length;j++)
-		{
-			resultItemStackArray[j] = null;
-		}
 		
-		// Create deconstructing recipes for things that don't have crafting recipes
-		if (parItem == Items.enchanted_book)
-		{
-			resultItemStackArray = new ItemStack[] {
-					null, new ItemStack(Items.leather, 1, 0), null,
-					new ItemStack(Items.paper, 1, 0), new ItemStack(Items.paper, 1, 0),	new ItemStack(Items.paper, 1, 0),
-					null, null, null
-			};
-		}
-		// Even though horse armor has recipe, need to adjust the wool color when deconstructed
-		else if (parItem == Items.iron_horse_armor)
-		{
-			return new ItemStack[] {
-					null,
-					null,
-					new ItemStack(Items.iron_ingot, 1, 0),
-					new ItemStack(Items.iron_ingot, 1, 0),
-					new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, 15),
-					new ItemStack(Items.iron_ingot, 1, 0),
-					new ItemStack(Items.iron_ingot, 1, 0),
-					new ItemStack(Items.iron_ingot, 1, 0),
-					new ItemStack(Items.iron_ingot, 1, 0)
-			};
-		}
-		else if (parItem == Items.golden_horse_armor)
-		{
-			return new ItemStack[] {
-					null,
-					null,
-					new ItemStack(Items.gold_ingot, 1, 0),
-					new ItemStack(Items.gold_ingot, 1, 0),
-					new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, 12),
-					new ItemStack(Items.gold_ingot, 1, 0),
-					new ItemStack(Items.gold_ingot, 1, 0),
-					new ItemStack(Items.gold_ingot, 1, 0),
-					new ItemStack(Items.gold_ingot, 1, 0)
-			};
-		}
-		else if (parItem == Items.diamond_horse_armor)
-		{
-			return new ItemStack[] {
-					null,
-					null,
-					new ItemStack(Items.diamond, 1, 0),
-					new ItemStack(Items.diamond, 1, 0),
-					new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, 11),
-					new ItemStack(Items.diamond, 1, 0),
-					new ItemStack(Items.diamond, 1, 0),
-					new ItemStack(Items.diamond, 1, 0),
-					new ItemStack(Items.diamond, 1, 0)
-			};
-		}
-		return resultItemStackArray;
-	}
-	
 	public ItemStack[] getCraftingGrid(IRecipe parRecipe)
 	{
 		// Initialize the result array
@@ -1393,36 +1307,7 @@ public final class DeconstructingRecipeHandler
 	
 	public int getStackSizeNeeded(ItemStack parItemStack)
 	{		
-		Item theItem = parItemStack.getItem();
-		// Create recipes for some things that don't normally have them
-		if (
-				theItem == Items.enchanted_book
-				)
-		{
-			return 1;
-		}
-		List<?> crafts = CraftingManager.getInstance().getRecipeList();
-		for(int i = 0;i<crafts.size();i++)
-		{
-			IRecipe recipe = (IRecipe) crafts.get(i);
-			if(recipe != null)
-			{
-				ItemStack outputItemStack = recipe.getRecipeOutput();
-				// if found matching recipe
-				if (outputItemStack != null)
-				{					
-					if (outputItemStack.getUnlocalizedName().equals(parItemStack.getUnlocalizedName()))
-					{
-						// DEBUG
-						System.out.println("getStackSizeNeeded() found matching recipe");
-						return DeconstructingQuantity.adjustQuantity(theItem, outputItemStack.stackSize);
-					}
-				}
-			}
-		}
-		// DEBUG
-		System.out.println("No matching recipe found!");
-		return 0; // no recipe found
+		return DeconstructingQuantity.getStackSizeNeeded(parItemStack);
 	}
 	
 }
