@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
+import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingInputQuantity;
 import com.blogspot.jabelarminecraft.blocksmith.recipes.DeconstructingRecipeHandler;
 
 public class ContainerDeconstructor extends Container
@@ -80,7 +81,7 @@ public class ContainerDeconstructor extends Container
                 deconstructingState = State.READY;
                 return;
             }
-            int amountRequired = deconstructingRecipeHandler.getStackSizeNeeded(inputInventory.getStackInSlot(0));
+            int amountRequired = DeconstructingInputQuantity.getStackSizeNeeded(inputInventory.getStackInSlot(0));
             // DEBUG
             System.out.println("Amount required = "+amountRequired);
 

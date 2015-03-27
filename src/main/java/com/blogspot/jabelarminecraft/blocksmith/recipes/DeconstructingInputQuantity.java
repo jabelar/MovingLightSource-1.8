@@ -31,7 +31,7 @@ import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
  * @author jabelar
  *
  */
-public class DeconstructingQuantity 
+public class DeconstructingInputQuantity 
 {
 	public static int getStackSizeNeeded(ItemStack parItemStack)
 	{		
