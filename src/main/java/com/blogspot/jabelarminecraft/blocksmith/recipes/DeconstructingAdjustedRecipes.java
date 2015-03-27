@@ -669,443 +669,51 @@ public class DeconstructingAdjustedRecipes
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.oak_stairs))
 		{
-			theMetadata = 0;
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 0));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.spruce_stairs))
 		{
-			theMetadata = 1;
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 1));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.birch_stairs))
 		{
-			theMetadata = 2;
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 2));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.jungle_stairs))
 		{
-			theMetadata = 3;
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 3));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.acacia_stairs))
 		{
-			theMetadata = 4;
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 4));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.dark_oak_stairs))
 		{
-			theMetadata = 5;
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata),
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata)
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, theMetadata), null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.planks), 1, 5));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.sandstone_stairs))
 		{
-			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.sandstone));
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, theItemStack,
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, theItemStack, theItemStack,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, theItemStack
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						theItemStack, theItemStack, null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.sandstone)));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.stone_stairs))
 		{
-			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.cobblestone));
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, theItemStack,
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, theItemStack, theItemStack,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, theItemStack
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						theItemStack, theItemStack, null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.cobblestone)));
+		}
+		else if (theItem == Item.getItemFromBlock(Blocks.brick_stairs))
+		{
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.brick_block)));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.nether_brick_stairs))
 		{
-			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.nether_brick));
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, theItemStack,
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, theItemStack, theItemStack,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, theItemStack
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						theItemStack, theItemStack, null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.nether_brick)));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.red_sandstone_stairs))
 		{
-			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.red_sandstone));
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, theItemStack,
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, theItemStack, theItemStack,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, theItemStack
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						theItemStack, theItemStack, null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.red_sandstone)));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.stone_brick_stairs))
 		{
-			ItemStack theItemStack = new ItemStack(Item.getItemFromBlock(Blocks.stonebrick));
-			if (divideByFourCounter == 0) 
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, theItemStack,
-						null, null, null,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 1)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, theItemStack, theItemStack,
-						null, null, null
-				};
-			}
-			else if (divideByFourCounter == 2)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						null, null, theItemStack
-				};
-			}
-			else if (divideByFourCounter == 3)
-			{
-				decrementDivideByFourCounter();
-				return new ItemStack[] {
-						null, null, null,
-						null, null, null,
-						theItemStack, theItemStack, null
-				};
-			}
+			return outputForStairs(new ItemStack(Item.getItemFromBlock(Blocks.stonebrick)));
 		}
 		else if (theItem == Item.getItemFromBlock(Blocks.quartz_stairs))
 		{
