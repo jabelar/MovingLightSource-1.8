@@ -34,20 +34,25 @@ import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 public class DeconstructingInputQuantity 
 {
 	public static int getStackSizeNeeded(ItemStack parItemStack)
-	{		
+	{
 		Item theItem = parItemStack.getItem();
 		// Create recipes for some things that don't normally have them
-		if (
-				theItem == Items.enchanted_book
-				)
+		if (BlockSmith.allowDeconstructEnchantedBooks)
 		{
-			return 1;
+		if (theItem == Items.enchanted_book)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 		List<?> crafts = CraftingManager.getInstance().getRecipeList();
-		for(int i = 0;i<crafts.size();i++)
+		for (int i = 0;i<crafts.size();i++)
 		{
 			IRecipe recipe = (IRecipe) crafts.get(i);
-			if(recipe != null)
+			if (recipe != null)
 			{
 				ItemStack outputItemStack = recipe.getRecipeOutput();
 				// if found matching recipe
@@ -70,20 +75,23 @@ public class DeconstructingInputQuantity
 	public static int adjustQuantity(Item theItem, int parDefaultQuantity)
 	{
 		// prevent some deconstructions that aren't realistic (like paper into reeds)
-		if (!BlockSmith.allowDeconstructAllCraftable)
+		if (!BlockSmith.allowDeconstructUnrealistic)
 		{
 			if (     theItem == Items.paper 
 			      || theItem == Items.melon_seeds
 				  || theItem == Items.pumpkin_seeds
 				  || theItem == Items.bread
 				  || theItem == Items.cake
-				  || (!BlockSmith.allowHorseArmorCrafting
-				        && (     theItem == Items.saddle
-				              || theItem == Items.iron_horse_armor
-						      || theItem == Items.golden_horse_armor
-						      || theItem == Items.diamond_horse_armor
-							)
-					  )
+				)
+			{
+				return 0;
+			}
+			if (!BlockSmith.allowHorseArmorCrafting && 
+					(    theItem == Items.saddle
+			          || theItem == Items.iron_horse_armor
+				      || theItem == Items.golden_horse_armor
+					  || theItem == Items.diamond_horse_armor
+					)
 				)
 			{
 				return 0;

@@ -202,10 +202,12 @@ public class CommonProxy
     public void syncConfig()
     {
     	config.load();
-        BlockSmith.allowDeconstructAllCraftable = config.get(Configuration.CATEGORY_GENERAL, "AllowDeconstructAllCraftable", false, "Allow unrealistic deconstruction").getBoolean(false);
+        BlockSmith.allowDeconstructUnrealistic = config.get(Configuration.CATEGORY_GENERAL, "AllowDeconstructAllCraftable", false, "Allow unrealistic deconstruction like pumpkins back from pumpkin seeds").getBoolean(false);
+        BlockSmith.allowDeconstructEnchantedBooks  = config.get(Configuration.CATEGORY_GENERAL, "AllowDeconstructEnchantedBooks", true, "Allow enchanted books to deconstruct like a regular book").getBoolean(true);
         BlockSmith.allowHorseArmorCrafting = config.get(Configuration.CATEGORY_GENERAL, "AllowHorseArmorCrafting", true, "Allow crafting of horse armor and saddles").getBoolean(true);
+        BlockSmith.allowPartialDeconstructing = config.get(Configuration.CATEGORY_GENERAL, "AllowPartialDeconstructing", true, "Allow deconstruction of stacks that are less than crafting output").getBoolean(true);
         
-        // save is useful for the first run where config might not exist
+        // save is useful for the first run where config might not exist, and doesn't hurt
         config.save();
     }
 
