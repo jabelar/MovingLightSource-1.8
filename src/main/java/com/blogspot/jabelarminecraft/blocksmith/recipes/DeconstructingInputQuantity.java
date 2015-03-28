@@ -37,9 +37,9 @@ public class DeconstructingInputQuantity
 	{
 		Item theItem = parItemStack.getItem();
 		// Create recipes for some things that don't normally have them
-		if (BlockSmith.allowDeconstructEnchantedBooks)
-		{
 		if (theItem == Items.enchanted_book)
+		{
+			if (BlockSmith.allowDeconstructEnchantedBooks)
 			{
 				return 1;
 			}
@@ -84,18 +84,28 @@ public class DeconstructingInputQuantity
 				  || theItem == Items.cake
 				)
 			{
+				// DEBUG
+				System.out.println("Triying to deconstruct unrealistic item when not allowed");
 				return 0;
 			}
-			if (!BlockSmith.allowHorseArmorCrafting && 
-					(    theItem == Items.saddle
-			          || theItem == Items.iron_horse_armor
-				      || theItem == Items.golden_horse_armor
-					  || theItem == Items.diamond_horse_armor
-					)
+		}
+		if (!BlockSmith.allowHorseArmorCrafting && 
+				(    theItem == Items.saddle
+		          || theItem == Items.iron_horse_armor
+			      || theItem == Items.golden_horse_armor
+				  || theItem == Items.diamond_horse_armor
 				)
-			{
-				return 0;
-			}
+			)
+		{
+			// DEBUG
+			System.out.println("Triying to deconstruct horse armor or saddle item when not allowed");
+			return 0;
+		}
+		if (!BlockSmith.allowPartialDeconstructing)
+		{
+			// DEBUG
+			System.out.println("Don't look for partial deconstruct recipe when not allowed");
+			return parDefaultQuantity;
 		}
 		if (       theItem == Items.oak_door
 				|| theItem == Items.spruce_door
