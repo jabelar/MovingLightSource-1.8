@@ -32,7 +32,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
-import com.blogspot.jabelarminecraft.blocksmith.utilities.MagicBeansUtilities;
+import com.blogspot.jabelarminecraft.blocksmith.utilities.Utilities;
 
 /**
  * @author jabelar
@@ -50,7 +50,7 @@ public class ItemCowHide extends Item
     @Override
     public String getItemStackDisplayName(ItemStack parItemStack) 
     {
-        return (MagicBeansUtilities.stringToRainbow(StatCollector.translateToLocal(getUnlocalizedNameInefficiently(parItemStack) + ".name")).trim());
+        return (Utilities.stringToRainbow(StatCollector.translateToLocal(getUnlocalizedNameInefficiently(parItemStack) + ".name")).trim());
     }
     
     /**

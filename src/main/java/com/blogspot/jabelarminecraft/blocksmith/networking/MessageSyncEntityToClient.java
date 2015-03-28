@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.entities.IEntity;
-import com.blogspot.jabelarminecraft.blocksmith.utilities.MagicBeansUtilities;
+import com.blogspot.jabelarminecraft.blocksmith.utilities.Utilities;
 
 /**
  * @author jabelar
@@ -74,7 +74,7 @@ public class MessageSyncEntityToClient implements IMessage
         public IMessage onMessage(MessageSyncEntityToClient message, MessageContext ctx) 
         {
         	EntityPlayer thePlayer = BlockSmith.proxy.getPlayerEntityFromContext(ctx);
-        	IEntity theEntity = (IEntity)MagicBeansUtilities.getEntityByID(message.entityId, thePlayer.worldObj);
+        	IEntity theEntity = (IEntity)Utilities.getEntityByID(message.entityId, thePlayer.worldObj);
         	// DEBUG
         	if (theEntity == null)
         	{

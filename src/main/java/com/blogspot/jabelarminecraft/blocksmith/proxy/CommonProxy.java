@@ -68,7 +68,6 @@ public class CommonProxy
 {
     
     protected int modEntityID = 0;
-    protected Configuration config;
      
     public void fmlLifeCycleEvent(FMLPreInitializationEvent event)
     { 
@@ -189,8 +188,7 @@ public class CommonProxy
         System.out.println(BlockSmith.MODNAME+" config path = "+BlockSmith.configFile.getAbsolutePath());
         System.out.println("Config file exists = "+BlockSmith.configFile.canRead());
         
-        config = new Configuration(BlockSmith.configFile);
-        BlockSmith.config = config;
+        BlockSmith.config = new Configuration(BlockSmith.configFile);
 
         syncConfig();
     }
@@ -201,14 +199,23 @@ public class CommonProxy
      */
     public void syncConfig()
     {
-    	config.load();
-        BlockSmith.allowDeconstructUnrealistic = config.get(Configuration.CATEGORY_GENERAL, "AllowDeconstructAllCraftable", false, "Allow unrealistic deconstruction like pumpkins back from pumpkin seeds").getBoolean(false);
-        BlockSmith.allowDeconstructEnchantedBooks  = config.get(Configuration.CATEGORY_GENERAL, "AllowDeconstructEnchantedBooks", true, "Allow enchanted books to deconstruct like a regular book").getBoolean(true);
-        BlockSmith.allowHorseArmorCrafting = config.get(Configuration.CATEGORY_GENERAL, "AllowHorseArmorCrafting", true, "Allow crafting of horse armor and saddles").getBoolean(true);
-        BlockSmith.allowPartialDeconstructing = config.get(Configuration.CATEGORY_GENERAL, "AllowPartialDeconstructing", true, "Allow deconstruction of stacks that are less than crafting output").getBoolean(true);
+    	BlockSmith.config.load();
+        BlockSmith.allowDeconstructUnrealistic = BlockSmith.config.get(Configuration.CATEGORY_GENERAL, "All Craftables Can Deconstruct", false, "Allow unrealistic deconstruction like pumpkins back from pumpkin seeds").getBoolean(false);
+        // DEBUG
+        System.out.println("Allow unrealistic deconstruction = "+BlockSmith.allowDeconstructUnrealistic);
+        BlockSmith.allowHorseArmorCrafting = BlockSmith.config.get(Configuration.CATEGORY_GENERAL, "Can Craft Horse Armor", true, "Allow crafting of horse armor and saddles").getBoolean(true);
+        // DEBUG
+        System.out.println("Allow horse armor crafting = "+BlockSmith.allowHorseArmorCrafting);
+        BlockSmith.allowDeconstructEnchantedBooks  = BlockSmith.config.get(Configuration.CATEGORY_GENERAL, "Can Deconstruct Enchanted Books", true, "Allow enchanted books to deconstruct like a regular book").getBoolean(true);
+        // DEBUG
+        System.out.println("Allow enchanted book deconstruction = "+BlockSmith.allowDeconstructEnchantedBooks);
+        BlockSmith.allowPartialDeconstructing = BlockSmith.config.get(Configuration.CATEGORY_GENERAL, "Allow Partial Deconstruction", true, "Allow deconstruction of stacks that are less than crafting output").getBoolean(true);
+        // DEBUG
+        System.out.println("Allow partial deconstruction = "+BlockSmith.allowPartialDeconstructing);
+
         
         // save is useful for the first run where config might not exist, and doesn't hurt
-        config.save();
+        BlockSmith.config.save();
     }
 
     /**

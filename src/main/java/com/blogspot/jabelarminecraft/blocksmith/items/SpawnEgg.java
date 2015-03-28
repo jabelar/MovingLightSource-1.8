@@ -45,7 +45,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
-import com.blogspot.jabelarminecraft.blocksmith.utilities.MagicBeansUtilities;
+import com.blogspot.jabelarminecraft.blocksmith.utilities.Utilities;
 
 /**
  * @author jabelar
@@ -258,7 +258,7 @@ public class SpawnEgg extends ItemMonsterPlacer
     // unless you specifically check for localization here and convert
     public String getItemStackDisplayName(ItemStack par1ItemStack)
     {
-        return MagicBeansUtilities.stringToRainbow("Spawn "+StatCollector.translateToLocal("entity."+BlockSmith.MODID+"."+entityToSpawnName+".name"));
+        return Utilities.stringToRainbow("Spawn "+StatCollector.translateToLocal("entity."+BlockSmith.MODID+"."+entityToSpawnName+".name"));
     }  
     
     public void setColors(int parColorBase, int parColorSpots)

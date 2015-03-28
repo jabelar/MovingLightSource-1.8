@@ -35,6 +35,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
+import com.blogspot.jabelarminecraft.blocksmith.utilities.Utilities;
 
 // Thanks to minalien tutoral at http://minalien.com/minecraft-forge-feature-spotlight-config-guis/
 public class GuiConfig extends net.minecraftforge.fml.client.config.GuiConfig 
@@ -43,9 +44,20 @@ public class GuiConfig extends net.minecraftforge.fml.client.config.GuiConfig
     {
         super(parent,
                 new ConfigElement(BlockSmith.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(),
-                BlockSmith.MODID, false, false, GuiConfig.getAbridgedConfigPath(BlockSmith.config.toString()));
+                BlockSmith.MODID, 
+                false, 
+                false, 
+                Utilities.stringToGolden("Craft The Way You Want", 7));
+    	titleLine2 = BlockSmith.configFile.getAbsolutePath();
     }
     
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+    	title = Utilities.stringToGolden("Craft The Way You Want", 7);
+    	super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+      
     @Override
     protected void actionPerformed(GuiButton button)
     {
