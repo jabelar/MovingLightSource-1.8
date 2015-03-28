@@ -12,6 +12,8 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
+
 public final class DeconstructingRecipeHandler
 {
 	// The item input to deconstructor
@@ -137,6 +139,13 @@ public final class DeconstructingRecipeHandler
 			}
 		}
 
+		if (BlockSmith.allowPartialDeconstructing)
+		{
 		return deconstructingAdjustedRecipes.adjustOutputQuantities(resultItemStackArray, parRecipe.getRecipeOutput());
+		}
+		else
+		{
+			return resultItemStackArray;
+		}
 	}
 }
