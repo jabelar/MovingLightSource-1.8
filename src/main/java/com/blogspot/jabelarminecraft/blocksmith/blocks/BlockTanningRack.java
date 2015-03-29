@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving.SpawnPlacementType;
@@ -41,6 +44,8 @@ import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
  */
 public class BlockTanningRack extends Block
 {
+	// create a property to allow animation of the block model
+    public static final PropertyBool TANNING_COMPLETE = PropertyBool.create("tanning_complete");
 
     public BlockTanningRack()
     {
@@ -79,7 +84,7 @@ public class BlockTanningRack extends Block
      * block is at the given coordinates. Args: blockAccess, x, y, z, side
      */
     @Override
-	public boolean isBlockSolid(IBlockAccess p_149747_1_, BlockPos parPos, EnumFacing parSide)
+	public boolean isBlockSolid(IBlockAccess parWorld, BlockPos parPos, EnumFacing parSide)
     {
         return getMaterial().isSolid();
     }
@@ -260,5 +265,43 @@ public class BlockTanningRack extends Block
 	public boolean isToolEffective(String parType, IBlockState parState)
     {
         return false;
+    }
+    
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
+    @Override
+	public IBlockState getStateFromMeta(int meta)
+    {
+    	if (meta == 0)
+    	{
+    		return getDefaultState().withProperty(TANNING_COMPLETE, false);
+    	}
+    	else
+    	{
+    		return getDefaultState().withProperty(TANNING_COMPLETE, true);
+    	}
+    }
+
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
+    @Override
+	public int getMetaFromState(IBlockState state)
+    {
+    	if ((Boolean)state.getValue(TANNING_COMPLETE))
+		{
+    		return 1;
+		}
+    	else
+    	{
+    		return 0;
+    	}
+    }
+
+    @Override
+	protected BlockState createBlockState()
+    {
+        return new BlockState(this, new IProperty[] {TANNING_COMPLETE});
     }
 }
