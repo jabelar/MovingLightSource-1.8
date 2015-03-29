@@ -3,7 +3,7 @@
     "textures": 
     {
         "particle": "blocks/lapis_block",
-        "leather": "blocksmith:items/cowhide",
+        "leather": "items/leather",
         "pole": "blocks/stone"
     },
    "elements":[  

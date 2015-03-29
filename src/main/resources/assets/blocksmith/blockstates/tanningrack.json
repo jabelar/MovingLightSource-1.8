@@ -2,6 +2,6 @@
     "variants": 
     {
         "tanning_complete=false": { "model": "blocksmith:tanningrack" },
-        "tanning_complete=true": { "model": "blocksmith:tanningrack" }
+        "tanning_complete=true": { "model": "blocksmith:tanningrackcomplete" }
     }
 }
