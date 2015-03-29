@@ -1,12 +1,19 @@
-{  
+{      
+
+    "textures": 
+    {
+        "particle": "blocks/lapis_block",
+        "leather": "items/leather",
+        "pole": "blocks/stone"
+    },
    "elements":[  
       { 
          "__comment":"The skin on the tanning rack", 
          "from":[ 4, 3, 7.5 ],
          "to":[ 12, 15, 7.5 ],
          "faces":{  
-            "north":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "south":{ "texture":"blocks/hardened_clay_stained_brown" }
+            "north":{ "uv": [ 0, 0, 15, 15 ], "texture":"#leather" },
+            "south":{ "uv": [ 0, 0, 15, 15 ],  "texture":"#leather" }
          }
       },
       {  
@@ -14,12 +21,12 @@
          "from":[ 13, 0, 7 ],
          "to":[ 15, 16, 8 ],
          "faces":{  
-            "down":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "up":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "north":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "south":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "west":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "east":{ "texture":"blocks/hardened_clay_stained_brown" }
+            "down":{ "texture":"#pole" },
+            "up":{ "texture": "#pole" },
+            "north":{ "texture":"#pole" },
+            "south":{ "texture":"#pole" },
+            "west":{ "texture":"#pole" },
+            "east":{ "texture":"#pole" }
          }
       },
       {  
@@ -27,12 +34,12 @@
          "from":[ 1, 0, 7 ],
          "to":[ 3, 16, 8 ],
          "faces":{  
-            "down":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "up":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "north":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "south":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "west":{ "texture":"blocks/hardened_clay_stained_brown" },
-            "east":{ "texture":"blocks/hardened_clay_stained_brown" }
+            "down":{ "texture": "#pole" },
+            "up":{ "texture": "#pole" },
+            "north":{ "texture": "#pole" },
+            "south":{ "texture": "#pole" },
+            "west":{ "texture": "#pole" },
+            "east":{ "texture": "#pole" }
          }
       }
    ]
