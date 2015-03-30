@@ -70,6 +70,8 @@ public class BlockTanningRack extends BlockContainer
 
     public static void changeBlockBasedOnTanningStatus(boolean parTanningComplete, World parWorld, BlockPos parBlockPos)
     {
+    	// DEBUG
+    	System.out.println("changeBlockBasedOnTanningStatus() with tanning complete = "+parTanningComplete);
         parWorld.setBlockState(parBlockPos, BlockSmith.blockTanningRack.getDefaultState().withProperty(TANNING_COMPLETE, parTanningComplete));
     }
     
@@ -87,12 +89,16 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
+    	// DEBUG
+    	System.out.println("onBlockPlaced()");
         return getDefaultState().withProperty(TANNING_COMPLETE, false);
     }
 
     @Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
+    	// DEBUG
+    	System.out.println("onBlockPlacedBy()");
         worldIn.setBlockState(pos, state.withProperty(TANNING_COMPLETE, false));
 
         if (stack.hasDisplayName())
@@ -330,10 +336,14 @@ public class BlockTanningRack extends BlockContainer
     {
     	if (meta == 0)
     	{
+    		// DEBUG
+    		System.out.println("getStateFromMeta with tanning complete = true");
     		return getDefaultState().withProperty(TANNING_COMPLETE, false);
     	}
     	else
     	{
+    		// DEBUG
+    		System.out.println("getStateFromMeta with tanning complete = true");
     		return getDefaultState().withProperty(TANNING_COMPLETE, true);
     	}
     }
@@ -346,10 +356,14 @@ public class BlockTanningRack extends BlockContainer
     {
     	if ((Boolean)state.getValue(TANNING_COMPLETE))
 		{
+    		// DEBUG
+    		System.out.println("getMetaFromState with tanning complete = true");
     		return 1;
 		}
     	else
     	{
+    		// DEBUG
+    		System.out.println("getMetaFromState with tanning complete = false");
     		return 0;
     	}
     }
@@ -357,6 +371,8 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	protected BlockState createBlockState()
     {
+    	// DEBUG
+    	System.out.println("createBlockState()");
         return new BlockState(this, new IProperty[] {TANNING_COMPLETE});
     }
 }
