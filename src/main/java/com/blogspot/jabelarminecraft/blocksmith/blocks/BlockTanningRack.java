@@ -58,6 +58,7 @@ public class BlockTanningRack extends BlockContainer
         super(BlockSmith.materialTanningRack);
         // DEBUG
         System.out.println("BlockTanningRack constructor");
+        setDefaultState(blockState.getBaseState().withProperty(TANNING_COMPLETE, false));
         // override default values of Block, where appropriate
         setUnlocalizedName("tanningrack");
         setCreativeTab(CreativeTabs.tabDecorations);
@@ -72,9 +73,17 @@ public class BlockTanningRack extends BlockContainer
 
     public static void changeBlockBasedOnTanningStatus(boolean parTanningComplete, World parWorld, BlockPos parBlockPos)
     {
-    	// DEBUG
-    	System.out.println("changeBlockBasedOnTanningStatus() with tanning complete = "+parTanningComplete);
-        parWorld.setBlockState(parBlockPos, BlockSmith.blockTanningRack.getDefaultState().withProperty(TANNING_COMPLETE, parTanningComplete));
+        IBlockState iBlockState = parWorld.getBlockState(parBlockPos);
+        TileEntity theTileEntity = parWorld.getTileEntity(parBlockPos);
+
+//    	// DEBUG
+//    	System.out.println("changeBlockBasedOnTanningStatus() with tanning complete = "+parTanningComplete);
+        parWorld.setBlockState(parBlockPos, BlockSmith.blockTanningRack.getDefaultState().withProperty(TANNING_COMPLETE, parTanningComplete), 3);
+        if (theTileEntity != null)
+        {
+            theTileEntity.validate();
+            parWorld.setTileEntity(parBlockPos, theTileEntity);
+        }
     }
     
     /**

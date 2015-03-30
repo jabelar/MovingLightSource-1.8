@@ -319,17 +319,19 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
             // started or stopped tanning, update block to change to active or inactive model
             if (hasBeenTanning != tanningSomething()) // the isTanning() value may have changed due to call to tanItem() earlier
             {
+            	// DEBUG
+            	System.out.println("Changed tanning state");
                 changedTanningState = true;
             }
             
             // if leather result is in output slot
             if (tanningRackItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] != null)
             {
-                BlockTanningRack.changeBlockBasedOnTanningStatus(true, worldObj, pos);
+                 BlockTanningRack.changeBlockBasedOnTanningStatus(true, worldObj, pos);
             }
             else
             {
-                BlockTanningRack.changeBlockBasedOnTanningStatus(true, worldObj, pos);
+                 BlockTanningRack.changeBlockBasedOnTanningStatus(false, worldObj, pos);
             }
         }
 
