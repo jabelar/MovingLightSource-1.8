@@ -23,6 +23,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityMooshroom;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -175,29 +177,37 @@ public class EventHandler
 		{
 			if (dropItem.getEntityItem().getItem() == Items.leather)
 			{
+				int stackSize = dropItem.getEntityItem().stackSize;
+
 				if (event.entityLiving instanceof EntityCow)
 				{
-					// DEBUG
-					System.out.println("Replacing leather drop with cowhide");
-					int stackSize = dropItem.getEntityItem().stackSize;
 					dropItem.setEntityItemStack(new ItemStack(BlockSmith.cowHide, stackSize));
 				}
 				if (event.entityLiving instanceof EntityHorse)
 				{
-					// DEBUG
-					System.out.println("Replacing leather drop with horsehide");
-					int stackSize = dropItem.getEntityItem().stackSize;
-					dropItem.setEntityItemStack(new ItemStack(BlockSmith.cowHide, stackSize));
+					dropItem.setEntityItemStack(new ItemStack(BlockSmith.horseHide, stackSize));
 				}
 				if (event.entityLiving instanceof EntityMooshroom)
 				{
-					// DEBUG
-					System.out.println("Replacing leather drop with cowhide");
-					int stackSize = dropItem.getEntityItem().stackSize;
 					dropItem.setEntityItemStack(new ItemStack(BlockSmith.cowHide, stackSize));
 				}
 			}
     	}
+    	
+		if (event.entityLiving instanceof EntityPig)
+		{
+			event.drops.add(new EntityItem(
+					event.entityLiving.worldObj, 
+					event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, 
+					new ItemStack(BlockSmith.pigSkin)));
+		}
+		else if (event.entityLiving instanceof EntitySheep)
+		{
+			event.drops.add(new EntityItem(
+					event.entityLiving.worldObj, 
+					event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, 
+					new ItemStack(BlockSmith.sheepSkin)));
+		}
     }
     
 //    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)

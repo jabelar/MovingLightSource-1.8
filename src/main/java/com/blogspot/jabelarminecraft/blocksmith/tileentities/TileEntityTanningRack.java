@@ -305,8 +305,8 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
                 // continue tanning
                 if (tanningSomething() && canGrind())
                 {
-	            	// DEBUG
-	            	System.out.println("TileEntityTanningRack update() continuing tanning");
+//	            	// DEBUG
+//	            	System.out.println("TileEntityTanningRack update() continuing tanning");
 	            	
                     ++ticksTanningItemSoFar;
                     
