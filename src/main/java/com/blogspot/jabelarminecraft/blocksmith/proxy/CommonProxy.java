@@ -61,6 +61,7 @@ import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToServer;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
+import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityTanningRack;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
 
@@ -265,6 +266,7 @@ public class CommonProxy
         System.out.println("Registering tile entities");
         GameRegistry.registerTileEntity(TileEntityGrinder.class, "tileEntityGrinder");               
         GameRegistry.registerTileEntity(TileEntityCompactor.class, "tileEntityCompactor");               
+        GameRegistry.registerTileEntity(TileEntityTanningRack.class, "tileEntityTanningRack");               
         // example: GameRegistry.registerTileEntity(TileEntityMagicBeanStalk.class, "tileEntityMagicBeanStalk");
     }
 

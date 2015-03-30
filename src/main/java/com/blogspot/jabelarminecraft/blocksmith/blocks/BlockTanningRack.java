@@ -19,15 +19,18 @@ package com.blogspot.jabelarminecraft.blocksmith.blocks;
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving.SpawnPlacementType;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -37,12 +40,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
+import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityTanningRack;
 
 /**
  * @author jabelar
  *
  */
-public class BlockTanningRack extends Block
+public class BlockTanningRack extends BlockContainer
 {
 	// create a property to allow animation of the block model
     public static final PropertyBool TANNING_COMPLETE = PropertyBool.create("tanning_complete");
@@ -62,6 +66,57 @@ public class BlockTanningRack extends Block
         lightOpacity = 20; // cast a light shadow
         setTickRandomly(false);
         useNeighborBrightness = false;
+    }
+
+    public static void changeBlockBasedOnTanningStatus(boolean parTanningComplete, World parWorld, BlockPos parBlockPos)
+    {
+        parWorld.setBlockState(parBlockPos, BlockSmith.blockTanningRack.getDefaultState().withProperty(TANNING_COMPLETE, parTanningComplete));
+    }
+    
+    /**
+     * Returns a new instance of a block's tile entity class. Called on placing the block.
+     */
+    @Override
+	public TileEntity createNewTileEntity(World worldIn, int meta)
+    {
+    	// DEBUG
+    	System.out.println("BlockTanningRack createNewTileEntity()");
+        return new TileEntityTanningRack();
+    }
+
+    @Override
+	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    {
+        return getDefaultState().withProperty(TANNING_COMPLETE, false);
+    }
+
+    @Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    {
+        worldIn.setBlockState(pos, state.withProperty(TANNING_COMPLETE, false));
+
+        if (stack.hasDisplayName())
+        {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+
+            if (tileentity instanceof TileEntityTanningRack)
+            {
+                ((TileEntityTanningRack)tileentity).setCustomInventoryName(stack.getDisplayName());
+            }
+        }
+    }
+
+    @Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+
+        if (tileentity instanceof TileEntityTanningRack)
+        {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityTanningRack)tileentity);
+            worldIn.updateComparatorOutputLevel(pos, this);
+        }
+        super.breakBlock(worldIn, pos, state);
     }
 
     @Override
