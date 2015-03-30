@@ -263,6 +263,7 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
     @Override
 	public void update()
     {
+        boolean hasBeenTanning = tanningSomething();
         boolean changedTanningState = false;
 
         if (tanningSomething())
@@ -305,7 +306,7 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
                     	
                         ticksTanningItemSoFar = 0;
                         ticksPerItem = timeToGrindOneItem(tanningRackItemStackArray[0]);
-                        grindItem();
+                        tanItem();
                         changedTanningState = true;
                     }
                 }
@@ -315,16 +316,11 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
                 }
             }
 
-        	// if something in output slot
-            if (tanningRackItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] != null)
+            // started or stopped tanning, update block to change to active or inactive model
+            if (hasBeenTanning != tanningSomething()) // the isTanning() value may have changed due to call to tanItem() earlier
             {
                 changedTanningState = true;
-                BlockTanningRack.changeBlockBasedOnTanningStatus(true, worldObj, pos);
-            }
-            else
-            {
-                changedTanningState = true;
-                BlockTanningRack.changeBlockBasedOnTanningStatus(false, worldObj, pos);
+                BlockTanningRack.changeBlockBasedOnTanningStatus(tanningSomething(), worldObj, pos);
             }
         }
 
@@ -340,7 +336,7 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
     }
 
     /**
-     * Returns true if the tanningRack can grind an item, i.e. has a source item, destination stack isn't full, etc.
+     * Returns true if the tanningRack can tan an item, i.e. has a source item, destination stack isn't full, etc.
      */
     private boolean canGrind()
     {
@@ -362,9 +358,9 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
     }
 
     /**
-     * Turn one item from the tanningRack source stack into the appropriate grinded item in the tanningRack result stack
+     * Turn one item from the tanningRack source stack into the appropriate taned item in the tanningRack result stack
      */
-    public void grindItem()
+    public void tanItem()
     {
         if (canGrind())
         {
@@ -407,7 +403,7 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
     @Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return index == slotEnum.INPUT_SLOT.ordinal() ? true : false; // can always put things in input (may not grind though) and can't put anything in output
+        return index == slotEnum.INPUT_SLOT.ordinal() ? true : false; // can always put things in input (may not tan though) and can't put anything in output
     }
 
     @Override

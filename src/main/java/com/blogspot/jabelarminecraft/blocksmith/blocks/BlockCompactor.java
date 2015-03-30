@@ -51,7 +51,7 @@ public class BlockCompactor extends BlockContainer
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     private final boolean isCompacting;
-    private static boolean hasTileEntity;
+    private boolean hasTileEntity;
 
     public BlockCompactor()
     {

@@ -45,8 +45,8 @@ public class GuiHandler implements IGuiHandler
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
-//		// DEBUG
-//		System.out.println("GuiHandler getClientGuiElement() with ID = "+ID);
+		// DEBUG
+		System.out.println("GuiHandler getClientGuiElement() with ID = "+ID);
         TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 
         if (tileEntity != null)
@@ -58,6 +58,10 @@ public class GuiHandler implements IGuiHandler
         	if (ID == BlockSmith.GUI_ENUM.COMPACTOR.ordinal())
         	{
                 return new GuiCompactor(player.inventory, (IInventory)tileEntity);
+        	}
+        	if (ID == BlockSmith.GUI_ENUM.TANNING_RACK.ordinal())
+        	{
+                return new GuiTanningRack(player.inventory, (IInventory)tileEntity);
         	}
        }
     	if (ID == BlockSmith.GUI_ENUM.DECONSTRUCTOR.ordinal())

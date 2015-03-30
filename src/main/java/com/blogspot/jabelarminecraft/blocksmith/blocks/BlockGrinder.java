@@ -51,7 +51,7 @@ public class BlockGrinder extends BlockContainer
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     private final boolean isGrinding;
-    private static boolean hasTileEntity;
+    private boolean hasTileEntity;
 
     public BlockGrinder()
     {

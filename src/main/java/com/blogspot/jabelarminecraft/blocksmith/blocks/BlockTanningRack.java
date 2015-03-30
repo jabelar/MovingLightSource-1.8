@@ -16,7 +16,6 @@
 
 package com.blogspot.jabelarminecraft.blocksmith.blocks;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
@@ -25,10 +24,11 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving.SpawnPlacementType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -50,6 +50,8 @@ public class BlockTanningRack extends BlockContainer
 {
 	// create a property to allow animation of the block model
     public static final PropertyBool TANNING_COMPLETE = PropertyBool.create("tanning_complete");
+    private boolean isTanning;
+    private boolean hasTileEntity;
 
     public BlockTanningRack()
     {
@@ -58,7 +60,7 @@ public class BlockTanningRack extends BlockContainer
         System.out.println("BlockTanningRack constructor");
         // override default values of Block, where appropriate
         setUnlocalizedName("tanningrack");
-        setCreativeTab(CreativeTabs.tabBlock);
+        setCreativeTab(CreativeTabs.tabDecorations);
         stepSound = soundTypeSnow;
         blockParticleGravity = 1.0F;
         slipperiness = 0.6F;
@@ -76,6 +78,47 @@ public class BlockTanningRack extends BlockContainer
     }
     
     /**
+     * Get the Item that this Block should drop when harvested.
+     *  
+     * @param fortune the level of the Fortune enchantment on the player's tool
+     */
+    @Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    {
+        return Item.getItemFromBlock(BlockSmith.blockTanningRack);
+    }
+
+    @Override
+	public void onBlockAdded(World parWorld, BlockPos parBlockPos, IBlockState parIBlockState)
+    {
+        if (!parWorld.isRemote)
+        {
+            parWorld.setBlockState(parBlockPos, parIBlockState.withProperty(TANNING_COMPLETE, false), 2);
+        }
+    }
+
+    @Override
+	@SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        // can create a particle effect here
+    }
+
+    @Override
+	public boolean onBlockActivated(World parWorld, BlockPos parBlockPos, IBlockState parIBlockState, EntityPlayer parPlayer, EnumFacing parSide, float hitX, float hitY, float hitZ)
+    {
+        if (!parWorld.isRemote)
+        {
+        	// DEBUG
+        	System.out.println("BlockTanningRack onBlockActivated() on server side");
+            parPlayer.openGui(BlockSmith.instance, BlockSmith.GUI_ENUM.TANNING_RACK.ordinal(), parWorld, parBlockPos.getX(), parBlockPos.getY(), parBlockPos.getZ()); 
+        }
+        
+        return true;
+    }
+
+
+    /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
     @Override
@@ -89,17 +132,12 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-    	// DEBUG
-    	System.out.println("onBlockPlaced()");
         return getDefaultState().withProperty(TANNING_COMPLETE, false);
     }
 
     @Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-    	// DEBUG
-    	System.out.println("onBlockPlacedBy()");
-        worldIn.setBlockState(pos, state.withProperty(TANNING_COMPLETE, false));
 
         if (stack.hasDisplayName())
         {
@@ -115,219 +153,58 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
-
-        if (tileentity instanceof TileEntityTanningRack)
+        if (!hasTileEntity)
         {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityTanningRack)tileentity);
-            worldIn.updateComparatorOutputLevel(pos, this);
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+
+            if (tileentity instanceof TileEntityTanningRack)
+            {
+                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityTanningRack)tileentity);
+                worldIn.updateComparatorOutputLevel(pos, this);
+            }
         }
+
         super.breakBlock(worldIn, pos, state);
     }
 
     @Override
-	@SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+	public boolean hasComparatorInputOverride()
     {
-        return EnumWorldBlockLayer.TRANSLUCENT;
-    }
-    
-    // Ensure that you can see through the translucent block properly, i.e. render inside sides.
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess parWorld, BlockPos parPos, EnumFacing parSide)
-    {
-    	return true;
-    }
-
-    /**
-     * Returns true if the given side of this block type should be rendered (if it's solid or not), if the adjacent
-     * block is at the given coordinates. Args: blockAccess, x, y, z, side
-     */
-    @Override
-	public boolean isBlockSolid(IBlockAccess parWorld, BlockPos parPos, EnumFacing parSide)
-    {
-        return getMaterial().isSolid();
-    }
-
-    /**
-     * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
-     * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
-     */
-    @Override
-	public boolean isOpaqueCube()
-    {
-        return getMaterial().isOpaque();
-    }
-
-    @Override
-	@SideOnly(Side.CLIENT)
-    public int getBlockColor()
-    {
-        return 0xFFFFFF; // white
-    }
-
-    /**
-     * Returns the mobility information of the block, 0 = free, 1 = can't push but can move over, 2 = total immobility
-     * and stop pistons
-     */
-    @Override
-	public int getMobilityFlag()
-    {
-        return getMaterial().getMaterialMobility();
-    }
-
-    /**
-     * Checks if the block is a solid face on the given side, used by placement logic.
-     *
-     * @param world The current world
-     * @param x X Position
-     * @param y Y position
-     * @param z Z position
-     * @param side The side to check
-     * @return True if the block is solid on the specified side.
-     */
-    @Override
-	public boolean isSideSolid(IBlockAccess world, BlockPos parPos, EnumFacing parSide)
-    {
-        return true; 
-    }
-    
-    @Override
-	public boolean isNormalCube()
-    {
-    	return true;
-    }
-    
-    @Override
-	public boolean isNormalCube(IBlockAccess parWorld, BlockPos parPos)
-    {
-    	return true;
-    }
-    
-
-    /**
-     * Determines if a new block can be replace the space occupied by this one,
-     * Used in the player's placement code to make the block act like water, and lava.
-     *
-     * @param world The current world
-     * @param x X Position
-     * @param y Y position
-     * @param z Z position
-     * @return True if the block is replaceable by another block
-     */
-    @Override
-	public boolean isReplaceable(World world, BlockPos parPos)
-    {
-        return getMaterial().isReplaceable();
-    }
-
-    /**
-     * Chance that fire will spread and consume this block.
-     * 300 being a 100% chance, 0, being a 0% chance.
-     *
-     * @param world The current world
-     * @param x The blocks X position
-     * @param y The blocks Y position
-     * @param z The blocks Z position
-     * @param face The face that the fire is coming from
-     * @return A number ranging from 0 to 300 relating used to determine if the block will be consumed by fire
-     */
-    @Override
-	public int getFlammability(IBlockAccess world, BlockPos parPos, EnumFacing parSide)
-    {
-        return 0;
-    }
-
-    /**
-     * Currently only called by fire when it is on top of this block.
-     * Returning true will prevent the fire from naturally dying during updating.
-     * Also prevents firing from dying from rain.
-     *
-     * @param world The current world
-     * @param x The blocks X position
-     * @param y The blocks Y position
-     * @param z The blocks Z position
-     * @param metadata The blocks current metadata
-     * @param side The face that the fire is coming from
-     * @return True if this block sustains fire, meaning it will never go out.
-     */
-    @Override
-	public boolean isFireSource(World parWorld, BlockPos parPos, EnumFacing parSide)
-    {
-        return false;
-    }
-
-    /**
-     * Metadata and fortune sensitive version, this replaces the old (int meta, Random rand)
-     * version in 1.1.
-     *
-     * @param meta Blocks Metadata
-     * @param fortune Current item fortune level
-     * @param random Random number generator
-     * @return The number of items to drop
-     */
-    @Override
-	public int quantityDropped(IBlockState parState, int parFortune, Random parRandom)
-    {
-        /**
-         * Returns the usual quantity dropped by the block plus a bonus of 1 to 'i' (inclusive).
-         */
-        return 0;
-    }
-
-    /**
-     * This returns a complete list of items dropped from this block.
-     *
-     * @param world The current world
-     * @param x X Position
-     * @param y Y Position
-     * @param z Z Position
-     * @param metadata Current metadata
-     * @param fortune Breakers fortune level
-     * @return A ArrayList containing all items this block drops
-     */
-    @Override
-	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos parPos, IBlockState parState, int parFortune)
-    {
-        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-        return ret;
-    }
-
-    @Override
-	public boolean canSilkHarvest(World parWorld, BlockPos parPos, IBlockState parState, EntityPlayer parPlayer)
-    {
-    	return false;
-    }
-
-    @Override
-	public boolean canCreatureSpawn(IBlockAccess parWorld, BlockPos parPos, SpawnPlacementType parType)
-    {
-    	// TODO
-    	// probably want to limit by creature type
         return true;
     }
 
     @Override
-	public boolean shouldCheckWeakPower(IBlockAccess parWorld, BlockPos parPos, EnumFacing parSide)
+	public int getComparatorInputOverride(World worldIn, BlockPos pos)
     {
-        return false;
+        return Container.calcRedstone(worldIn.getTileEntity(pos));
+    }
+
+    @Override
+	@SideOnly(Side.CLIENT)
+    public Item getItem(World worldIn, BlockPos pos)
+    {
+        return Item.getItemFromBlock(BlockSmith.blockTanningRack);
     }
 
     /**
-     * Checks if the specified tool type is efficient on this block, 
-     * meaning that it digs at full speed.
-     * 
-     * @param type
-     * @param metadata
-     * @return
+     * The type of render function that is called for this block
      */
     @Override
-	public boolean isToolEffective(String parType, IBlockState parState)
+	public int getRenderType()
     {
-        return false;
+        return 3;
     }
-    
+
+    /**
+     * Possibly modify the given BlockState before rendering it on an Entity (Minecarts, Endermen, ...)
+     */
+    @Override
+	@SideOnly(Side.CLIENT)
+    public IBlockState getStateForEntityRender(IBlockState state)
+    {
+        return state;
+    }
+
     /**
      * Convert the given metadata into a BlockState for this Block
      */
@@ -336,15 +213,12 @@ public class BlockTanningRack extends BlockContainer
     {
     	if (meta == 0)
     	{
-    		// DEBUG
-    		System.out.println("getStateFromMeta with tanning complete = true");
     		return getDefaultState().withProperty(TANNING_COMPLETE, false);
     	}
     	else
     	{
-    		// DEBUG
-    		System.out.println("getStateFromMeta with tanning complete = true");
     		return getDefaultState().withProperty(TANNING_COMPLETE, true);
+
     	}
     }
 
@@ -354,16 +228,12 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	public int getMetaFromState(IBlockState state)
     {
-    	if ((Boolean)state.getValue(TANNING_COMPLETE))
-		{
-    		// DEBUG
-    		System.out.println("getMetaFromState with tanning complete = true");
+    	if ((Boolean) state.getValue(TANNING_COMPLETE))
+        {
     		return 1;
-		}
+        }
     	else
     	{
-    		// DEBUG
-    		System.out.println("getMetaFromState with tanning complete = false");
     		return 0;
     	}
     }
@@ -371,8 +241,25 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	protected BlockState createBlockState()
     {
-    	// DEBUG
-    	System.out.println("createBlockState()");
         return new BlockState(this, new IProperty[] {TANNING_COMPLETE});
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public EnumWorldBlockLayer getBlockLayer()
+    {
+    	return EnumWorldBlockLayer.TRANSLUCENT;
+    }
+    
+    @Override
+	public boolean isBlockSolid(IBlockAccess parWorld, BlockPos parBlockPos, EnumFacing parSide)
+    {
+    	return getMaterial().isSolid();
+    }
+    
+    @Override
+	public boolean isOpaqueCube()
+    {
+    	return getMaterial().isOpaque();
     }
 }

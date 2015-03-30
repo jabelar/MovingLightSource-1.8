@@ -115,7 +115,7 @@ public class BlockSmith
     // enumerate guis
     public enum GUI_ENUM 
     {
-        GRINDER, COMPACTOR, DECONSTRUCTOR
+        GRINDER, COMPACTOR, DECONSTRUCTOR, TANNING_RACK
     }
     
     public static StatBasic deconstructedItemsStat;
