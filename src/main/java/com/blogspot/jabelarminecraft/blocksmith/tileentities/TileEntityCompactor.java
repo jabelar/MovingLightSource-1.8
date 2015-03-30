@@ -16,6 +16,7 @@
 
 package com.blogspot.jabelarminecraft.blocksmith.tileentities;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -26,7 +27,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -57,6 +60,15 @@ public class TileEntityCompactor extends TileEntityLockable implements IUpdatePl
     private int ticksCompactingItemSoFar;
     private int ticksPerItem;
     private String compactorCustomName;
+
+    /**
+     * This controls whether the tile entity gets replaced whenever the block state is changed.
+     */
+    @Override
+    public boolean shouldRefresh(World parWorld, BlockPos parPos, IBlockState parOldState, IBlockState parNewState)
+    {
+    	return false;
+    }
 
     /**
      * Returns the number of slots in the inventory.

@@ -45,6 +45,9 @@ import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockDeconstructor;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
+import com.blogspot.jabelarminecraft.blocksmith.items.ItemHorseHide;
+import com.blogspot.jabelarminecraft.blocksmith.items.ItemPigSkin;
+import com.blogspot.jabelarminecraft.blocksmith.items.ItemSheepSkin;
 import com.blogspot.jabelarminecraft.blocksmith.materials.MaterialTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.proxy.CommonProxy;
 
@@ -97,6 +100,9 @@ public class BlockSmith
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop
 	public final static ItemCowHide cowHide = new ItemCowHide();
+	public final static ItemSheepSkin sheepSkin = new ItemSheepSkin();
+	public final static ItemPigSkin pigSkin = new ItemPigSkin();
+	public final static ItemHorseHide horseHide = new ItemHorseHide();
     
 	// initiate spawn egg items
    

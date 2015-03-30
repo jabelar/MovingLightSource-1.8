@@ -255,6 +255,9 @@ public class CommonProxy
         System.out.println("Registering items");
 
         GameRegistry.registerItem(BlockSmith.cowHide, BlockSmith.cowHide.getUnlocalizedName().substring(5));
+        GameRegistry.registerItem(BlockSmith.sheepSkin, BlockSmith.sheepSkin.getUnlocalizedName().substring(5));
+        GameRegistry.registerItem(BlockSmith.pigSkin, BlockSmith.pigSkin.getUnlocalizedName().substring(5));
+        GameRegistry.registerItem(BlockSmith.horseHide, BlockSmith.horseHide.getUnlocalizedName().substring(5));
     }
     
     /**
