@@ -12,6 +12,7 @@ import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerDeconstructor;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerGrinder;
+import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerTanningRack;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -19,8 +20,8 @@ public class GuiHandler implements IGuiHandler
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) 
 	{ 
-//		// DEBUG
-//		System.out.println("GuiHandler getServerGuiElement() with ID = "+ID+" and deconstructor is ID "+BlockSmith.GUI_ENUM.DECONSTRUCTOR.ordinal());
+		// DEBUG
+		System.out.println("GuiHandler getServerGuiElement() with ID = "+ID+" and deconstructor is ID "+BlockSmith.GUI_ENUM.DECONSTRUCTOR.ordinal());
         TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 
         if (tileEntity != null)
@@ -32,6 +33,10 @@ public class GuiHandler implements IGuiHandler
         	if (ID == BlockSmith.GUI_ENUM.COMPACTOR.ordinal())
         	{
                 return new ContainerCompactor(player.inventory, (IInventory)tileEntity);
+        	}
+        	if (ID == BlockSmith.GUI_ENUM.TANNING_RACK.ordinal())
+        	{
+                return new ContainerTanningRack(player.inventory, (IInventory)tileEntity);
         	}
         }
     	if (ID == BlockSmith.GUI_ENUM.DECONSTRUCTOR.ordinal())
