@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerDeconstructor;
+import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerForge;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerTanningRack;
 
@@ -37,6 +38,10 @@ public class GuiHandler implements IGuiHandler
         	if (ID == BlockSmith.GUI_ENUM.TANNING_RACK.ordinal())
         	{
                 return new ContainerTanningRack(player.inventory, (IInventory)tileEntity);
+        	}
+        	if (ID == BlockSmith.GUI_ENUM.FORGE.ordinal())
+        	{
+                return new ContainerForge(player.inventory, (IInventory)tileEntity);
         	}
         }
     	if (ID == BlockSmith.GUI_ENUM.DECONSTRUCTOR.ordinal())
@@ -67,6 +72,10 @@ public class GuiHandler implements IGuiHandler
         	if (ID == BlockSmith.GUI_ENUM.TANNING_RACK.ordinal())
         	{
                 return new GuiTanningRack(player.inventory, (IInventory)tileEntity);
+        	}
+        	if (ID == BlockSmith.GUI_ENUM.FORGE.ordinal())
+        	{
+                return new GuiForge(player.inventory, (IInventory)tileEntity);
         	}
        }
     	if (ID == BlockSmith.GUI_ENUM.DECONSTRUCTOR.ordinal())

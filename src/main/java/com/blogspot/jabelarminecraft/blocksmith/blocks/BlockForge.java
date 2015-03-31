@@ -12,13 +12,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -63,21 +61,14 @@ public class BlockForge extends BlockFurnace
     @Override
 	public boolean onBlockActivated(World parWorld, BlockPos parBlockPos, IBlockState parIBlockState, EntityPlayer parPlayer, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (parWorld.isRemote)
+        if (!parWorld.isRemote)
         {
-            return true;
+        	// DEBUG
+        	System.out.println("onBlockActivated() on server side");
+            parPlayer.openGui(BlockSmith.instance, BlockSmith.GUI_ENUM.FORGE.ordinal(), parWorld, parBlockPos.getX(), parBlockPos.getY(), parBlockPos.getZ()); 
         }
-        else
-        {
-            TileEntity tileentity = parWorld.getTileEntity(parBlockPos);
-
-            if (tileentity instanceof TileEntityFurnace)
-            {
-                parPlayer.displayGUIChest((TileEntityFurnace)tileentity);
-            }
-
-            return true;
-        }
+        
+        return true;
     }
 
     public static void changeBlockState(boolean parLit, World parWorld, BlockPos parBlockPos)
@@ -109,7 +100,7 @@ public class BlockForge extends BlockFurnace
     @Override
 	public TileEntity createNewTileEntity(World worldIn, int meta)
     {
-        return new TileEntityFurnace();
+        return new TileEntityForge();
     }
 
     @Override
@@ -127,9 +118,9 @@ public class BlockForge extends BlockFurnace
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityFurnace)
+            if (tileentity instanceof TileEntityForge)
             {
-                ((TileEntityFurnace)tileentity).setCustomInventoryName(stack.getDisplayName());
+                ((TileEntityForge)tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -141,7 +132,7 @@ public class BlockForge extends BlockFurnace
 
             if (tileentity instanceof TileEntityForge)
             {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityFurnace)tileentity);
+                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityForge)tileentity);
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
         super.breakBlock(worldIn, pos, state);
@@ -163,7 +154,7 @@ public class BlockForge extends BlockFurnace
 	@SideOnly(Side.CLIENT)
     public Item getItem(World worldIn, BlockPos pos)
     {
-        return Item.getItemFromBlock(Blocks.furnace);
+        return Item.getItemFromBlock(BlockSmith.blockForge);
     }
 
     /**
