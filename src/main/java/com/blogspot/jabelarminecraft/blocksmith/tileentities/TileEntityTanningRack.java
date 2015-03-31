@@ -19,9 +19,11 @@ package com.blogspot.jabelarminecraft.blocksmith.tileentities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -33,6 +35,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.recipes.TanningRackRecipes;
@@ -336,14 +339,42 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
                 changedTanningState = true;
             }
             
-            // if leather result is in output slot
+            // if leather result is in output slot display it
             if (tanningRackItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] != null)
             {
                  BlockTanningRack.changeBlockBasedOnTanningStatus(6, worldObj, pos);
             }
-            else
+            else // display what is in input slot
             {
-                 BlockTanningRack.changeBlockBasedOnTanningStatus(0, worldObj, pos);
+            	if (tanningRackItemStackArray[slotEnum.INPUT_SLOT.ordinal()] != null)
+	            {
+            		Item inputItem = tanningRackItemStackArray[slotEnum.INPUT_SLOT.ordinal()].getItem();
+            		
+	            	if (inputItem == BlockSmith.cowHide)
+	            	{
+	                	BlockTanningRack.changeBlockBasedOnTanningStatus(1, worldObj, pos);
+	            	}
+	            	else if (inputItem == BlockSmith.sheepSkin)
+	            	{
+	                	BlockTanningRack.changeBlockBasedOnTanningStatus(2, worldObj, pos);
+	            	}
+	            	else if (inputItem == BlockSmith.pigSkin)
+	            	{
+	                	BlockTanningRack.changeBlockBasedOnTanningStatus(3, worldObj, pos);
+	            	}
+	            	else if (inputItem == BlockSmith.horseHide)
+	            	{
+	                	BlockTanningRack.changeBlockBasedOnTanningStatus(4, worldObj, pos);
+	            	}
+	            	else if (inputItem == Items.rabbit_hide)
+	            	{
+	                	BlockTanningRack.changeBlockBasedOnTanningStatus(5, worldObj, pos);
+	            	}
+            	}
+            	else
+            	{
+                	BlockTanningRack.changeBlockBasedOnTanningStatus(0, worldObj, pos);
+            	}
             }
         }
 
