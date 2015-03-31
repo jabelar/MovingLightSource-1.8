@@ -8,7 +8,7 @@
       {  
          "__comment":"The right post of the tanning rack", 
          "from":[ 13, 0, 7 ],
-         "to":[ 15, 16, 8 ],
+         "to":[ 15, 24, 8 ],
          "faces":{  
             "down":{ "texture":"#pole" },
             "up":{ "texture": "#pole" },
@@ -21,7 +21,7 @@
       {  
          "__comment":"The left post of the tanning rack",      
          "from":[ 1, 0, 7 ],
-         "to":[ 3, 16, 8 ],
+         "to":[ 3, 24, 8 ],
          "faces":{  
             "down":{ "texture": "#pole" },
             "up":{ "texture": "#pole" },

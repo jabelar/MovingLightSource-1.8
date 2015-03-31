@@ -68,6 +68,7 @@ public class BlockTanningRack extends BlockContainer
         lightOpacity = 20; // cast a light shadow
         setTickRandomly(false);
         useNeighborBrightness = false;
+        maxY = 1.5D; // make double height collision box
     }
 
     public static void changeBlockBasedOnTanningStatus(int parTanningIngredient, World parWorld, BlockPos parBlockPos)
@@ -201,7 +202,7 @@ public class BlockTanningRack extends BlockContainer
     {
         return 3;
     }
-
+    
     /**
      * Possibly modify the given BlockState before rendering it on an Entity (Minecarts, Endermen, ...)
      */

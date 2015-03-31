@@ -2,15 +2,14 @@
 
     "textures": 
     {
-        "particle": "blocks/lapis_block",
         "leather": "items/leather",
         "pole": "blocks/stone"
     },
    "elements":[  
       { 
          "__comment":"The skin on the tanning rack", 
-         "from":[ 3, 3, 7.5 ],
-         "to":[ 13, 15, 7.5 ],
+         "from":[ 3, 11, 7.5 ],
+         "to":[ 13, 23, 7.5 ],
          "faces":{  
             "north":{ "uv": [ 2, 2, 14, 14 ], "texture":"#leather" },
             "south":{ "uv": [ 2, 2, 14, 14 ],  "texture":"#leather" }
@@ -19,7 +18,7 @@
       {  
          "__comment":"The right post of the tanning rack", 
          "from":[ 13, 0, 7 ],
-         "to":[ 15, 16, 8 ],
+         "to":[ 15, 24, 8 ],
          "faces":{  
             "down":{ "texture":"#pole" },
             "up":{ "texture": "#pole" },
@@ -32,7 +31,7 @@
       {  
          "__comment":"The left post of the tanning rack",      
          "from":[ 1, 0, 7 ],
-         "to":[ 3, 16, 8 ],
+         "to":[ 3, 24, 8 ],
          "faces":{  
             "down":{ "texture": "#pole" },
             "up":{ "texture": "#pole" },
