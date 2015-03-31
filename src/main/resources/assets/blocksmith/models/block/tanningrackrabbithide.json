@@ -3,7 +3,7 @@
     "textures": 
     {
         "leather": "items/rabbit_hide",
-        "pole": "blocks/stone"
+        "pole": "blocks/log_big_oak"
     },
    "elements":[  
       { 

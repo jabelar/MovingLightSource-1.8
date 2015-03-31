@@ -161,6 +161,8 @@ public class ClientProxy extends CommonProxy
     	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockGrinder), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockGrinder.getUnlocalizedName().substring(5), "inventory"));
     	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockCompactor), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockCompactor.getUnlocalizedName().substring(5), "inventory"));
     	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockDeconstructor), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockDeconstructor.getUnlocalizedName().substring(5), "inventory"));
+    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockForge), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockForge.getUnlocalizedName().substring(5), "inventory"));
+    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockForgeLit), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockForgeLit.getUnlocalizedName().substring(5), "inventory"));
 	}
 	
 	/*	 

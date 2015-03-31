@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "blocksmith:forge" },
+        "facing=south": { "model": "blocksmith:forge", "y": 180 },
+        "facing=west":  { "model": "blocksmith:forge", "y": 270 },
+        "facing=east":  { "model": "blocksmith:forge", "y": 90 }
+    }
+}

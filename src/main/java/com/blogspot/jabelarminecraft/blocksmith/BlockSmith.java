@@ -42,6 +42,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockDeconstructor;
+import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockForge;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.blocks.BlockTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
@@ -95,7 +96,9 @@ public class BlockSmith
 	public final static BlockTanningRack blockTanningRack = new BlockTanningRack();
 	public final static BlockGrinder blockGrinder = new BlockGrinder();
 	public final static BlockCompactor blockCompactor = new BlockCompactor();
-    public static BlockDeconstructor blockDeconstructor = new BlockDeconstructor();
+    public final static BlockDeconstructor blockDeconstructor = new BlockDeconstructor();
+    public final static BlockForge blockForge = new BlockForge(false);
+    public final static BlockForge blockForgeLit = new BlockForge(true);
 	
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop

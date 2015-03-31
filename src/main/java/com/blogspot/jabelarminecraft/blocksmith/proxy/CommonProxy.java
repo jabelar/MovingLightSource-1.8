@@ -60,6 +60,7 @@ import com.blogspot.jabelarminecraft.blocksmith.networking.MessageSyncEntityToCl
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToServer;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityCompactor;
+import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityForge;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityTanningRack;
 import com.google.common.base.Predicates;
@@ -229,6 +230,8 @@ public class CommonProxy
     	GameRegistry.registerBlock(BlockSmith.blockGrinder, BlockSmith.blockGrinder.getUnlocalizedName().substring(5));
     	GameRegistry.registerBlock(BlockSmith.blockCompactor, BlockSmith.blockCompactor.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(BlockSmith.blockDeconstructor, BlockSmith.blockDeconstructor.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(BlockSmith.blockForge, BlockSmith.blockForge.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(BlockSmith.blockForgeLit, BlockSmith.blockForgeLit.getUnlocalizedName().substring(5));
     	
         // each instance of your block should have a name that is unique within your mod.  use lower case.
         // you don't need to register an item corresponding to the block, GameRegistry.registerBlock does this automatically.
@@ -270,6 +273,7 @@ public class CommonProxy
         GameRegistry.registerTileEntity(TileEntityGrinder.class, "tileEntityGrinder");               
         GameRegistry.registerTileEntity(TileEntityCompactor.class, "tileEntityCompactor");               
         GameRegistry.registerTileEntity(TileEntityTanningRack.class, "tileEntityTanningRack");               
+        GameRegistry.registerTileEntity(TileEntityForge.class, "tileEntityForge");               
         // example: GameRegistry.registerTileEntity(TileEntityMagicBeanStalk.class, "tileEntityMagicBeanStalk");
     }
 

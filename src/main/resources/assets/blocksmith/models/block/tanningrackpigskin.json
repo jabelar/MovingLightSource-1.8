@@ -3,7 +3,7 @@
     "textures": 
     {
         "leather": "blocksmith:items/pigskin",
-        "pole": "blocks/stone"
+        "pole": "blocks/log_big_oak"
     },
    "elements":[  
       { 
