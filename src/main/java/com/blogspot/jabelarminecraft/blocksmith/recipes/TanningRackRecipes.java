@@ -48,6 +48,7 @@ public class TanningRackRecipes
         addTanningRecipe(new ItemStack(BlockSmith.sheepSkin), new ItemStack(Items.leather), 0.7F);
         addTanningRecipe(new ItemStack(BlockSmith.pigSkin), new ItemStack(Items.leather), 0.7F);
         addTanningRecipe(new ItemStack(BlockSmith.horseHide), new ItemStack(Items.leather, 2), 0.7F);
+        addTanningRecipe(new ItemStack(Items.rabbit_hide, 4), new ItemStack(Items.leather, 1), 0.7F);
     }
 
     public void addTanningRecipe(ItemStack parItemStackIn, ItemStack parItemStackOut, float parExperience)
