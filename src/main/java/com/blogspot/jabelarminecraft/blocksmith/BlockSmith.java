@@ -98,7 +98,7 @@ public class BlockSmith
 	public final static BlockCompactor blockCompactor = new BlockCompactor();
     public final static BlockDeconstructor blockDeconstructor = new BlockDeconstructor();
     public final static BlockForge blockForge = new BlockForge(false);
-    public final static BlockForge blockForgeLit = new BlockForge(true);
+//    public final static BlockForge blockForgeLit = new BlockForge(true);
 	
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop

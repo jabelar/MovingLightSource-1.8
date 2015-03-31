@@ -7,6 +7,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -32,6 +33,8 @@ import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityForge;
  */
 public class BlockForge extends BlockFurnace
 {
+	// create a property to allow animation of the block model
+    public static final PropertyBool FORGE_LIT = PropertyBool.create("forge_lit");
 
 	public BlockForge(boolean parLit) 
 	{
@@ -73,19 +76,8 @@ public class BlockForge extends BlockFurnace
 
     public static void changeBlockState(boolean parLit, World parWorld, BlockPos parBlockPos)
     {
-        IBlockState iblockstate = parWorld.getBlockState(parBlockPos);
-        TileEntity tileentity = parWorld.getTileEntity(parBlockPos);
-
-        if (parLit)
-        {
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockForgeLit.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockForgeLit.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-        }
-        else
-        {
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockForge.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            parWorld.setBlockState(parBlockPos, BlockSmith.blockForge.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-        }
+    	TileEntity tileentity = parWorld.getTileEntity(parBlockPos);
+        parWorld.setBlockState(parBlockPos, BlockSmith.blockForge.getDefaultState().withProperty(FORGE_LIT, parLit));
 
         if (tileentity != null)
         {
@@ -182,14 +174,28 @@ public class BlockForge extends BlockFurnace
     @Override
 	public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
+    	IBlockState resultIBlockState = this.getDefaultState();
+    	int metaFacing = meta & 7;
+    	
+        EnumFacing enumfacing = EnumFacing.getFront(metaFacing);
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {
             enumfacing = EnumFacing.NORTH;
         }
 
-        return this.getDefaultState().withProperty(FACING, enumfacing);
+        resultIBlockState = resultIBlockState.withProperty(FACING, enumfacing);
+        
+        if ((meta & 8) > 0) // check for forge lit
+        {
+        	resultIBlockState = resultIBlockState.withProperty(FORGE_LIT, true);
+        }
+        else
+        {
+        	resultIBlockState = resultIBlockState.withProperty(FORGE_LIT, false);
+        }
+        
+        return resultIBlockState;
     }
 
     /**
@@ -198,13 +204,18 @@ public class BlockForge extends BlockFurnace
     @Override
 	public int getMetaFromState(IBlockState state)
     {
-        return ((EnumFacing)state.getValue(FACING)).getIndex();
+    	int resultMeta = ((EnumFacing)state.getValue(FACING)).getIndex();
+    	if ((Boolean)state.getValue(FORGE_LIT))
+    	{
+    		resultMeta += 8;
+    	}
+    	return resultMeta;
     }
 
     @Override
 	protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {FACING});
+        return new BlockState(this, new IProperty[] {FACING, FORGE_LIT});
     }
 
     @SideOnly(Side.CLIENT)
@@ -212,7 +223,6 @@ public class BlockForge extends BlockFurnace
     static final class SwitchEnumFacing
         {
             static final int[] field_180356_a = new int[EnumFacing.values().length];
-            private static final String __OBFID = "CL_00002111";
 
             static
             {

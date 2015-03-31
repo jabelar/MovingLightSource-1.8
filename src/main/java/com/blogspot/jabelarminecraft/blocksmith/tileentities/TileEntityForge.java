@@ -315,7 +315,7 @@ public class TileEntityForge extends TileEntityLockable implements IUpdatePlayer
             if (flag != isBurning())
             {
                 flag1 = true;
-                BlockForge.func_176446_a(isBurning(), worldObj, pos);
+                BlockForge.changeBlockState(isBurning(), worldObj, pos);
             }
         }
 
