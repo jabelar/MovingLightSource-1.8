@@ -339,11 +339,11 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
             // if leather result is in output slot
             if (tanningRackItemStackArray[slotEnum.OUTPUT_SLOT.ordinal()] != null)
             {
-                 BlockTanningRack.changeBlockBasedOnTanningStatus(true, worldObj, pos);
+                 BlockTanningRack.changeBlockBasedOnTanningStatus(6, worldObj, pos);
             }
             else
             {
-                 BlockTanningRack.changeBlockBasedOnTanningStatus(false, worldObj, pos);
+                 BlockTanningRack.changeBlockBasedOnTanningStatus(0, worldObj, pos);
             }
         }
 

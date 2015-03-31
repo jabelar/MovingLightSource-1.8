@@ -20,7 +20,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -49,8 +49,7 @@ import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityTanningRa
 public class BlockTanningRack extends BlockContainer
 {
 	// create a property to allow animation of the block model
-    public static final PropertyBool TANNING_COMPLETE = PropertyBool.create("tanning_complete");
-    private boolean isTanning;
+    public static final PropertyInteger TANNING_INGREDIENT = PropertyInteger.create("tanning_ingredient", 0, 6);
     private boolean hasTileEntity;
 
     public BlockTanningRack()
@@ -58,7 +57,7 @@ public class BlockTanningRack extends BlockContainer
         super(BlockSmith.materialTanningRack);
         // DEBUG
         System.out.println("BlockTanningRack constructor");
-        setDefaultState(blockState.getBaseState().withProperty(TANNING_COMPLETE, false));
+        setDefaultState(blockState.getBaseState().withProperty(TANNING_INGREDIENT, 0));
         // override default values of Block, where appropriate
         setUnlocalizedName("tanningrack");
         setCreativeTab(CreativeTabs.tabDecorations);
@@ -71,14 +70,13 @@ public class BlockTanningRack extends BlockContainer
         useNeighborBrightness = false;
     }
 
-    public static void changeBlockBasedOnTanningStatus(boolean parTanningComplete, World parWorld, BlockPos parBlockPos)
+    public static void changeBlockBasedOnTanningStatus(int parTanningIngredient, World parWorld, BlockPos parBlockPos)
     {
-        IBlockState iBlockState = parWorld.getBlockState(parBlockPos);
         TileEntity theTileEntity = parWorld.getTileEntity(parBlockPos);
 
 //    	// DEBUG
 //    	System.out.println("changeBlockBasedOnTanningStatus() with tanning complete = "+parTanningComplete);
-        parWorld.setBlockState(parBlockPos, BlockSmith.blockTanningRack.getDefaultState().withProperty(TANNING_COMPLETE, parTanningComplete), 3);
+        parWorld.setBlockState(parBlockPos, BlockSmith.blockTanningRack.getDefaultState().withProperty(TANNING_INGREDIENT, parTanningIngredient), 3);
         if (theTileEntity != null)
         {
             theTileEntity.validate();
@@ -102,7 +100,7 @@ public class BlockTanningRack extends BlockContainer
     {
         if (!parWorld.isRemote)
         {
-            parWorld.setBlockState(parBlockPos, parIBlockState.withProperty(TANNING_COMPLETE, false), 2);
+            parWorld.setBlockState(parBlockPos, parIBlockState.withProperty(TANNING_INGREDIENT, 0), 2);
         }
     }
 
@@ -141,7 +139,7 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        return getDefaultState().withProperty(TANNING_COMPLETE, false);
+        return getDefaultState().withProperty(TANNING_INGREDIENT, 0);
     }
 
     @Override
@@ -220,15 +218,7 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	public IBlockState getStateFromMeta(int meta)
     {
-    	if (meta == 0)
-    	{
-    		return getDefaultState().withProperty(TANNING_COMPLETE, false);
-    	}
-    	else
-    	{
-    		return getDefaultState().withProperty(TANNING_COMPLETE, true);
-
-    	}
+    	return getDefaultState().withProperty(TANNING_INGREDIENT, meta);
     }
 
     /**
@@ -237,20 +227,13 @@ public class BlockTanningRack extends BlockContainer
     @Override
 	public int getMetaFromState(IBlockState state)
     {
-    	if ((Boolean) state.getValue(TANNING_COMPLETE))
-        {
-    		return 1;
-        }
-    	else
-    	{
-    		return 0;
-    	}
+    	return (Integer) state.getValue(TANNING_INGREDIENT);
     }
 
     @Override
 	protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {TANNING_COMPLETE});
+        return new BlockState(this, new IProperty[] {TANNING_INGREDIENT});
     }
 
     @Override

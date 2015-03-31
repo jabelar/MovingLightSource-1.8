@@ -35,7 +35,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -115,39 +114,35 @@ public class BlockGrinder extends BlockContainer
 
     @Override
 	@SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void randomDisplayTick(World parWorld, BlockPos parBlockPos, IBlockState parIBlockState, Random parRand)
     {
-        if (isGrinding)
-        {
-            EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
-            double d0 = pos.getX() + 0.5D;
-            double d1 = pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
-            double d2 = pos.getZ() + 0.5D;
-            double d3 = 0.52D;
-            double d4 = rand.nextDouble() * 0.6D - 0.3D;
-
-            switch (BlockGrinder.SwitchEnumFacing.enumFacingArray[enumfacing.ordinal()])
-            {
-                case 1:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-                    break;
-                case 2:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-                    break;
-                case 3:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
-                    break;
-                case 4:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
-                    break;
-			default:
-				break;
-            }
-        }
+//        if (isGrinding)
+//        {
+//            EnumFacing enumfacing = (EnumFacing)parIBlockState.getValue(FACING);
+//            double d0 = parBlockPos.getX() + 0.5D;
+//            double d1 = parBlockPos.getY() + parRand.nextDouble() * 6.0D / 16.0D;
+//            double d2 = parBlockPos.getZ() + 0.5D;
+//            double d3 = 0.52D;
+//            double d4 = parRand.nextDouble() * 0.6D - 0.3D;
+//
+//            switch (BlockGrinder.SwitchEnumFacing.enumFacingArray[enumfacing.ordinal()])
+//            {
+//                case 1:
+//                    parWorld.spawnParticle(EnumParticleTypes.CLOUD, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+//                    break;
+//                case 2:
+//                    parWorld.spawnParticle(EnumParticleTypes.CLOUD, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+//                    break;
+//                case 3:
+//                    parWorld.spawnParticle(EnumParticleTypes.CLOUD, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
+//                    break;
+//                case 4:
+//                    parWorld.spawnParticle(EnumParticleTypes.CLOUD, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
+//                    break;
+//			default:
+//				break;
+//            }
+//        }
     }
 
     @Override
