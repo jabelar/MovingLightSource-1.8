@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -207,7 +208,7 @@ public class BlockForge extends BlockFurnace
     	int resultMeta = ((EnumFacing)state.getValue(FACING)).getIndex();
     	if ((Boolean)state.getValue(FORGE_LIT))
     	{
-    		resultMeta += 8;
+    		resultMeta = resultMeta | 8;
     	}
     	return resultMeta;
     }
@@ -218,49 +219,83 @@ public class BlockForge extends BlockFurnace
         return new BlockState(this, new IProperty[] {FACING, FORGE_LIT});
     }
 
-    @SideOnly(Side.CLIENT)
-
-    static final class SwitchEnumFacing
+    @Override
+	@SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World parWorld, BlockPos parBlockPos, IBlockState parIBlockState, Random rand)
+    {
+        if ((Boolean)parIBlockState.getValue(FORGE_LIT))
         {
-            static final int[] field_180356_a = new int[EnumFacing.values().length];
+        	// DEBUG
+        	System.out.println("randomDisplayTick with forge lit = true");
+            EnumFacing enumfacing = (EnumFacing)parIBlockState.getValue(FACING);
+            double d0 = parBlockPos.getX() + 0.5D;
+            double d1 = parBlockPos.getY() + rand.nextDouble() * 6.0D / 16.0D;
+            double d2 = parBlockPos.getZ() + 0.5D;
+            double d3 = 0.52D;
+            double d4 = rand.nextDouble() * 0.6D - 0.3D;
 
-            static
+            switch (BlockForge.SwitchEnumFacing.field_180356_a[enumfacing.ordinal()])
             {
-                try
-                {
-                    field_180356_a[EnumFacing.WEST.ordinal()] = 1;
-                }
-                catch (NoSuchFieldError var4)
-                {
-                    ;
-                }
-
-                try
-                {
-                    field_180356_a[EnumFacing.EAST.ordinal()] = 2;
-                }
-                catch (NoSuchFieldError var3)
-                {
-                    ;
-                }
-
-                try
-                {
-                    field_180356_a[EnumFacing.NORTH.ordinal()] = 3;
-                }
-                catch (NoSuchFieldError var2)
-                {
-                    ;
-                }
-
-                try
-                {
-                    field_180356_a[EnumFacing.SOUTH.ordinal()] = 4;
-                }
-                catch (NoSuchFieldError var1)
-                {
-                    ;
-                }
+                case 1:
+                    parWorld.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    parWorld.spawnParticle(EnumParticleTypes.FLAME, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    break;
+                case 2:
+                    parWorld.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    parWorld.spawnParticle(EnumParticleTypes.FLAME, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    break;
+                case 3:
+                    parWorld.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
+                    parWorld.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
+                    break;
+                case 4:
+                    parWorld.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
+                    parWorld.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
             }
         }
+    }
+    @SideOnly(Side.CLIENT)
+    static final class SwitchEnumFacing
+    {
+        static final int[] field_180356_a = new int[EnumFacing.values().length];
+
+        static
+        {
+            try
+            {
+                field_180356_a[EnumFacing.WEST.ordinal()] = 1;
+            }
+            catch (NoSuchFieldError var4)
+            {
+                ;
+            }
+
+            try
+            {
+                field_180356_a[EnumFacing.EAST.ordinal()] = 2;
+            }
+            catch (NoSuchFieldError var3)
+            {
+                ;
+            }
+
+            try
+            {
+                field_180356_a[EnumFacing.NORTH.ordinal()] = 3;
+            }
+            catch (NoSuchFieldError var2)
+            {
+                ;
+            }
+
+            try
+            {
+                field_180356_a[EnumFacing.SOUTH.ordinal()] = 4;
+            }
+            catch (NoSuchFieldError var1)
+            {
+                ;
+            }
+        }
+    }
 }
