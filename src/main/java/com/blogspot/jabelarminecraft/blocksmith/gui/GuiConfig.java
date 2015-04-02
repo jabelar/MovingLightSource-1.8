@@ -33,11 +33,13 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.PostConfigChangedE
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.utilities.Utilities;
 
-// Thanks to minalien tutoral at http://minalien.com/minecraft-forge-feature-spotlight-config-guis/
+@SideOnly(Side.CLIENT)
 public class GuiConfig extends net.minecraftforge.fml.client.config.GuiConfig 
 {
     public GuiConfig(GuiScreen parent) 

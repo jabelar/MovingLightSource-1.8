@@ -7,6 +7,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerCompactor;
@@ -15,6 +17,7 @@ import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerForge;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerGrinder;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerTanningRack;
 
+@SideOnly(Side.CLIENT)
 public class GuiHandler implements IGuiHandler
 {
 

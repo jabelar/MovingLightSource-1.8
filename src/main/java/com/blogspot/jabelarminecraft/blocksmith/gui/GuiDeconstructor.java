@@ -7,12 +7,15 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerDeconstructor;
 import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerDeconstructor.State;
 
+@SideOnly(Side.CLIENT)
 public class GuiDeconstructor extends GuiContainer
 {
 

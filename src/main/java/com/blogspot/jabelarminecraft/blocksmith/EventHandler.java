@@ -38,7 +38,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.blogspot.jabelarminecraft.blocksmith.gui.GuiConfig;
 
-@SuppressWarnings("deprecation")
 public class EventHandler 
 {
     /*
