@@ -27,6 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent.MouseInputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -59,11 +60,11 @@ public class FMLEventHandler
 //
 //	}
 //
-//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-//	public void onEvent(MouseInputEvent event)
-//	{
-//
-//	}
+	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+	public void onEvent(MouseInputEvent event)
+	{
+		event.setCanceled(true);
+	}
 //	
 //	/*
 //	 * Player events
@@ -109,8 +110,8 @@ public class FMLEventHandler
 		}
 		
 		// DEBUG
-//		System.out.println("WorldData hasCastleSpawned ="+WorldData.get(event.player.worldObj).getHasCastleSpwaned()+
-//				", familyCowHasGivenLead ="+WorldData.get(event.player.worldObj).getFamilyCowHasGivenLead());
+//		System.out.println("WorldData hasCastleSpawned ="+WorldData.get(((EntityPlayerSP)thePlayer).movementInput.worldObj).getHasCastleSpwaned()+
+//				", familyCowHasGivenLead ="+WorldData.get(((EntityPlayerSP)thePlayer).movementInput.worldObj).getFamilyCowHasGivenLead());
 	}
 
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
@@ -155,7 +156,6 @@ public class FMLEventHandler
 			thePlayer.addChatMessage(versionWarningChatComponent);
 			BlockSmith.haveWarnedVersionOutOfDate = true;
 		}
-		
 	}
 
 //	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
