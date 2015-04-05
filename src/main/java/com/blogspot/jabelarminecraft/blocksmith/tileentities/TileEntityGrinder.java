@@ -67,14 +67,14 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     @Override
     public boolean shouldRefresh(World parWorld, BlockPos parPos, IBlockState parOldState, IBlockState parNewState)
     {
-    	return false;
+        return false;
     }
 
     /**
      * Returns the number of slots in the inventory.
      */
     @Override
-	public int getSizeInventory()
+    public int getSizeInventory()
     {
         return grinderItemStackArray.length;
     }
@@ -83,7 +83,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * Returns the stack in slot i
      */
     @Override
-	public ItemStack getStackInSlot(int index)
+    public ItemStack getStackInSlot(int index)
     {
         return grinderItemStackArray[index];
     }
@@ -93,7 +93,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * new stack.
      */
     @Override
-	public ItemStack decrStackSize(int index, int count)
+    public ItemStack decrStackSize(int index, int count)
     {
         if (grinderItemStackArray[index] != null)
         {
@@ -128,7 +128,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * like when you close a workbench GUI.
      */
     @Override
-	public ItemStack getStackInSlotOnClosing(int index)
+    public ItemStack getStackInSlotOnClosing(int index)
     {
         if (grinderItemStackArray[index] != null)
         {
@@ -146,11 +146,11 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
     @Override
-	public void setInventorySlotContents(int index, ItemStack stack)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-    	// DEBUG
-    	System.out.println("TileEntityGrinder setInventorySlotContents()");
-    	
+        // DEBUG
+        System.out.println("TileEntityGrinder setInventorySlotContents()");
+        
         boolean isSameItemStackAlreadyInSlot = stack != null && stack.isItemEqual(grinderItemStackArray[index]) && ItemStack.areItemStackTagsEqual(stack, grinderItemStackArray[index]);
         grinderItemStackArray[index] = stack;
 
@@ -172,7 +172,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * Gets the name of this command sender (usually username, but possibly "Rcon")
      */
     @Override
-	public String getName()
+    public String getName()
     {
         return hasCustomName() ? grinderCustomName : "container.grinder";
     }
@@ -181,7 +181,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * Returns true if this thing is named
      */
     @Override
-	public boolean hasCustomName()
+    public boolean hasCustomName()
     {
         return grinderCustomName != null && grinderCustomName.length() > 0;
     }
@@ -192,7 +192,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     }
 
     @Override
-	public void readFromNBT(NBTTagCompound compound)
+    public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
         NBTTagList nbttaglist = compound.getTagList("Items", 10);
@@ -220,7 +220,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     }
 
     @Override
-	public void writeToNBT(NBTTagCompound compound)
+    public void writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
         compound.setShort("GrindTime", (short)timeCanGrind);
@@ -252,7 +252,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * this more of a set than a get?*
      */
     @Override
-	public int getInventoryStackLimit()
+    public int getInventoryStackLimit()
     {
         return 64;
     }
@@ -273,7 +273,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     }
 
     @Override
-	public void update()
+    public void update()
     {
         boolean hasBeenGrinding = grindingSomething();
         boolean changedGrindingState = false;
@@ -285,37 +285,37 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
 
         if (!worldObj.isRemote)
         {
-        	// if something in input slot
+            // if something in input slot
             if (grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()] != null)
-            {            	
-             	// start grinding
+            {                
+                 // start grinding
                 if (!grindingSomething() && canGrind())
                 {
-	            	// DEBUG
-	            	System.out.println("TileEntityGrinder update() started grinding");
-	            	
-	                timeCanGrind = 150;
-	
-	                 if (grindingSomething())
-	                 {
-	                     changedGrindingState = true;
-	                 }
+                    // DEBUG
+                    System.out.println("TileEntityGrinder update() started grinding");
+                    
+                    timeCanGrind = 150;
+    
+                     if (grindingSomething())
+                     {
+                         changedGrindingState = true;
+                     }
                 }
 
                 // continue grinding
                 if (grindingSomething() && canGrind())
                 {
-	            	// DEBUG
-	            	System.out.println("TileEntityGrinder update() continuing grinding");
-	            	
+                    // DEBUG
+                    System.out.println("TileEntityGrinder update() continuing grinding");
+                    
                     ++ticksGrindingItemSoFar;
                     
                     // check if completed grinding an item
                     if (ticksGrindingItemSoFar == ticksPerItem)
                     {
-                    	// DEBUG
-                    	System.out.println("Grinding completed another output cycle");
-                    	
+                        // DEBUG
+                        System.out.println("Grinding completed another output cycle");
+                        
                         ticksGrindingItemSoFar = 0;
                         ticksPerItem = timeToGrindOneItem(grinderItemStackArray[0]);
                         grindItem();
@@ -352,7 +352,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      */
     private boolean canGrind()
     {
-    	// if nothing in input slot
+        // if nothing in input slot
         if (grinderItemStackArray[slotEnum.INPUT_SLOT.ordinal()] == null)
         {
             return false;
@@ -401,25 +401,25 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
     @Override
-	public boolean isUseableByPlayer(EntityPlayer playerIn)
+    public boolean isUseableByPlayer(EntityPlayer playerIn)
     {
         return worldObj.getTileEntity(pos) != this ? false : playerIn.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64.0D;
     }
 
     @Override
-	public void openInventory(EntityPlayer playerIn) {}
+    public void openInventory(EntityPlayer playerIn) {}
 
     @Override
-	public void closeInventory(EntityPlayer playerIn) {}
+    public void closeInventory(EntityPlayer playerIn) {}
 
     @Override
-	public boolean isItemValidForSlot(int index, ItemStack stack)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         return index == slotEnum.INPUT_SLOT.ordinal() ? true : false; // can always put things in input (may not grind though) and can't put anything in output
     }
 
     @Override
-	public int[] getSlotsForFace(EnumFacing side)
+    public int[] getSlotsForFace(EnumFacing side)
     {
         return side == EnumFacing.DOWN ? slotsBottom : (side == EnumFacing.UP ? slotsTop : slotsSides);
     }
@@ -429,7 +429,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * side
      */
     @Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
+    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
     {
         return isItemValidForSlot(index, itemStackIn);
     }
@@ -439,27 +439,27 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * side
      */
     @Override
-	public boolean canExtractItem(int parSlotIndex, ItemStack parStack, EnumFacing parFacing)
+    public boolean canExtractItem(int parSlotIndex, ItemStack parStack, EnumFacing parFacing)
     {
         return true;
     }
 
     @Override
-	public String getGuiID()
+    public String getGuiID()
     {
         return "blocksmith:grinder";
     }
 
     @Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
-    	// DEBUG
-    	System.out.println("TileEntityGrinder createContainer()");
+        // DEBUG
+        System.out.println("TileEntityGrinder createContainer()");
         return new ContainerGrinder(playerInventory, this);
     }
 
     @Override
-	public int getField(int id)
+    public int getField(int id)
     {
         switch (id)
         {
@@ -477,7 +477,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
     }
 
     @Override
-	public void setField(int id, int value)
+    public void setField(int id, int value)
     {
         switch (id)
         {
@@ -493,19 +493,19 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
             case 3:
                 ticksPerItem = value;
                 break;
-		default:
-			break;
+        default:
+            break;
         }
     }
 
     @Override
-	public int getFieldCount()
+    public int getFieldCount()
     {
         return 4;
     }
 
     @Override
-	public void clear()
+    public void clear()
     {
         for (int i = 0; i < grinderItemStackArray.length; ++i)
         {

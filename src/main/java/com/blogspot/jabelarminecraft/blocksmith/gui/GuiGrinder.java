@@ -34,7 +34,7 @@ import com.blogspot.jabelarminecraft.blocksmith.containers.ContainerGrinder;
 @SideOnly(Side.CLIENT)
 public class GuiGrinder  extends GuiContainer
 {
-	private static final ResourceLocation grinderGuiTextures = new ResourceLocation(BlockSmith.MODID+":textures/gui/container/grinder.png");
+    private static final ResourceLocation grinderGuiTextures = new ResourceLocation(BlockSmith.MODID+":textures/gui/container/grinder.png");
     private final InventoryPlayer inventoryPlayer;
     private final IInventory tileGrinder;
 
@@ -49,7 +49,7 @@ public class GuiGrinder  extends GuiContainer
      * Draw the foreground layer for the GuiContainer (everything in front of the items). Args : mouseX, mouseY
      */
     @Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         String s = tileGrinder.getDisplayName().getUnformattedText();
         fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
@@ -60,7 +60,7 @@ public class GuiGrinder  extends GuiContainer
      * Args : renderPartialTicks, mouseX, mouseY
      */
     @Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         mc.getTextureManager().bindTexture(grinderGuiTextures);

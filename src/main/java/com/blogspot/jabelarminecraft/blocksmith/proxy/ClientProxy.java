@@ -13,8 +13,8 @@
 
     For a copy of the GNU General Public License see <http://www.gnu.org/licenses/>.
 
-	If you're interested in licensing the code under different terms you can
-	contact the author at julian_abelar@hotmail.com 
+    If you're interested in licensing the code under different terms you can
+    contact the author at julian_abelar@hotmail.com 
 */
 
 package com.blogspot.jabelarminecraft.blocksmith.proxy;
@@ -40,137 +40,136 @@ import org.lwjgl.util.glu.Sphere;
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.VersionChecker;
 
-
 public class ClientProxy extends CommonProxy 
 {
-	/*
-	 * Fields related to key binding
-	 */
-	public static KeyBinding[] keyBindings;
-	
-	/*
-	 * For rendering a sphere, need ids for call lists for outside and inside
-	 */
-	public static int sphereIdOutside;
-	public static int sphereIdInside;
-	
-	@Override
-	public void fmlLifeCycleEvent(FMLPreInitializationEvent event)
-	{
-		// DEBUG
-        System.out.println("on Client side");
-        
-		// do common stuff
-		super.fmlLifeCycleEvent(event);
-
-	}
-	
-	@Override
-	public void fmlLifeCycleEvent(FMLInitializationEvent event)
-	{
-		// DEBUG
-        System.out.println("on Client side");
-
-        // do common stuff
-		super.fmlLifeCycleEvent(event);
-
-		// do client-specific stuff
-		// registerClientPacketHandler();
-		registerKeyBindings();
-
-    	// create sphere call list
-    	createSphereCallList();
-    	
-        registerEntityRenderers();
-    	registerItemRenderers();
-    	registerBlockRenderers();
-	}
-	
-	@Override
-	public void fmlLifeCycleEvent(FMLPostInitializationEvent event)
-	{
-		// DEBUG
-        System.out.println("on Client side");
-
-        // do common stuff
-		super.fmlLifeCycleEvent(event);
-
-		// do client-specific stuff
-		BlockSmith.versionChecker = new VersionChecker();
-		Thread versionCheckThread = new Thread(BlockSmith.versionChecker, "Version Check");
-		versionCheckThread.start();
-	}
-
-	/*
-	 * Registers key bindings
-	 */
-	public void registerKeyBindings() 
-	{		
-		// declare an array of key bindings
-		keyBindings = new KeyBinding[2]; 
-		
-		// instantiate the key bindings
-		keyBindings[0] = new KeyBinding("key.structure.desc", Keyboard.KEY_P, "key.magicbeans.category");
-		keyBindings[1] = new KeyBinding("key.hud.desc", Keyboard.KEY_H, "key.magicbeans.category");
-		
-		// register all the key bindings
-		for (int i = 0; i < keyBindings.length; ++i) 
-		{
-			ClientRegistry.registerKeyBinding(keyBindings[i]);
-		}
-	}
-
-	/**
-	 * Registers the entity renderers
-	 */
-	public void registerEntityRenderers() 
+    /*
+     * Fields related to key binding
+     */
+    public static KeyBinding[] keyBindings;
+    
+    /*
+     * For rendering a sphere, need ids for call lists for outside and inside
+     */
+    public static int sphereIdOutside;
+    public static int sphereIdInside;
+    
+    @Override
+    public void fmlLifeCycleEvent(FMLPreInitializationEvent event)
     {
-		// the float parameter passed to the Render class is the shadow size for the entity
-      
-		// RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
-	    // RenderingRegistry.registerEntityRenderingHandler(EntityGoldenGoose.class, new RenderGoldenGoose(renderManager, new ModelGoldenGoose(), 0.5F)); // 0.5F is shadow size 
-    }
-	
-	public void registerItemRenderers()
-	{
-		// DEBUG
-		System.out.println("Registering item renderers");
-		
-		registerItemRenderer(BlockSmith.cowHide);
-		registerItemRenderer(BlockSmith.sheepSkin);
-		registerItemRenderer(BlockSmith.pigSkin);
-		registerItemRenderer(BlockSmith.horseHide);
-		// registerItemRenderer(JnaeMod.magicBeans);
-	}
-	
-	public void registerItemRenderer(Item parItem)
-	{
-		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-
-    	renderItem.getItemModelMesher().register(parItem, 0, new ModelResourceLocation(BlockSmith.MODID + ":" + parItem.getUnlocalizedName().substring(5), "inventory"));
-	}
-	
-	public void registerBlockRenderers()
-	{
-		// DEBUG
-		System.out.println("Registering block renderers");
-		
-    	RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+        // DEBUG
+        System.out.println("on Client side");
         
-    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockTanningRack), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockTanningRack.getUnlocalizedName().substring(5), "inventory"));
-    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockGrinder), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockGrinder.getUnlocalizedName().substring(5), "inventory"));
-    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockCompactor), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockCompactor.getUnlocalizedName().substring(5), "inventory"));
-    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockDeconstructor), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockDeconstructor.getUnlocalizedName().substring(5), "inventory"));
-    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockForge), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockForge.getUnlocalizedName().substring(5), "inventory"));
-//    	renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockForgeLit), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockForgeLit.getUnlocalizedName().substring(5), "inventory"));
-	}
-	
-	/*	 
-	 * Thanks to CoolAlias for this tip!
-	 */
-	/**
-	 * Returns a side-appropriate EntityPlayer for use during message handling
-	 */
+        // do common stuff
+        super.fmlLifeCycleEvent(event);
+
+    }
+    
+    @Override
+    public void fmlLifeCycleEvent(FMLInitializationEvent event)
+    {
+        // DEBUG
+        System.out.println("on Client side");
+
+        // do common stuff
+        super.fmlLifeCycleEvent(event);
+
+        // do client-specific stuff
+        // registerClientPacketHandler();
+        registerKeyBindings();
+
+        // create sphere call list
+        createSphereCallList();
+        
+        registerEntityRenderers();
+        registerItemRenderers();
+        registerBlockRenderers();
+    }
+    
+    @Override
+    public void fmlLifeCycleEvent(FMLPostInitializationEvent event)
+    {
+        // DEBUG
+        System.out.println("on Client side");
+
+        // do common stuff
+        super.fmlLifeCycleEvent(event);
+
+        // do client-specific stuff
+        BlockSmith.versionChecker = new VersionChecker();
+        Thread versionCheckThread = new Thread(BlockSmith.versionChecker, "Version Check");
+        versionCheckThread.start();
+    }
+
+    /*
+     * Registers key bindings
+     */
+    public void registerKeyBindings() 
+    {        
+        // declare an array of key bindings
+        keyBindings = new KeyBinding[2]; 
+        
+        // instantiate the key bindings
+        keyBindings[0] = new KeyBinding("key.structure.desc", Keyboard.KEY_P, "key.magicbeans.category");
+        keyBindings[1] = new KeyBinding("key.hud.desc", Keyboard.KEY_H, "key.magicbeans.category");
+        
+        // register all the key bindings
+        for (int i = 0; i < keyBindings.length; ++i) 
+        {
+            ClientRegistry.registerKeyBinding(keyBindings[i]);
+        }
+    }
+
+    /**
+     * Registers the entity renderers
+     */
+    public void registerEntityRenderers() 
+    {
+        // the float parameter passed to the Render class is the shadow size for the entity
+      
+        // RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+        // RenderingRegistry.registerEntityRenderingHandler(EntityGoldenGoose.class, new RenderGoldenGoose(renderManager, new ModelGoldenGoose(), 0.5F)); // 0.5F is shadow size 
+    }
+    
+    public void registerItemRenderers()
+    {
+        // DEBUG
+        System.out.println("Registering item renderers");
+        
+        registerItemRenderer(BlockSmith.cowHide);
+        registerItemRenderer(BlockSmith.sheepSkin);
+        registerItemRenderer(BlockSmith.pigSkin);
+        registerItemRenderer(BlockSmith.horseHide);
+        // registerItemRenderer(JnaeMod.magicBeans);
+    }
+    
+    public void registerItemRenderer(Item parItem)
+    {
+        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+
+        renderItem.getItemModelMesher().register(parItem, 0, new ModelResourceLocation(BlockSmith.MODID + ":" + parItem.getUnlocalizedName().substring(5), "inventory"));
+    }
+    
+    public void registerBlockRenderers()
+    {
+        // DEBUG
+        System.out.println("Registering block renderers");
+        
+        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+        
+        renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockTanningRack), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockTanningRack.getUnlocalizedName().substring(5), "inventory"));
+        renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockGrinder), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockGrinder.getUnlocalizedName().substring(5), "inventory"));
+        renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockCompactor), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockCompactor.getUnlocalizedName().substring(5), "inventory"));
+        renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockDeconstructor), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockDeconstructor.getUnlocalizedName().substring(5), "inventory"));
+        renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockForge), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockForge.getUnlocalizedName().substring(5), "inventory"));
+//        renderItem.getItemModelMesher().register(Item.getItemFromBlock(BlockSmith.blockForgeLit), 0, new ModelResourceLocation(BlockSmith.MODID + ":" + BlockSmith.blockForgeLit.getUnlocalizedName().substring(5), "inventory"));
+    }
+    
+    /*     
+     * Thanks to CoolAlias for this tip!
+     */
+    /**
+     * Returns a side-appropriate EntityPlayer for use during message handling
+     */
     @Override
     public EntityPlayer getPlayerEntityFromContext(MessageContext ctx) 
     {

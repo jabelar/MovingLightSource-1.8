@@ -44,9 +44,9 @@ public class ContainerGrinder extends Container
 
     public ContainerGrinder(InventoryPlayer parInventoryPlayer, IInventory parIInventory)
     {
-    	// DEBUG
-    	System.out.println("ContainerGrinder constructor()");
-    	
+        // DEBUG
+        System.out.println("ContainerGrinder constructor()");
+        
         tileGrinder = parIInventory;
         sizeInventory = tileGrinder.getSizeInventory();
         addSlotToContainer(new Slot(tileGrinder, TileEntityGrinder.slotEnum.INPUT_SLOT.ordinal(), 56, 35));
@@ -74,7 +74,7 @@ public class ContainerGrinder extends Container
      * Add the given Listener to the list of Listeners. Method name is for legacy.
      */
     @Override
-	public void addCraftingToCrafters(ICrafting listener)
+    public void addCraftingToCrafters(ICrafting listener)
     {
         super.addCraftingToCrafters(listener);
         listener.func_175173_a(this, tileGrinder);
@@ -84,7 +84,7 @@ public class ContainerGrinder extends Container
      * Looks for changes made in the container, sends them to every listener.
      */
     @Override
-	public void detectAndSendChanges()
+    public void detectAndSendChanges()
     {
         super.detectAndSendChanges();
 
@@ -114,14 +114,14 @@ public class ContainerGrinder extends Container
     }
 
     @Override
-	@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data)
     {
         tileGrinder.setField(id, data);
     }
 
     @Override
-	public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(EntityPlayer playerIn)
     {
         return tileGrinder.isUseableByPlayer(playerIn);
     }
@@ -130,7 +130,7 @@ public class ContainerGrinder extends Container
      * Take a stack from the specified inventory slot.
      */
     @Override
-	public ItemStack transferStackInSlot(EntityPlayer playerIn, int slotIndex)
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int slotIndex)
     {
         ItemStack itemStack1 = null;
         Slot slot = (Slot)inventorySlots.get(slotIndex);
@@ -151,7 +151,7 @@ public class ContainerGrinder extends Container
             }
             else if (slotIndex != TileEntityGrinder.slotEnum.INPUT_SLOT.ordinal())
             {
-            	// check if there is a grinding recipe for the stack
+                // check if there is a grinding recipe for the stack
                 if (GrinderRecipes.instance().getGrindingResult(itemStack2) != null)
                 {
                     if (!mergeItemStack(itemStack2, 0, 1, false))

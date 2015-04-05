@@ -45,7 +45,7 @@ public class SlotGrinderOutput  extends Slot
      * Check if the stack is a valid item for this slot. .
      */
     @Override
-	public boolean isItemValid(ItemStack stack)
+    public boolean isItemValid(ItemStack stack)
     {
         return false; // can't place anything into it
     }
@@ -55,7 +55,7 @@ public class SlotGrinderOutput  extends Slot
      * stack.
      */
     @Override
-	public ItemStack decrStackSize(int parAmount)
+    public ItemStack decrStackSize(int parAmount)
     {
         if (getHasStack())
         {
@@ -66,7 +66,7 @@ public class SlotGrinderOutput  extends Slot
     }
 
     @Override
-	public void onPickupFromSlot(EntityPlayer playerIn, ItemStack stack)
+    public void onPickupFromSlot(EntityPlayer playerIn, ItemStack stack)
     {
         onCrafting(stack);
         super.onPickupFromSlot(playerIn, stack);
@@ -77,7 +77,7 @@ public class SlotGrinderOutput  extends Slot
      * internal count then calls onCrafting(item).
      */
     @Override
-	protected void onCrafting(ItemStack parItemStack, int parAmountGround)
+    protected void onCrafting(ItemStack parItemStack, int parAmountGround)
     {
         numGrinderOutput += parAmountGround;
         onCrafting(parItemStack);
@@ -87,9 +87,9 @@ public class SlotGrinderOutput  extends Slot
      * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood.
      */
     @Override
-	protected void onCrafting(ItemStack parItemStack)
+    protected void onCrafting(ItemStack parItemStack)
     {
-//		  this adds a stat count    	
+//          this adds a stat count        
 //        parItemStack.onCrafting(thePlayer.worldObj, thePlayer, field_75228_b);
 
         if (!thePlayer.worldObj.isRemote)
