@@ -27,7 +27,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.MouseInputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -60,11 +59,11 @@ public class FMLEventHandler
 //
 //	}
 //
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onEvent(MouseInputEvent event)
-	{
-		event.setCanceled(true);
-	}
+//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//	public void onEvent(MouseInputEvent event)
+//	{
+//
+//	}
 //	
 //	/*
 //	 * Player events
