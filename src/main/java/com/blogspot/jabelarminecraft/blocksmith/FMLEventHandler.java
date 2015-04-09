@@ -205,6 +205,13 @@ public class FMLEventHandler
 		}
 	}
 	
+	/**
+	 * Pretty much copied this from the EntityRenderer getMouseOver() function
+	 * 
+	 * @param parInterpolationFactor
+	 * @param parDistance
+	 * @return
+	 */
 	public static MovingObjectPosition getMouseOver(float parInterpolationFactor, float parDistance)
 	{
 		Minecraft mc = FMLClientHandler.instance().getClient();
@@ -223,34 +230,33 @@ public class FMLEventHandler
 		{
 			if (mc.theWorld != null)
 			{
-				double var2 = parDistance;
-				returnMOP = theRenderViewEntity.rayTrace(var2, parInterpolationFactor);
-				double calcdist = var2;
+				double calcdist = parDistance;
+				returnMOP = theRenderViewEntity.rayTrace(parDistance, parInterpolationFactor);
 				Vec3 posEyesVec = theRenderViewEntity.getPositionEyes(parInterpolationFactor);
-				var2 = calcdist;
+				Vec3 lookVec = theRenderViewEntity.getLook(parInterpolationFactor);
+				Vec3 lookVecFullDistance = posEyesVec.addVector(lookVec.xCoord * parDistance, lookVec.yCoord * parDistance, lookVec.zCoord * parDistance);
+				
 				if (returnMOP != null)
 				{
 					calcdist = returnMOP.hitVec.distanceTo(posEyesVec);
 				}
 				
-				Vec3 lookVec = theRenderViewEntity.getLook(parInterpolationFactor);
-				Vec3 var8 = posEyesVec.addVector(lookVec.xCoord * var2, lookVec.yCoord * var2, lookVec.zCoord * var2);
 				@SuppressWarnings("unchecked")
-				List<Entity> list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(theRenderViewEntity, theViewBoundingBox.addCoord(lookVec.xCoord * var2, lookVec.yCoord * var2, lookVec.zCoord * var2).expand(1.0F, 1.0F, 1.0F));
+				List<Entity> potentialTargetsList = mc.theWorld.getEntitiesWithinAABBExcludingEntity(theRenderViewEntity, theViewBoundingBox.addCoord(lookVec.xCoord * parDistance, lookVec.yCoord * parDistance, lookVec.zCoord * parDistance).expand(1.0F, 1.0F, 1.0F));
 				double d = calcdist;
 				
-				for (Entity entity : list)
+				for (Entity potentialTargetEntity : potentialTargetsList)
 				{
-					if (entity.canBeCollidedWith() && entity.getBoundingBox() != null)
+					if (potentialTargetEntity.canBeCollidedWith() && potentialTargetEntity.getBoundingBox() != null)
 					{
-						AxisAlignedBB theAABB = entity.getBoundingBox().expand(0.1F, 0.1F, 0.1F);
-						MovingObjectPosition mop0 = theAABB.calculateIntercept(posEyesVec, var8);
+						AxisAlignedBB theAABB = potentialTargetEntity.getBoundingBox().expand(0.1F, 0.1F, 0.1F);
+						MovingObjectPosition mop0 = theAABB.calculateIntercept(posEyesVec, lookVecFullDistance);
 						
 						if (theAABB.isVecInside(posEyesVec))
 						{
 							if (d <= 0.0D)
 							{
-								theHitEntity = entity;
+								theHitEntity = potentialTargetEntity;
 								d = 0.0D;
 							}
 						} else if (mop0 != null)
@@ -259,7 +265,7 @@ public class FMLEventHandler
 							
 							if (d1 < d || d == 0.0D)
 							{
-								theHitEntity = entity;
+								theHitEntity = potentialTargetEntity;
 								d = d1;
 							}
 						}
