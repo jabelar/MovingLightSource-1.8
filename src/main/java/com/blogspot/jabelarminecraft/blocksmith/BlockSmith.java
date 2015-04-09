@@ -21,6 +21,7 @@ package com.blogspot.jabelarminecraft.blocksmith;
 
 import java.io.File;
 
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBasic;
 import net.minecraft.util.EnumChatFormatting;
@@ -49,6 +50,7 @@ import com.blogspot.jabelarminecraft.blocksmith.items.ItemCowHide;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemHorseHide;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemPigSkin;
 import com.blogspot.jabelarminecraft.blocksmith.items.ItemSheepSkin;
+import com.blogspot.jabelarminecraft.blocksmith.items.ItemSwordExtended;
 import com.blogspot.jabelarminecraft.blocksmith.materials.MaterialTanningRack;
 import com.blogspot.jabelarminecraft.blocksmith.proxy.CommonProxy;
 
@@ -106,6 +108,7 @@ public class BlockSmith
 	public final static ItemSheepSkin sheepSkin = new ItemSheepSkin();
 	public final static ItemPigSkin pigSkin = new ItemPigSkin();
 	public final static ItemHorseHide horseHide = new ItemHorseHide();
+	public final static ItemSwordExtended swordExtended = new ItemSwordExtended(ToolMaterial.IRON);
     
 	// initiate spawn egg items
    

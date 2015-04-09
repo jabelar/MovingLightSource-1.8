@@ -25,12 +25,10 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.NameFormat;
 import net.minecraftforge.fml.client.GuiIngameModOptions;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -146,21 +144,11 @@ public class EventHandler
 //
 //    }
 //
-    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-    public void onEvent(LivingUpdateEvent event)
-    {
-        // This event has an Entity variable, access it like this: event.entity;
-        // and can check if for player with if (event.entity instanceof EntityPlayer)
-		
-    	if (event.entityLiving instanceof EntityPlayer)
-    	{
-    		EntityPlayer thePlayer = (EntityPlayer)event.entityLiving;
-    		if (thePlayer.ticksExisted > 5) // make sure there is a valid prev position, don't run on first tick
-    		{
-	    		thePlayer.setPosition(thePlayer.prevPosX, thePlayer.prevPosY, thePlayer.prevPosZ);
-    		}
-    	}
-    }
+//    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//    public void onEvent(LivingUpdateEvent event)
+//    {
+//
+//    }
 //
 //    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 //    public void onEvent(EnderTeleportEvent event)
@@ -707,7 +695,7 @@ public class EventHandler
 //    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 //    public void onEvent(RenderPlayerEvent.Pre event)
 //    {
-//        
+//
 //    }
 //
 //    @SideOnly(Side.CLIENT)
@@ -728,7 +716,7 @@ public class EventHandler
 //    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 //    public void onEvent(RenderWorldEvent.Pre event)
 //    {
-//        
+//    	Minecraft.getMinecraft().gameSettings.thirdPersonView = 2;
 //    }
 //
 //    @SideOnly(Side.CLIENT)

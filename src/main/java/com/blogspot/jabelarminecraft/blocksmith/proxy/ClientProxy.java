@@ -139,6 +139,7 @@ public class ClientProxy extends CommonProxy
         registerItemRenderer(BlockSmith.sheepSkin);
         registerItemRenderer(BlockSmith.pigSkin);
         registerItemRenderer(BlockSmith.horseHide);
+        registerItemRenderer(BlockSmith.swordExtended);
         // registerItemRenderer(JnaeMod.magicBeans);
     }
     
