@@ -205,76 +205,74 @@ public class FMLEventHandler
 		}
 	}
 	
-	public static MovingObjectPosition getMouseOver(float frame, float dist)
+	public static MovingObjectPosition getMouseOver(float parInterpolationFactor, float parDistance)
 	{
 		Minecraft mc = FMLClientHandler.instance().getClient();
 		Entity theRenderViewEntity = mc.getRenderViewEntity();
-		AxisAlignedBB theBoundingBox = new AxisAlignedBB(
+		Entity theHitEntity = null;
+		AxisAlignedBB theViewBoundingBox = new AxisAlignedBB(
 				theRenderViewEntity.posX-0.5D,
-				theRenderViewEntity.posY-0.5D,
+				theRenderViewEntity.posY-0.0D,
 				theRenderViewEntity.posZ-0.5D,
 				theRenderViewEntity.posX+0.5D,
-				theRenderViewEntity.posY+0.5D,
+				theRenderViewEntity.posY+1.5D,
 				theRenderViewEntity.posZ+0.5D
 				);
-		MovingObjectPosition mop = null;
+		MovingObjectPosition returnMOP = null;
 		if (mc.getRenderViewEntity() != null)
 		{
 			if (mc.theWorld != null)
 			{
-				double var2 = dist;
-				mop = theRenderViewEntity.rayTrace(var2, frame);
+				double var2 = parDistance;
+				returnMOP = theRenderViewEntity.rayTrace(var2, parInterpolationFactor);
 				double calcdist = var2;
-				Vec3 pos = theRenderViewEntity.getPositionEyes(frame);
+				Vec3 posEyesVec = theRenderViewEntity.getPositionEyes(parInterpolationFactor);
 				var2 = calcdist;
-				if (mop != null)
+				if (returnMOP != null)
 				{
-					calcdist = mop.hitVec.distanceTo(pos);
+					calcdist = returnMOP.hitVec.distanceTo(posEyesVec);
 				}
 				
-				Vec3 lookvec = theRenderViewEntity.getLook(frame);
-				Vec3 var8 = pos.addVector(lookvec.xCoord * var2, lookvec.yCoord * var2, lookvec.zCoord * var2);
-				Entity pointedEntity = null;
-				float var9 = 1.0F;
+				Vec3 lookVec = theRenderViewEntity.getLook(parInterpolationFactor);
+				Vec3 var8 = posEyesVec.addVector(lookVec.xCoord * var2, lookVec.yCoord * var2, lookVec.zCoord * var2);
 				@SuppressWarnings("unchecked")
-				List<Entity> list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(theRenderViewEntity, theBoundingBox.addCoord(lookvec.xCoord * var2, lookvec.yCoord * var2, lookvec.zCoord * var2).expand(var9, var9, var9));
+				List<Entity> list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(theRenderViewEntity, theViewBoundingBox.addCoord(lookVec.xCoord * var2, lookVec.yCoord * var2, lookVec.zCoord * var2).expand(1.0F, 1.0F, 1.0F));
 				double d = calcdist;
 				
 				for (Entity entity : list)
 				{
 					if (entity.canBeCollidedWith() && entity.getBoundingBox() != null)
 					{
-						float bordersize = entity.getCollisionBorderSize();
-						AxisAlignedBB aabb = entity.getBoundingBox().expand(bordersize, bordersize, bordersize);
-						MovingObjectPosition mop0 = aabb.calculateIntercept(pos, var8);
+						AxisAlignedBB theAABB = entity.getBoundingBox().expand(0.1F, 0.1F, 0.1F);
+						MovingObjectPosition mop0 = theAABB.calculateIntercept(posEyesVec, var8);
 						
-						if (aabb.isVecInside(pos))
+						if (theAABB.isVecInside(posEyesVec))
 						{
-							if (0.0D < d || d == 0.0D)
+							if (d <= 0.0D)
 							{
-								pointedEntity = entity;
+								theHitEntity = entity;
 								d = 0.0D;
 							}
 						} else if (mop0 != null)
 						{
-							double d1 = pos.distanceTo(mop0.hitVec);
+							double d1 = posEyesVec.distanceTo(mop0.hitVec);
 							
 							if (d1 < d || d == 0.0D)
 							{
-								pointedEntity = entity;
+								theHitEntity = entity;
 								d = d1;
 							}
 						}
 					}
 				}
 				
-				if (pointedEntity != null && (d < calcdist || mop == null))
+				if (theHitEntity != null && (d < calcdist || returnMOP == null))
 				{
-					mop = new MovingObjectPosition(pointedEntity);
+					returnMOP = new MovingObjectPosition(theHitEntity);
 				}
 			}
 		}
-		return mop;
+		return returnMOP;
 	}
 
 
