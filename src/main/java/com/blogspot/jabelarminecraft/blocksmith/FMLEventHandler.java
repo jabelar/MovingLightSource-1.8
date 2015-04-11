@@ -30,7 +30,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -65,7 +64,7 @@ public class FMLEventHandler
 //    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 //    public void onEvent(KeyInputEvent event)
 //    {
-//        
+//
 //    }
 //
 //    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
@@ -155,71 +154,18 @@ public class FMLEventHandler
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     public void onEvent(PlayerTickEvent event)
     {        
-        if (event.phase == TickEvent.Phase.END && event.player.worldObj.isRemote) // only proceed if START phase otherwise, will execute twice per tick
+        if (event.phase == TickEvent.Phase.START && event.player.worldObj.isRemote) // only proceed if START phase otherwise, will execute twice per tick
         {
-//            if (event.player != null && event.player.swingProgressInt == 1) // Just swung
-//            {
-//            	// DEBUG
-//            	System.out.println("Swinging weapon");
-//                ItemStack itemstack = event.player.getCurrentEquippedItem();
-//                IExtendedReach ieri;
-//                if (itemstack != null)
-//                {
-//                    if (itemstack.getItem() instanceof IExtendedReach)
-//                    {
-//                    	// DEBUG
-//                    	System.out.println("Weapon has extended reach");
-//                        ieri = (IExtendedReach) itemstack.getItem();
-//                    } else
-//                    {
-//                        ieri = null;
-//                    }
-//
-//                    if (ieri != null)
-//                    {
-//                        float reach = ieri.getReach();
-//                        MovingObjectPosition mov = getMouseOverExtended(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
-//                        
-//                        if (mov != null)
-//                        {
-//                        	// DEBUG
-//                        	System.out.println("MOV not null");
-//                            if (mov.entityHit != null && mov.entityHit.hurtResistantTime == 0)
-//                            {
-//                            	// DEBUG
-//                            	System.out.println("Hit entity "+mov.entityHit);
-//                                if (mov.entityHit != event.player )
-//                                {
-//                                    BlockSmith.network.sendToServer(new MessageExtendedReachAttack(mov.entityHit.getEntityId()));
-//                                }
-//                            }
-//                            else
-//                            {
-//                            	// DEBUG
-//                            	System.out.println("Entity is null or has hurt resistance");
-//                            }
-//                        }
-//                        else
-//                        {
-//                        	// DEBUG
-//                        	System.out.println("MOV is null");
-//                        }
-//                    }
-//                }
-//            }
-        }
-        
-        EntityPlayer thePlayer = event.player;
-        World world = thePlayer.worldObj;
-                
-        if (!BlockSmith.haveWarnedVersionOutOfDate && world.isRemote && !BlockSmith.versionChecker.isLatestVersion())
-        {
-            ClickEvent versionCheckChatClickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, "http://jabelarminecraft.blogspot.com");
-            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(versionCheckChatClickEvent);
-            ChatComponentText versionWarningChatComponent = new ChatComponentText("Your Magic Beans Mod is not latest version!  Click here to update.");
-            versionWarningChatComponent.setChatStyle(clickableChatStyle);
-            thePlayer.addChatMessage(versionWarningChatComponent);
-            BlockSmith.haveWarnedVersionOutOfDate = true;
+            EntityPlayer thePlayer = event.player;
+            if (!BlockSmith.haveWarnedVersionOutOfDate && !BlockSmith.versionChecker.isLatestVersion())
+            {
+                ClickEvent versionCheckChatClickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, "http://jabelarminecraft.blogspot.com");
+                ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(versionCheckChatClickEvent);
+                ChatComponentText versionWarningChatComponent = new ChatComponentText("Your Magic Beans Mod is not latest version!  Click here to update.");
+                versionWarningChatComponent.setChatStyle(clickableChatStyle);
+                thePlayer.addChatMessage(versionWarningChatComponent);
+                BlockSmith.haveWarnedVersionOutOfDate = true;
+            }
         }
     }
     
