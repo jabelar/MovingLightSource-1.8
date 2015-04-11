@@ -53,7 +53,6 @@ import com.blogspot.jabelarminecraft.blocksmith.utilities.Utilities;
  */
 public class SpawnEgg extends ItemMonsterPlacer
 {
-    @SideOnly(Side.CLIENT)
     protected int colorBase = 0x000000;
     protected int colorSpots = 0xFFFFFF;
     protected String entityToSpawnName = "";

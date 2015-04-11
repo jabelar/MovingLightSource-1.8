@@ -178,8 +178,7 @@ public class FMLEventHandler
                     if (ieri != null)
                     {
                         float reach = ieri.getReach();
-                        MovingObjectPosition mov = FMLClientHandler.instance()
-                                .getClient().getRenderViewEntity().rayTrace(reach, 0);// getMouseOverExtended(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
+                        MovingObjectPosition mov = getMouseOverExtended(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
                         
                         if (mov != null)
                         {
