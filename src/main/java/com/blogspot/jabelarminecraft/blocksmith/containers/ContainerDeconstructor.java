@@ -29,7 +29,7 @@ public class ContainerDeconstructor extends Container
     public DeconstructingRecipeHandler deconstructingRecipeHandler;
     private final World worldObj;
     public InventoryPlayer playerInventory;
-    public String resultString = I18n.format("deconstructing.result.ready");
+    public String resultString = "deconstructing.result.ready";
     public State deconstructingState = State.READY;
     public int x = 0;
     public int y = 0;
