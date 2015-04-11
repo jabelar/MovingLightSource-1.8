@@ -39,7 +39,7 @@ public class EntityPigTest extends EntityPig
 	{
 		// DEBUG
 		System.out.println("Test pig has been attacked");
-        if (this.func_180431_b(parDamageSource))
+        if (this.isEntityInvulnerable(parDamageSource))
         {
         	// DEBUG
         	System.out.println("Entity is invulnerable");

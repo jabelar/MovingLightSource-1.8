@@ -29,6 +29,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -44,6 +45,7 @@ import org.lwjgl.util.glu.Sphere;
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.VersionChecker;
 import com.blogspot.jabelarminecraft.blocksmith.entities.EntityPigTest;
+import com.blogspot.jabelarminecraft.blocksmith.models.MyModelLoader;
 
 public class ClientProxy extends CommonProxy 
 {
@@ -75,16 +77,24 @@ public class ClientProxy extends CommonProxy
         // DEBUG
         System.out.println("on Client side");
 
-        // do common stuff
+        /*
+         *  do common stuff
+         */
         super.fmlLifeCycleEvent(event);
 
-        // do client-specific stuff
-        // registerClientPacketHandler();
+        /*
+         *  do client-specific stuff
+         */
+        // register key bindings
         registerKeyBindings();
 
         // create sphere call list
         createSphereCallList();
         
+        // register model loader
+        ModelLoaderRegistry.registerLoader(new MyModelLoader());
+
+        // register renderers
         registerEntityRenderers();
         registerItemRenderers();
         registerBlockRenderers();

@@ -66,10 +66,10 @@ public class BlockDeconstructor extends Block
         if (!parWorld.isRemote)
         {
         	// Rotate block if the front side is blocked
-            Block blockToNorth = parWorld.getBlockState(parBlockPos.offsetNorth()).getBlock();
-            Block blockToSouth = parWorld.getBlockState(parBlockPos.offsetSouth()).getBlock();
-            Block blockToWest = parWorld.getBlockState(parBlockPos.offsetWest()).getBlock();
-            Block blockToEast = parWorld.getBlockState(parBlockPos.offsetEast()).getBlock();
+            Block blockToNorth = parWorld.getBlockState(parBlockPos.north()).getBlock();
+            Block blockToSouth = parWorld.getBlockState(parBlockPos.south()).getBlock();
+            Block blockToWest = parWorld.getBlockState(parBlockPos.west()).getBlock();
+            Block blockToEast = parWorld.getBlockState(parBlockPos.east()).getBlock();
             EnumFacing enumfacing = (EnumFacing)parIBlockState.getValue(FACING);
 
             if (enumfacing == EnumFacing.NORTH && blockToNorth.isFullBlock() && !blockToSouth.isFullBlock())

@@ -22,8 +22,9 @@ group= "com.blogspot.jabelarminecraft.blocksmith" // http://maven.apache.org/gui
 archivesBaseName = "blocksmith"
 
 minecraft {
-    version = "1.8-11.14.1.1354"
+    version = "1.8-11.14.1.1361"
     runDir = "../run/assets"
+    mappings = "snapshot_20150411"
 }
 
 dependencies {

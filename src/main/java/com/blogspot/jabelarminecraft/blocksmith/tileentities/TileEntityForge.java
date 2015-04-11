@@ -149,7 +149,7 @@ public class TileEntityForge extends TileEntityLockable implements IUpdatePlayer
      * Gets the name of this command sender (usually username, but possibly "Rcon")
      */
     @Override
-	public String getName()
+	public String getCommandSenderName()
     {
         return hasCustomName() ? forgeCustomName : "container.forge";
     }
@@ -458,7 +458,7 @@ public class TileEntityForge extends TileEntityLockable implements IUpdatePlayer
     @Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return index == 2 ? false : (index != 1 ? true : isItemFuel(stack) || SlotForgeFuel.func_178173_c_(stack));
+        return index == 2 ? false : (index != 1 ? true : isItemFuel(stack) || SlotForgeFuel.isItemBucket(stack));
     }
 
     @Override

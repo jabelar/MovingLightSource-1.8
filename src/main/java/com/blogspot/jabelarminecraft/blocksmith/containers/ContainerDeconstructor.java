@@ -279,7 +279,7 @@ public class ContainerDeconstructor extends Container
     }
 
     @Override
-	public boolean func_94530_a(ItemStack parItemStack, Slot parSlot)
+	public boolean canMergeSlot(ItemStack parItemStack, Slot parSlot)
     {
         return !parSlot.inventory.equals(outputInventory);
     }

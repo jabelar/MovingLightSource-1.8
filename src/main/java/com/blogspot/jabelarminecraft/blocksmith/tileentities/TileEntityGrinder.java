@@ -172,7 +172,7 @@ public class TileEntityGrinder extends TileEntityLockable implements IUpdatePlay
      * Gets the name of this command sender (usually username, but possibly "Rcon")
      */
     @Override
-    public String getName()
+    public String getCommandSenderName()
     {
         return hasCustomName() ? grinderCustomName : "container.grinder";
     }

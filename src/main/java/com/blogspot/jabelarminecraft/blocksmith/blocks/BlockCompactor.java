@@ -86,10 +86,10 @@ public class BlockCompactor extends BlockContainer
         if (!parWorld.isRemote)
         {
         	// Rotate block if the front side is blocked
-            Block blockToNorth = parWorld.getBlockState(parBlockPos.offsetNorth()).getBlock();
-            Block blockToSouth = parWorld.getBlockState(parBlockPos.offsetSouth()).getBlock();
-            Block blockToWest = parWorld.getBlockState(parBlockPos.offsetWest()).getBlock();
-            Block blockToEast = parWorld.getBlockState(parBlockPos.offsetEast()).getBlock();
+            Block blockToNorth = parWorld.getBlockState(parBlockPos.north()).getBlock();
+            Block blockToSouth = parWorld.getBlockState(parBlockPos.south()).getBlock();
+            Block blockToWest = parWorld.getBlockState(parBlockPos.west()).getBlock();
+            Block blockToEast = parWorld.getBlockState(parBlockPos.east()).getBlock();
             EnumFacing enumfacing = (EnumFacing)parIBlockState.getValue(FACING);
 
             if (enumfacing == EnumFacing.NORTH && blockToNorth.isFullBlock() && !blockToSouth.isFullBlock())
@@ -203,13 +203,13 @@ public class BlockCompactor extends BlockContainer
     @Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        return getDefaultState().withProperty(FACING, placer.func_174811_aO().getOpposite());
+        return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
     @Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.func_174811_aO().getOpposite()), 2);
+        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
 
         if (stack.hasDisplayName())
         {

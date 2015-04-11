@@ -74,9 +74,9 @@ public class ContainerTanningRack extends Container
      * Add the given Listener to the list of Listeners. Method name is for legacy.
      */
     @Override
-	public void addCraftingToCrafters(ICrafting listener)
+	public void onCraftGuiOpened(ICrafting listener)
     {
-        super.addCraftingToCrafters(listener);
+        super.onCraftGuiOpened(listener);
         listener.func_175173_a(this, tileTanningRack);
     }
 

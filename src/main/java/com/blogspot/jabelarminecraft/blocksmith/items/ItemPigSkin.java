@@ -69,9 +69,9 @@ public class ItemPigSkin extends Item
         {
             if (movingObjectPosition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                BlockPos blockPos = movingObjectPosition.func_178782_a();
+                BlockPos blockPos = movingObjectPosition.getBlockPos();
 
-                if (!parPlayer.func_175151_a(blockPos.offset(movingObjectPosition.field_178784_b), movingObjectPosition.field_178784_b, parItemStack))
+                if (!parPlayer.canPlayerEdit(blockPos.offset(movingObjectPosition.sideHit), movingObjectPosition.sideHit, parItemStack))
                 {
                     return parItemStack;
                 }

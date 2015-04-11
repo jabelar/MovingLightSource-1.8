@@ -175,7 +175,7 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
      * Gets the name of this command sender (usually username, but possibly "Rcon")
      */
     @Override
-	public String getName()
+	public String getCommandSenderName()
     {
         return hasCustomName() ? tanningRackCustomName : "container.tanningRack";
     }

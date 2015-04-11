@@ -18,7 +18,6 @@ package com.blogspot.jabelarminecraft.blocksmith.items;
 
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -69,17 +68,15 @@ public class ItemCowHide extends Item
         {
             if (movingObjectPosition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                BlockPos blockPos = movingObjectPosition.func_178782_a();
+                BlockPos blockPos = movingObjectPosition.getBlockPos();
 
-                if (!parPlayer.func_175151_a(blockPos.offset(movingObjectPosition.field_178784_b), movingObjectPosition.field_178784_b, parItemStack))
+                if (!parPlayer.canPlayerEdit(blockPos.offset(movingObjectPosition.sideHit), movingObjectPosition.sideHit, parItemStack))
                 {
                     return parItemStack;
                 }
 
                 IBlockState theBlockState = parWorld.getBlockState(blockPos);
                 Block theBlock = theBlockState.getBlock();
-                Material theMaterial = theBlock.getMaterial();
-
                 if (theBlock == BlockSmith.blockTanningRack)
                 {
                 	// DEBUG

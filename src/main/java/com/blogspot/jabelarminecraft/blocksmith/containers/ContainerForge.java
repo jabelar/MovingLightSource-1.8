@@ -56,9 +56,9 @@ public class ContainerForge extends Container
      * Add the given Listener to the list of Listeners. Method name is for legacy.
      */
     @Override
-	public void addCraftingToCrafters(ICrafting parICraftingListener)
+	public void onCraftGuiOpened(ICrafting parICraftingListener)
     {
-        super.addCraftingToCrafters(parICraftingListener);
+        super.onCraftGuiOpened(parICraftingListener);
         parICraftingListener.func_175173_a(this, tileForge);
     }
 

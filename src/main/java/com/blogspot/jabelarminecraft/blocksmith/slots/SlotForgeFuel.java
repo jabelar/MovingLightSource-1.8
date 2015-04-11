@@ -27,17 +27,17 @@ public class SlotForgeFuel extends Slot
     @Override
 	public boolean isItemValid(ItemStack stack)
     {
-        return TileEntityForge.isItemFuel(stack) || func_178173_c_(stack);
+        return TileEntityForge.isItemFuel(stack) || isItemBucket(stack);
     }
 
     @Override
-	public int func_178170_b(ItemStack p_178170_1_)
+	public int getItemStackLimit(ItemStack parItemStack)
     {
-        return func_178173_c_(p_178170_1_) ? 1 : super.func_178170_b(p_178170_1_);
+        return isItemValid(parItemStack) ? 1 : super.getItemStackLimit(parItemStack);
     }
 
-    public static boolean func_178173_c_(ItemStack p_178173_0_)
+    public static boolean isItemBucket(ItemStack parItemStack)
     {
-        return p_178173_0_ != null && p_178173_0_.getItem() != null && p_178173_0_.getItem() == Items.bucket;
+        return parItemStack != null && parItemStack.getItem() != null && parItemStack.getItem() == Items.bucket;
     }
 }
