@@ -25,7 +25,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
@@ -40,9 +39,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-
-import com.blogspot.jabelarminecraft.blocksmith.items.IExtendedReach;
-import com.blogspot.jabelarminecraft.blocksmith.networking.MessageExtendedReachAttack;
 
 
 public class FMLEventHandler 
@@ -69,7 +65,7 @@ public class FMLEventHandler
 //    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 //    public void onEvent(KeyInputEvent event)
 //    {
-//
+//        
 //    }
 //
 //    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
@@ -161,56 +157,56 @@ public class FMLEventHandler
     {        
         if (event.phase == TickEvent.Phase.END && event.player.worldObj.isRemote) // only proceed if START phase otherwise, will execute twice per tick
         {
-            if (event.player != null && event.player.swingProgressInt == 1) // Just swung
-            {
-            	// DEBUG
-            	System.out.println("Swinging weapon");
-                ItemStack itemstack = event.player.getCurrentEquippedItem();
-                IExtendedReach ieri;
-                if (itemstack != null)
-                {
-                    if (itemstack.getItem() instanceof IExtendedReach)
-                    {
-                    	// DEBUG
-                    	System.out.println("Weapon has extended reach");
-                        ieri = (IExtendedReach) itemstack.getItem();
-                    } else
-                    {
-                        ieri = null;
-                    }
-
-                    if (ieri != null)
-                    {
-                        float reach = ieri.getReach();
-                        MovingObjectPosition mov = getMouseOverExtended(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
-                        
-                        if (mov != null)
-                        {
-                        	// DEBUG
-                        	System.out.println("MOV not null");
-                            if (mov.entityHit != null && mov.entityHit.hurtResistantTime == 0)
-                            {
-                            	// DEBUG
-                            	System.out.println("Hit entity "+mov.entityHit);
-                                if (mov.entityHit != event.player )
-                                {
-                                    BlockSmith.network.sendToServer(new MessageExtendedReachAttack(mov.entityHit.getEntityId()));
-                                }
-                            }
-                            else
-                            {
-                            	// DEBUG
-                            	System.out.println("Entity is null or has hurt resistance");
-                            }
-                        }
-                        else
-                        {
-                        	// DEBUG
-                        	System.out.println("MOV is null");
-                        }
-                    }
-                }
-            }
+//            if (event.player != null && event.player.swingProgressInt == 1) // Just swung
+//            {
+//            	// DEBUG
+//            	System.out.println("Swinging weapon");
+//                ItemStack itemstack = event.player.getCurrentEquippedItem();
+//                IExtendedReach ieri;
+//                if (itemstack != null)
+//                {
+//                    if (itemstack.getItem() instanceof IExtendedReach)
+//                    {
+//                    	// DEBUG
+//                    	System.out.println("Weapon has extended reach");
+//                        ieri = (IExtendedReach) itemstack.getItem();
+//                    } else
+//                    {
+//                        ieri = null;
+//                    }
+//
+//                    if (ieri != null)
+//                    {
+//                        float reach = ieri.getReach();
+//                        MovingObjectPosition mov = getMouseOverExtended(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
+//                        
+//                        if (mov != null)
+//                        {
+//                        	// DEBUG
+//                        	System.out.println("MOV not null");
+//                            if (mov.entityHit != null && mov.entityHit.hurtResistantTime == 0)
+//                            {
+//                            	// DEBUG
+//                            	System.out.println("Hit entity "+mov.entityHit);
+//                                if (mov.entityHit != event.player )
+//                                {
+//                                    BlockSmith.network.sendToServer(new MessageExtendedReachAttack(mov.entityHit.getEntityId()));
+//                                }
+//                            }
+//                            else
+//                            {
+//                            	// DEBUG
+//                            	System.out.println("Entity is null or has hurt resistance");
+//                            }
+//                        }
+//                        else
+//                        {
+//                        	// DEBUG
+//                        	System.out.println("MOV is null");
+//                        }
+//                    }
+//                }
+//            }
         }
         
         EntityPlayer thePlayer = event.player;
