@@ -163,12 +163,16 @@ public class FMLEventHandler
         {
             if (event.player != null && event.player.swingProgressInt == 1) // Just swung
             {
+            	// DEBUG
+            	System.out.println("Swinging weapon");
                 ItemStack itemstack = event.player.getCurrentEquippedItem();
                 IExtendedReach ieri;
                 if (itemstack != null)
                 {
                     if (itemstack.getItem() instanceof IExtendedReach)
                     {
+                    	// DEBUG
+                    	System.out.println("Weapon has extended reach");
                         ieri = (IExtendedReach) itemstack.getItem();
                     } else
                     {
@@ -184,6 +188,8 @@ public class FMLEventHandler
                         {
                             if (mov.entityHit != null && mov.entityHit.hurtResistantTime == 0)
                             {
+                            	// DEBUG
+                            	System.out.println("Hit entity "+mov.entityHit);
                                 if (mov.entityHit != event.player )
                                 {
                                     BlockSmith.network.sendToServer(new MessageExtendedReachAttack(mov.entityHit.getEntityId()));
