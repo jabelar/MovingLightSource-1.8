@@ -186,6 +186,8 @@ public class FMLEventHandler
                         
                         if (mov != null)
                         {
+                        	// DEBUG
+                        	System.out.println("MOV not null");
                             if (mov.entityHit != null && mov.entityHit.hurtResistantTime == 0)
                             {
                             	// DEBUG
@@ -195,6 +197,16 @@ public class FMLEventHandler
                                     BlockSmith.network.sendToServer(new MessageExtendedReachAttack(mov.entityHit.getEntityId()));
                                 }
                             }
+                            else
+                            {
+                            	// DEBUG
+                            	System.out.println("Entity is null or has hurt resistance");
+                            }
+                        }
+                        else
+                        {
+                        	// DEBUG
+                        	System.out.println("MOV is null");
                         }
                     }
                 }
