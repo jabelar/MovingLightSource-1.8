@@ -20,13 +20,17 @@
 package com.blogspot.jabelarminecraft.blocksmith.proxy;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelPig;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPig;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -39,6 +43,7 @@ import org.lwjgl.util.glu.Sphere;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.VersionChecker;
+import com.blogspot.jabelarminecraft.blocksmith.entities.EntityPigTest;
 
 public class ClientProxy extends CommonProxy 
 {
@@ -126,8 +131,9 @@ public class ClientProxy extends CommonProxy
     {
         // the float parameter passed to the Render class is the shadow size for the entity
       
-        // RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+        RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
         // RenderingRegistry.registerEntityRenderingHandler(EntityGoldenGoose.class, new RenderGoldenGoose(renderManager, new ModelGoldenGoose(), 0.5F)); // 0.5F is shadow size 
+    	RenderingRegistry.registerEntityRenderingHandler(EntityPigTest.class, new RenderPig(renderManager, new ModelPig(), 0.5F));
     }
     
     public void registerItemRenderers()

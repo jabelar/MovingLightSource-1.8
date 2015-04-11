@@ -23,7 +23,6 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.item.ItemStack;
@@ -43,6 +42,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 import com.blogspot.jabelarminecraft.blocksmith.items.IExtendedReach;
+import com.blogspot.jabelarminecraft.blocksmith.networking.MessageExtendedReachAttack;
 
 
 public class FMLEventHandler 
@@ -159,7 +159,7 @@ public class FMLEventHandler
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public void onEvent(PlayerTickEvent event)
 	{		
-		if (event.phase == TickEvent.Phase.END && !event.player.worldObj.isRemote) // only proceed if START phase otherwise, will execute twice per tick
+		if (event.phase == TickEvent.Phase.END && event.player.worldObj.isRemote) // only proceed if START phase otherwise, will execute twice per tick
 		{
 			if (event.player != null && event.player.swingProgressInt == 1) // Just swung
 			{
@@ -184,8 +184,8 @@ public class FMLEventHandler
 						float reach = ieri.getReach();
 						// DEBUG
 						System.out.println("With reach = "+reach);
-						MovingObjectPosition mov = getMouseOverOrig(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
-
+						MovingObjectPosition mov = getMouseOverExtended(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
+						
 						if (mov != null)
 						{
 							if (mov.entityHit != null && mov.entityHit.hurtResistantTime == 0)
@@ -196,11 +196,7 @@ public class FMLEventHandler
 								{
 									// DEBUG
 									System.out.println("Attacking entity with extended reach");
-									// event.player.attackTargetEntityWithCurrentItem(mov.entityHit);
-									((EntityLivingBase)mov.entityHit).setHealth(((EntityLivingBase)mov.entityHit).getHealth()-4.0F);
-									// mov.entityHit.attackEntityFrom(DamageSource.causePlayerDamage(event.player), 4.0F);
-									// FMLClientHandler.instance().getClient().playerController.attackEntity(event.player, mov.entityHit);
-									// mov.entityHit.setDead();
+									BlockSmith.network.sendToServer(new MessageExtendedReachAttack(mov.entityHit.getEntityId()));
 								}
 								else
 								{
@@ -238,7 +234,7 @@ public class FMLEventHandler
 		}
 	}
 	
-	public static MovingObjectPosition getMouseOverOrig(float dist)
+	public static MovingObjectPosition getMouseOverExtended(float dist)
 	{
 		Minecraft mc = FMLClientHandler.instance().getClient();
 		Entity theRenderViewEntity = mc.getRenderViewEntity();
@@ -251,62 +247,60 @@ public class FMLEventHandler
 				theRenderViewEntity.posZ+0.5D
 				);
 		MovingObjectPosition returnMOP = null;
-		if (theRenderViewEntity != null)
+		if (mc.theWorld != null)
 		{
-			if (mc.theWorld != null)
+			double var2 = dist;
+			returnMOP = theRenderViewEntity.rayTrace(var2, 0);
+			double calcdist = var2;
+			Vec3 pos = theRenderViewEntity.getPositionEyes(0);
+			var2 = calcdist;
+			if (returnMOP != null)
 			{
-				double var2 = dist;
-				returnMOP = theRenderViewEntity.rayTrace(var2, 0);
-				double calcdist = var2;
-				Vec3 pos = theRenderViewEntity.getPositionEyes(0);
-				var2 = calcdist;
-				if (returnMOP != null)
+				calcdist = returnMOP.hitVec.distanceTo(pos);
+			}
+			
+			Vec3 lookvec = theRenderViewEntity.getLook(0);
+			Vec3 var8 = pos.addVector(lookvec.xCoord * var2, lookvec.yCoord * var2, lookvec.zCoord * var2);
+			Entity pointedEntity = null;
+			float var9 = 1.0F;
+			@SuppressWarnings("unchecked")
+			List<Entity> list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(theRenderViewEntity, theViewBoundingBox.addCoord(lookvec.xCoord * var2, lookvec.yCoord * var2, lookvec.zCoord * var2).expand(var9, var9, var9));
+			double d = calcdist;
+			
+			for (Entity entity : list)
+			{
+				if (entity.canBeCollidedWith())
 				{
-					calcdist = returnMOP.hitVec.distanceTo(pos);
-				}
-				
-				Vec3 lookvec = theRenderViewEntity.getLook(0);
-				Vec3 var8 = pos.addVector(lookvec.xCoord * var2, lookvec.yCoord * var2, lookvec.zCoord * var2);
-				Entity pointedEntity = null;
-				float var9 = 1.0F;
-				@SuppressWarnings("unchecked")
-				List<Entity> list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(theRenderViewEntity, theViewBoundingBox.addCoord(lookvec.xCoord * var2, lookvec.yCoord * var2, lookvec.zCoord * var2).expand(var9, var9, var9));
-				double d = calcdist;
-				
-				for (Entity entity : list)
-				{
-					if (entity.canBeCollidedWith())
+					float bordersize = entity.getCollisionBorderSize();
+					AxisAlignedBB aabb = new AxisAlignedBB(entity.posX-entity.width/2, entity.posY, entity.posZ-entity.width/2, entity.posX+entity.width/2, entity.posY+entity.height, entity.posZ+entity.width/2);
+					aabb.expand(bordersize, bordersize, bordersize);
+					MovingObjectPosition mop0 = aabb.calculateIntercept(pos, var8);
+					
+					if (aabb.isVecInside(pos))
 					{
-						float bordersize = entity.getCollisionBorderSize();
-						AxisAlignedBB aabb = new AxisAlignedBB(entity.posX-entity.width/2, entity.posY, entity.posZ-entity.width/2, entity.posX+entity.width/2, entity.posY+entity.height, entity.posZ+entity.width/2);
-						aabb.expand(bordersize, bordersize, bordersize);
-						MovingObjectPosition mop0 = aabb.calculateIntercept(pos, var8);
+						if (0.0D < d || d == 0.0D)
+						{
+							pointedEntity = entity;
+							d = 0.0D;
+						}
+					} else if (mop0 != null)
+					{
+						double d1 = pos.distanceTo(mop0.hitVec);
 						
-						if (aabb.isVecInside(pos))
+						if (d1 < d || d == 0.0D)
 						{
-							if (0.0D < d || d == 0.0D)
-							{
-								pointedEntity = entity;
-								d = 0.0D;
-							}
-						} else if (mop0 != null)
-						{
-							double d1 = pos.distanceTo(mop0.hitVec);
-							
-							if (d1 < d || d == 0.0D)
-							{
-								pointedEntity = entity;
-								d = d1;
-							}
+							pointedEntity = entity;
+							d = d1;
 						}
 					}
 				}
-				
-				if (pointedEntity != null && (d < calcdist || returnMOP == null))
-				{
-					returnMOP = new MovingObjectPosition(pointedEntity);
-				}
 			}
+			
+			if (pointedEntity != null && (d < calcdist || returnMOP == null))
+			{
+				returnMOP = new MovingObjectPosition(pointedEntity);
+			}
+		
 		}
 		return returnMOP;
 	}

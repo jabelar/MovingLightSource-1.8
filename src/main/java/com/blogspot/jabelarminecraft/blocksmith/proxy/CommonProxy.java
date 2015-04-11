@@ -54,8 +54,10 @@ import com.blogspot.jabelarminecraft.blocksmith.FMLEventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.OreGenEventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.TerrainGenEventHandler;
 import com.blogspot.jabelarminecraft.blocksmith.commands.CommandStructureCapture;
+import com.blogspot.jabelarminecraft.blocksmith.entities.EntityPigTest;
 import com.blogspot.jabelarminecraft.blocksmith.gui.GuiHandler;
 import com.blogspot.jabelarminecraft.blocksmith.items.SpawnEgg;
+import com.blogspot.jabelarminecraft.blocksmith.networking.MessageExtendedReachAttack;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageSyncEntityToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToClient;
 import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToServer;
@@ -165,6 +167,7 @@ public class CommonProxy
         // register messages from server to client
         BlockSmith.network.registerMessage(MessageToClient.Handler.class, MessageToClient.class, packetId++, Side.CLIENT);
         BlockSmith.network.registerMessage(MessageSyncEntityToClient.Handler.class, MessageSyncEntityToClient.class, packetId++, Side.CLIENT);
+        BlockSmith.network.registerMessage(MessageExtendedReachAttack.Handler.class, MessageExtendedReachAttack.class, packetId++, Side.SERVER);
 	}
 	
 	/*	 
@@ -354,6 +357,7 @@ public class CommonProxy
         // or without spawn egg use
 
         // example: registerModEntity(EntityGoldenGoose.class, "golden_goose");
+        registerModEntityWithEgg(EntityPigTest.class, "Test Pig", 0xE18519, 0x000000);
     }
  
     /**
