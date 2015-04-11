@@ -23,6 +23,7 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.item.ItemStack;
@@ -158,19 +159,20 @@ public class FMLEventHandler
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public void onEvent(PlayerTickEvent event)
 	{		
-		if (event.phase == TickEvent.Phase.END) // only proceed if START phase otherwise, will execute twice per tick
+		if (event.phase == TickEvent.Phase.END && !event.player.worldObj.isRemote) // only proceed if START phase otherwise, will execute twice per tick
 		{
 			if (event.player != null && event.player.swingProgressInt == 1) // Just swung
 			{
+				// DEBUG
+				System.out.println("Swinging weapon");
 				ItemStack itemstack = event.player.getCurrentEquippedItem();
 				IExtendedReach ieri;
 				if (itemstack != null)
 				{
 					if (itemstack.getItem() instanceof IExtendedReach)
 					{
-						ieri = (IExtendedReach) itemstack.getItem();
-					} else if (itemstack.getItem() instanceof IExtendedReach)
-					{
+						// DEBUG
+						System.out.println("Using an extended reach item");
 						ieri = (IExtendedReach) itemstack.getItem();
 					} else
 					{
@@ -180,11 +182,42 @@ public class FMLEventHandler
 					if (ieri != null)
 					{
 						float reach = ieri.getReach();
-						MovingObjectPosition mov = getMouseOver(0, reach);
+						// DEBUG
+						System.out.println("With reach = "+reach);
+						MovingObjectPosition mov = getMouseOverOrig(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
 
-						if (mov != null && mov.entityHit != null && mov.entityHit != event.player && mov.entityHit.hurtResistantTime == 0)
+						if (mov != null)
 						{
-							FMLClientHandler.instance().getClient().playerController.attackEntity(event.player, mov.entityHit);
+							if (mov.entityHit != null && mov.entityHit.hurtResistantTime == 0)
+							{
+								// DEBUG
+								System.out.println("entityHit = "+mov.entityHit);
+								if (mov.entityHit != event.player )
+								{
+									// DEBUG
+									System.out.println("Attacking entity with extended reach");
+									// event.player.attackTargetEntityWithCurrentItem(mov.entityHit);
+									((EntityLivingBase)mov.entityHit).setHealth(((EntityLivingBase)mov.entityHit).getHealth()-4.0F);
+									// mov.entityHit.attackEntityFrom(DamageSource.causePlayerDamage(event.player), 4.0F);
+									// FMLClientHandler.instance().getClient().playerController.attackEntity(event.player, mov.entityHit);
+									// mov.entityHit.setDead();
+								}
+								else
+								{
+									// DEBUG
+									System.out.println("entityHit is the player");
+								}
+							}
+							else
+							{
+								// DEBUG
+								System.out.println("entityHit is null");
+							}
+						}
+						else
+						{
+							// DEBUG
+							System.out.println("No MovingObjectPosition found");
 						}
 					}
 				}
@@ -205,18 +238,10 @@ public class FMLEventHandler
 		}
 	}
 	
-	/**
-	 * Pretty much copied this from the EntityRenderer getMouseOver() function
-	 * 
-	 * @param parInterpolationFactor
-	 * @param parDistance
-	 * @return
-	 */
-	public static MovingObjectPosition getMouseOver(float parInterpolationFactor, float parDistance)
+	public static MovingObjectPosition getMouseOverOrig(float dist)
 	{
 		Minecraft mc = FMLClientHandler.instance().getClient();
 		Entity theRenderViewEntity = mc.getRenderViewEntity();
-		Entity theHitEntity = null;
 		AxisAlignedBB theViewBoundingBox = new AxisAlignedBB(
 				theRenderViewEntity.posX-0.5D,
 				theRenderViewEntity.posY-0.0D,
@@ -226,61 +251,65 @@ public class FMLEventHandler
 				theRenderViewEntity.posZ+0.5D
 				);
 		MovingObjectPosition returnMOP = null;
-		if (mc.getRenderViewEntity() != null)
+		if (theRenderViewEntity != null)
 		{
 			if (mc.theWorld != null)
 			{
-				double calcdist = parDistance;
-				returnMOP = theRenderViewEntity.rayTrace(parDistance, parInterpolationFactor);
-				Vec3 posEyesVec = theRenderViewEntity.getPositionEyes(parInterpolationFactor);
-				Vec3 lookVec = theRenderViewEntity.getLook(parInterpolationFactor);
-				Vec3 lookVecFullDistance = posEyesVec.addVector(lookVec.xCoord * parDistance, lookVec.yCoord * parDistance, lookVec.zCoord * parDistance);
-				
+				double var2 = dist;
+				returnMOP = theRenderViewEntity.rayTrace(var2, 0);
+				double calcdist = var2;
+				Vec3 pos = theRenderViewEntity.getPositionEyes(0);
+				var2 = calcdist;
 				if (returnMOP != null)
 				{
-					calcdist = returnMOP.hitVec.distanceTo(posEyesVec);
+					calcdist = returnMOP.hitVec.distanceTo(pos);
 				}
 				
+				Vec3 lookvec = theRenderViewEntity.getLook(0);
+				Vec3 var8 = pos.addVector(lookvec.xCoord * var2, lookvec.yCoord * var2, lookvec.zCoord * var2);
+				Entity pointedEntity = null;
+				float var9 = 1.0F;
 				@SuppressWarnings("unchecked")
-				List<Entity> potentialTargetsList = mc.theWorld.getEntitiesWithinAABBExcludingEntity(theRenderViewEntity, theViewBoundingBox.addCoord(lookVec.xCoord * parDistance, lookVec.yCoord * parDistance, lookVec.zCoord * parDistance).expand(1.0F, 1.0F, 1.0F));
+				List<Entity> list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(theRenderViewEntity, theViewBoundingBox.addCoord(lookvec.xCoord * var2, lookvec.yCoord * var2, lookvec.zCoord * var2).expand(var9, var9, var9));
 				double d = calcdist;
 				
-				for (Entity potentialTargetEntity : potentialTargetsList)
+				for (Entity entity : list)
 				{
-					if (potentialTargetEntity.canBeCollidedWith() && potentialTargetEntity.getBoundingBox() != null)
+					if (entity.canBeCollidedWith())
 					{
-						AxisAlignedBB theAABB = potentialTargetEntity.getBoundingBox().expand(0.1F, 0.1F, 0.1F);
-						MovingObjectPosition mop0 = theAABB.calculateIntercept(posEyesVec, lookVecFullDistance);
+						float bordersize = entity.getCollisionBorderSize();
+						AxisAlignedBB aabb = new AxisAlignedBB(entity.posX-entity.width/2, entity.posY, entity.posZ-entity.width/2, entity.posX+entity.width/2, entity.posY+entity.height, entity.posZ+entity.width/2);
+						aabb.expand(bordersize, bordersize, bordersize);
+						MovingObjectPosition mop0 = aabb.calculateIntercept(pos, var8);
 						
-						if (theAABB.isVecInside(posEyesVec))
+						if (aabb.isVecInside(pos))
 						{
-							if (d <= 0.0D)
+							if (0.0D < d || d == 0.0D)
 							{
-								theHitEntity = potentialTargetEntity;
+								pointedEntity = entity;
 								d = 0.0D;
 							}
 						} else if (mop0 != null)
 						{
-							double d1 = posEyesVec.distanceTo(mop0.hitVec);
+							double d1 = pos.distanceTo(mop0.hitVec);
 							
 							if (d1 < d || d == 0.0D)
 							{
-								theHitEntity = potentialTargetEntity;
+								pointedEntity = entity;
 								d = d1;
 							}
 						}
 					}
 				}
 				
-				if (theHitEntity != null && (d < calcdist || returnMOP == null))
+				if (pointedEntity != null && (d < calcdist || returnMOP == null))
 				{
-					returnMOP = new MovingObjectPosition(theHitEntity);
+					returnMOP = new MovingObjectPosition(pointedEntity);
 				}
 			}
 		}
 		return returnMOP;
 	}
-
 
 //	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 //	public void onEvent(RenderTickEvent event)
