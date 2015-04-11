@@ -26,7 +26,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import com.blogspot.jabelarminecraft.blocksmith.BlockSmith;
 import com.blogspot.jabelarminecraft.blocksmith.items.IExtendedReach;
-import com.blogspot.jabelarminecraft.blocksmith.utilities.Utilities;
 
 /**
  * @author jabelar
@@ -72,7 +71,7 @@ public class MessageExtendedReachAttack implements IMessage
         	// DEBUG
         	System.out.println("Message received");
         	EntityPlayer thePlayer = BlockSmith.proxy.getPlayerEntityFromContext(ctx);
-        	Entity theEntity = Utilities.getEntityByID(message.entityId, thePlayer.worldObj);
+        	Entity theEntity = thePlayer.worldObj.getEntityByID(message.entityId);
         	// DEBUG
         	System.out.println("Entity = "+theEntity);
         	

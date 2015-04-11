@@ -20,7 +20,7 @@ public class ItemSwordExtended extends ItemSword implements IExtendedReach
 	@Override
 	public float getReach() 
 	{
-		return 12.0F;
+		return 30.0F;
 	}
 
 }
