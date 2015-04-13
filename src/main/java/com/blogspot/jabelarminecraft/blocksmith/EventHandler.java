@@ -639,16 +639,12 @@ public class EventHandler
             EntityPlayer thePlayer = mc.thePlayer;
             if (thePlayer != null)
             {
-                // DEBUG
-                System.out.println("Swinging weapon");
                 ItemStack itemstack = thePlayer.getCurrentEquippedItem();
                 IExtendedReach ieri;
                 if (itemstack != null)
                 {
                     if (itemstack.getItem() instanceof IExtendedReach)
                     {
-                        // DEBUG
-                        System.out.println("Weapon has extended reach");
                         ieri = (IExtendedReach) itemstack.getItem();
                     } else
                     {
@@ -658,31 +654,17 @@ public class EventHandler
                     if (ieri != null)
                     {
                         float reach = ieri.getReach();
-                        MovingObjectPosition mov = getMouseOverExtended(reach); // FMLClientHandler.instance().getClient().getRenderViewEntity().rayTrace(reach, 0); // getMouseOver(0, reach);
+                        MovingObjectPosition mov = getMouseOverExtended(reach); 
                         
                         if (mov != null)
                         {
-                                // DEBUG
-                                System.out.println("MOV not null");
                             if (mov.entityHit != null && mov.entityHit.hurtResistantTime == 0)
                             {
-                                // DEBUG
-                                System.out.println("Hit entity "+mov.entityHit);
                                 if (mov.entityHit != thePlayer )
                                 {
                                     BlockSmith.network.sendToServer(new MessageExtendedReachAttack(mov.entityHit.getEntityId()));
                                 }
                             }
-                            else
-                            {
-                                // DEBUG
-                                System.out.println("Entity is null or has hurt resistance");
-                            }
-                        }
-                        else
-                        {
-                                // DEBUG
-                                System.out.println("MOV is null");
                         }
                     }
                 }
