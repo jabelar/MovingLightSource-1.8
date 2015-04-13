@@ -5,6 +5,7 @@ package com.blogspot.jabelarminecraft.blocksmith.tileentities;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -22,8 +23,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -560,4 +563,14 @@ public class TileEntityForge extends TileEntityLockable implements IUpdatePlayer
             forgeItemStacks[i] = null;
         }
     }
+    
+    /**
+     * This controls whether the tile entity gets replaced whenever the block state is changed.
+     * Normally only want this when block actually is replaced.
+     */
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
+	{
+	    return (oldState.getBlock() != newSate.getBlock());
+	}
 }

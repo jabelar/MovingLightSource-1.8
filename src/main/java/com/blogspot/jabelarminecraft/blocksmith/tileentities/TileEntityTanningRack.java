@@ -66,12 +66,13 @@ public class TileEntityTanningRack extends TileEntityLockable implements IUpdate
 
     /**
      * This controls whether the tile entity gets replaced whenever the block state is changed.
+     * Normally only want this when block actually is replaced.
      */
-    @Override
-    public boolean shouldRefresh(World parWorld, BlockPos parPos, IBlockState parOldState, IBlockState parNewState)
-    {
-    	return false;
-    }
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
+	{
+	    return (oldState.getBlock() != newSate.getBlock());
+	}
     
     /**
      * Returns the number of slots in the inventory.
