@@ -261,6 +261,15 @@ public class FMLEventHandler
 //        
 //    }
 
+//  @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+//  public void onEvent(WorldTickEvent event)
+//  {
+//      if (event.phase == TickEvent.Phase.END) // only proceed if START phase otherwise, will execute twice per tick
+//      {
+//          return;
+//      }          
+//  }
+
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     public void onEvent(OnConfigChangedEvent eventArgs) 
     {
