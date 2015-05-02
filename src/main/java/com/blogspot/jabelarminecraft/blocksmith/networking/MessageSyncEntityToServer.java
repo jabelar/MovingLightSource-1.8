@@ -17,7 +17,7 @@
 package com.blogspot.jabelarminecraft.blocksmith.networking;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -70,13 +70,24 @@ public class MessageSyncEntityToServer implements IMessage
     public static class Handler implements IMessageHandler<MessageSyncEntityToServer, IMessage> 
     {
         @Override
-        public IMessage onMessage(MessageSyncEntityToServer message, MessageContext ctx) 
+        public IMessage onMessage(final MessageSyncEntityToServer message, MessageContext ctx) 
         {
-        	EntityPlayer thePlayer = BlockSmith.proxy.getPlayerEntityFromContext(ctx);
-        	IEntity theEntity = (IEntity)thePlayer.worldObj.getEntityByID(message.entityId);
-        	theEntity.setSyncDataCompound(message.entitySyncDataCompound);
-        	// DEBUG
-        	System.out.println("MessageSyncEnitityToClient onMessage(), entity ID = "+message.entityId);
+            // Know it will be on the server so make it thread-safe
+            final EntityPlayerMP thePlayer = (EntityPlayerMP) BlockSmith.proxy.getPlayerEntityFromContext(ctx);
+            thePlayer.getServerForPlayer().addScheduledTask(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run() 
+                        {
+                            IEntity theEntity = (IEntity)thePlayer.worldObj.getEntityByID(message.entityId);
+                            theEntity.setSyncDataCompound(message.entitySyncDataCompound);
+                            // DEBUG
+                            System.out.println("MessageSyncEnitityToClient onMessage(), entity ID = "+message.entityId);
+                            return; 
+                        }
+                }
+            );
             return null; // no response in this case
         }
     }
