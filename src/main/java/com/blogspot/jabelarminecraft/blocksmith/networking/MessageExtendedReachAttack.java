@@ -18,7 +18,7 @@ package com.blogspot.jabelarminecraft.blocksmith.networking;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -66,32 +66,43 @@ public class MessageExtendedReachAttack implements IMessage
     public static class Handler implements IMessageHandler<MessageExtendedReachAttack, IMessage> 
     {
         @Override
-        public IMessage onMessage(MessageExtendedReachAttack message, MessageContext ctx) 
+        public IMessage onMessage(final MessageExtendedReachAttack message, MessageContext ctx) 
         {
         	// DEBUG
         	System.out.println("Message received");
-        	EntityPlayer thePlayer = BlockSmith.proxy.getPlayerEntityFromContext(ctx);
-        	Entity theEntity = thePlayer.worldObj.getEntityByID(message.entityId);
-        	// DEBUG
-        	System.out.println("Entity = "+theEntity);
-        	
-        	// Need to ensure that hackers can't cause trick kills, so double check weapon type
-        	// and reach
-        	if (thePlayer.getCurrentEquippedItem() == null)
-        	{
-        		return null;
-        	}
-        	if (thePlayer.getCurrentEquippedItem().getItem() instanceof IExtendedReach)
-        	{
-        		IExtendedReach theExtendedReachWeapon = (IExtendedReach)thePlayer.getCurrentEquippedItem().getItem();
-        		double distanceSq = thePlayer.getDistanceSqToEntity(theEntity);
-        		double reachSq =theExtendedReachWeapon.getReach()*theExtendedReachWeapon.getReach();
-        		if (reachSq >= distanceSq)
-        		{
-                	thePlayer.attackTargetEntityWithCurrentItem(theEntity);
-        		}
-        	}
-            return null; // no response in this case
-        }
+        	// Know it will be on the server so make it thread-safe
+        	final EntityPlayerMP thePlayer = (EntityPlayerMP) BlockSmith.proxy.getPlayerEntityFromContext(ctx);
+        	thePlayer.getServerForPlayer().addScheduledTask(
+        	        new Runnable()
+                	{
+                        @Override
+                        public void run() 
+                        {
+                            Entity theEntity = thePlayer.worldObj.getEntityByID(message.entityId);
+                            // DEBUG
+                            System.out.println("Entity = "+theEntity);
+                            
+                            // Need to ensure that hackers can't cause trick kills, so double check weapon type
+                            // and reach
+                            if (thePlayer.getCurrentEquippedItem() == null)
+                            {
+                                return;
+                            }
+                            if (thePlayer.getCurrentEquippedItem().getItem() instanceof IExtendedReach)
+                            {
+                                IExtendedReach theExtendedReachWeapon = (IExtendedReach)thePlayer.getCurrentEquippedItem().getItem();
+                                double distanceSq = thePlayer.getDistanceSqToEntity(theEntity);
+                                double reachSq =theExtendedReachWeapon.getReach()*theExtendedReachWeapon.getReach();
+                                if (reachSq >= distanceSq)
+                                {
+                                    thePlayer.attackTargetEntityWithCurrentItem(theEntity);
+                                }
+                            }
+                            return; // no response in this case
+                        }
+                }
+        	);
+        	return null; // no response message
+    	}
     }
 }
