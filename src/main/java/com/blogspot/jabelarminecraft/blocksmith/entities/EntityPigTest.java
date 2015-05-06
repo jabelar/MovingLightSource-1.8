@@ -32,6 +32,7 @@ public class EntityPigTest extends EntityPig
 	public EntityPigTest(World worldIn) 
 	{
 		super(worldIn);
+		setSize(1.0F, 10.0F);
 	}
 	
 	@Override
