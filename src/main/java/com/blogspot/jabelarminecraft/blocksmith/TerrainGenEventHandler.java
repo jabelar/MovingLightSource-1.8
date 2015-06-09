@@ -19,6 +19,11 @@
 
 package com.blogspot.jabelarminecraft.blocksmith;
 
+import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 
 public class TerrainGenEventHandler 
 {
@@ -128,11 +133,13 @@ public class TerrainGenEventHandler
 //
 //	}
 //	
-//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-//	public void onEvent(SaplingGrowTreeEvent event)
-//	{
-//		
-//	}
+	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+	public void onEvent(SaplingGrowTreeEvent event)
+	{
+	    // DEBUG
+	    System.out.println("Denying sapling growth");
+		event.setResult(Result.DENY);
+	}
 //	
 //	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 //	public void onEvent(WorldTypeEvent event)
