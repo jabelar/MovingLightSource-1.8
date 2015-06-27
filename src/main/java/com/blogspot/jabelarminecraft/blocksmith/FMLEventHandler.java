@@ -165,16 +165,19 @@ public class FMLEventHandler
         }
         else if (event.phase == TickEvent.Phase.START && !event.player.worldObj.isRemote)
         {
-            if (event.player.getCurrentEquippedItem().getItem() != null && event.player.getCurrentEquippedItem().getItem() == ItemBlock.getItemFromBlock(Blocks.torch))
+            if (event.player.getCurrentEquippedItem() != null)
             {
-                int blockX = MathHelper.floor_double(event.player.posX);
-                int blockY = MathHelper.floor_double(event.player.posY-0.2D - event.player.getYOffset());
-                int blockZ = MathHelper.floor_double(event.player.posZ);
-                BlockPos blockLocation = new BlockPos(blockX, blockY, blockZ);
-                if (event.player.worldObj.getBlockState(blockLocation).getBlock() == Blocks.air
-                        && event.player.worldObj.getBlockState(blockLocation.add(0, -1, 0)).getBlock() != Blocks.air)
+                if (event.player.getCurrentEquippedItem().getItem() == ItemBlock.getItemFromBlock(Blocks.torch))
                 {
-                    event.player.worldObj.setBlockState(blockLocation, Blocks.torch.getDefaultState());
+                    int blockX = MathHelper.floor_double(event.player.posX);
+                    int blockY = MathHelper.floor_double(event.player.posY-0.2D - event.player.getYOffset());
+                    int blockZ = MathHelper.floor_double(event.player.posZ);
+                    BlockPos blockLocation = new BlockPos(blockX, blockY, blockZ);
+                    if (event.player.worldObj.getBlockState(blockLocation).getBlock() == Blocks.air
+                            && event.player.worldObj.getBlockState(blockLocation.add(0, -1, 0)).getBlock() != Blocks.air)
+                    {
+                        event.player.worldObj.setBlockState(blockLocation, Blocks.torch.getDefaultState());
+                    }
                 }
             }
         }

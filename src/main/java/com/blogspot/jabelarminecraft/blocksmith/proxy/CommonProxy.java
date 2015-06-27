@@ -235,6 +235,7 @@ public class CommonProxy
         GameRegistry.registerBlock(BlockSmith.blockDeconstructor, BlockSmith.blockDeconstructor.getUnlocalizedName().substring(5));
         GameRegistry.registerBlock(BlockSmith.blockForge, BlockSmith.blockForge.getUnlocalizedName().substring(5));
 //        GameRegistry.registerBlock(BlockSmith.blockForgeLit, BlockSmith.blockForgeLit.getUnlocalizedName().substring(5));
+        GameRegistry.registerBlock(BlockSmith.blockMovingLightSource, BlockSmith.blockMovingLightSource.getUnlocalizedName().substring(5));
     	
         // each instance of your block should have a name that is unique within your mod.  use lower case.
         // you don't need to register an item corresponding to the block, GameRegistry.registerBlock does this automatically.
