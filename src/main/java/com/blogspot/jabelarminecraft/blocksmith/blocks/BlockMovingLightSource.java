@@ -66,6 +66,7 @@ public class BlockMovingLightSource extends BlockTorch
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
         setTickRandomly(true);
         setCreativeTab(CreativeTabs.tabDecorations);
+        setLightLevel(1.0F);
     }
 
     @Override

@@ -176,7 +176,7 @@ public class FMLEventHandler
                     if (event.player.worldObj.getBlockState(blockLocation).getBlock() == Blocks.air
                             && event.player.worldObj.getBlockState(blockLocation.add(0, -1, 0)).getBlock() != Blocks.air)
                     {
-                        event.player.worldObj.setBlockState(blockLocation, Blocks.torch.getDefaultState());
+                        event.player.worldObj.setBlockState(blockLocation, BlockSmith.blockMovingLightSource.getDefaultState());
                     }
                 }
             }
