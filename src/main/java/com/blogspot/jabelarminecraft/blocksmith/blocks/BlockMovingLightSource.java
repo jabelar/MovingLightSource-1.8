@@ -45,8 +45,8 @@ public class BlockMovingLightSource extends Block implements ITileEntityProvider
 
     public BlockMovingLightSource()
     {
-        super(Material.grass);
-        setUnlocalizedName("blockMovingLightSource");
+        super(Material.air );
+        setUnlocalizedName("movinglightsource");
         setDefaultState(blockState.getBaseState());
         setTickRandomly(true);
         setCreativeTab(CreativeTabs.tabDecorations);

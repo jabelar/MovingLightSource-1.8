@@ -18,6 +18,8 @@ package com.blogspot.jabelarminecraft.blocksmith.tileentities;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -36,8 +38,8 @@ public class TileEntityMovingLightSource extends TileEntity implements IUpdatePl
     public TileEntityMovingLightSource()
     {
         // after constructing the tile entity instance, remember to call the setPlayer() method.
-        // DEBUG
-        System.out.println("Constructing");
+//        // DEBUG
+//        System.out.println("Constructing");
     }
     
     /**
@@ -53,20 +55,22 @@ public class TileEntityMovingLightSource extends TileEntity implements IUpdatePl
     @Override
     public void update()
     {
-        // DEBUG
-        System.out.println("Updating");
-        
         // check if player has moved away from the tile entity
-        if (worldObj.getClosestPlayer(getPos().getX()+0.5D, getPos().getY()+0.5D, getPos().getZ()+0.5D, 1.5D) == null)
+        EntityPlayer thePlayer = worldObj.getClosestPlayer(getPos().getX()+0.5D, getPos().getY()+0.5D, getPos().getZ()+0.5D, 2.0D);
+        if (thePlayer == null)
         {
-            // DEBUG
-            System.out.println("Player has moved away from the tile entity at "+getPos());
-            
             if (worldObj.getBlockState(getPos()).getBlock() == BlockSmith.blockMovingLightSource)
             {
                 worldObj.setBlockToAir(getPos());
             }
-        }        
+        }
+        else if (thePlayer.getCurrentEquippedItem().getItem() != Item.getItemFromBlock(Blocks.torch))
+        {
+            if (worldObj.getBlockState(getPos()).getBlock() == BlockSmith.blockMovingLightSource)
+            {
+                worldObj.setBlockToAir(getPos());
+            }            
+        }
     }  
     
     public void setPlayer(EntityPlayer parPlayer)

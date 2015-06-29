@@ -172,11 +172,16 @@ public class FMLEventHandler
                     int blockX = MathHelper.floor_double(event.player.posX);
                     int blockY = MathHelper.floor_double(event.player.posY-0.2D - event.player.getYOffset());
                     int blockZ = MathHelper.floor_double(event.player.posZ);
-                    BlockPos blockLocation = new BlockPos(blockX, blockY, blockZ);
+                    // place light at head level
+                    BlockPos blockLocation = new BlockPos(blockX, blockY, blockZ).up();
                     if (event.player.worldObj.getBlockState(blockLocation).getBlock() == Blocks.air)
-//                            && event.player.worldObj.getBlockState(blockLocation.add(0, -1, 0)).getBlock() != Blocks.air)
                     {
                         event.player.worldObj.setBlockState(blockLocation, BlockSmith.blockMovingLightSource.getDefaultState());
+                    }
+                    else 
+                        if (event.player.worldObj.getBlockState(blockLocation.add(event.player.getLookVec().xCoord, event.player.getLookVec().yCoord, event.player.getLookVec().zCoord)).getBlock() == Blocks.air)
+                    {
+                        event.player.worldObj.setBlockState(blockLocation.add(event.player.getLookVec().xCoord, event.player.getLookVec().yCoord, event.player.getLookVec().zCoord), BlockSmith.blockMovingLightSource.getDefaultState());
                     }
                 }
             }
