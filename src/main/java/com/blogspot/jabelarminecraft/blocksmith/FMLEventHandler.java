@@ -173,8 +173,8 @@ public class FMLEventHandler
                     int blockY = MathHelper.floor_double(event.player.posY-0.2D - event.player.getYOffset());
                     int blockZ = MathHelper.floor_double(event.player.posZ);
                     BlockPos blockLocation = new BlockPos(blockX, blockY, blockZ);
-                    if (event.player.worldObj.getBlockState(blockLocation).getBlock() == Blocks.air
-                            && event.player.worldObj.getBlockState(blockLocation.add(0, -1, 0)).getBlock() != Blocks.air)
+                    if (event.player.worldObj.getBlockState(blockLocation).getBlock() == Blocks.air)
+//                            && event.player.worldObj.getBlockState(blockLocation.add(0, -1, 0)).getBlock() != Blocks.air)
                     {
                         event.player.worldObj.setBlockState(blockLocation, BlockSmith.blockMovingLightSource.getDefaultState());
                     }

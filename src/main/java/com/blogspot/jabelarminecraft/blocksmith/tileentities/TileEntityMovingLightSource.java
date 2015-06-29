@@ -57,7 +57,7 @@ public class TileEntityMovingLightSource extends TileEntity implements IUpdatePl
         System.out.println("Updating");
         
         // check if player has moved away from the tile entity
-        if (worldObj.getClosestPlayer(getPos().getX(), getPos().getY(), getPos().getZ(), 3.0D) == null)
+        if (worldObj.getClosestPlayer(getPos().getX()+0.5D, getPos().getY()+0.5D, getPos().getZ()+0.5D, 1.5D) == null)
         {
             // DEBUG
             System.out.println("Player has moved away from the tile entity at "+getPos());
