@@ -64,6 +64,7 @@ import com.blogspot.jabelarminecraft.blocksmith.networking.MessageToServer;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityCompactor;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityForge;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityGrinder;
+import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityMovingLightSource;
 import com.blogspot.jabelarminecraft.blocksmith.tileentities.TileEntityTanningRack;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
@@ -279,6 +280,7 @@ public class CommonProxy
         GameRegistry.registerTileEntity(TileEntityCompactor.class, "tileEntityCompactor");               
         GameRegistry.registerTileEntity(TileEntityTanningRack.class, "tileEntityTanningRack");               
         GameRegistry.registerTileEntity(TileEntityForge.class, "tileEntityForge");               
+        GameRegistry.registerTileEntity(TileEntityMovingLightSource.class, "tileEntityMovingLightSource");               
         // example: GameRegistry.registerTileEntity(TileEntityMagicBeanStalk.class, "tileEntityMagicBeanStalk");
     }
 
