@@ -51,16 +51,19 @@ public class BlockMovingLightSource extends Block implements ITileEntityProvider
             add(Item.getItemFromBlock(Blocks.torch));
             add(Item.getItemFromBlock(Blocks.redstone_torch));
             add(Item.getItemFromBlock(Blocks.redstone_lamp));
+            add(Item.getItemFromBlock(Blocks.redstone_block));
+            add(Item.getItemFromBlock(Blocks.redstone_ore));
+            add(Items.redstone);
+            add(Item.getItemFromBlock(Blocks.redstone_wire));
             add(Item.getItemFromBlock(Blocks.glowstone));
+            add(Items.glowstone_dust);
             add(Item.getItemFromBlock(Blocks.lava));
+            add(Items.lava_bucket  );
             add(Item.getItemFromBlock(Blocks.lit_redstone_lamp));
             add(Item.getItemFromBlock(Blocks.beacon));
             add(Item.getItemFromBlock(Blocks.sea_lantern));
             add(Item.getItemFromBlock(Blocks.end_portal));
             add(Item.getItemFromBlock(Blocks.end_portal_frame));
-            add(Item.getItemFromBlock(Blocks.redstone_block));
-            add(Item.getItemFromBlock(Blocks.redstone_ore));
-            add(Items.lava_bucket  );
         }
     };
 
