@@ -18,8 +18,8 @@ buildscript {
 apply plugin: 'forge'
 
 version = "1.8-1.0.0"
-group= "com.blogspot.jabelarminecraft.blocksmith" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "blocksmith"
+group= "com.blogspot.jabelarminecraft.movingblocksource" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "movingblocksource"
 
 minecraft {
     version = "1.8-11.14.3.1502"
