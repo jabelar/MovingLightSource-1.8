@@ -22,7 +22,6 @@ package com.blogspot.jabelarminecraft.movinglightsource;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
@@ -34,6 +33,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+
+import com.blogspot.jabelarminecraft.movinglightsource.blocks.BlockMovingLightSource;
 
 
 public class FMLEventHandler 
@@ -167,7 +168,7 @@ public class FMLEventHandler
         {
             if (event.player.getCurrentEquippedItem() != null)
             {
-                if (event.player.getCurrentEquippedItem().getItem() == ItemBlock.getItemFromBlock(Blocks.torch))
+                if (BlockMovingLightSource.isLightEmittingItem(event.player.getCurrentEquippedItem().getItem()))
                 {
                     int blockX = MathHelper.floor_double(event.player.posX);
                     int blockY = MathHelper.floor_double(event.player.posY-0.2D - event.player.getYOffset());

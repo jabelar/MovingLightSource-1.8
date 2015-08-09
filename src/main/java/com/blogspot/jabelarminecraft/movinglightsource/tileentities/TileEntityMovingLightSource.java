@@ -18,14 +18,13 @@ package com.blogspot.jabelarminecraft.movinglightsource.tileentities;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import com.blogspot.jabelarminecraft.movinglightsource.MovingLightSource;
+import com.blogspot.jabelarminecraft.movinglightsource.blocks.BlockMovingLightSource;
 
 /**
  * @author jabelar
@@ -64,7 +63,7 @@ public class TileEntityMovingLightSource extends TileEntity implements IUpdatePl
                 worldObj.setBlockToAir(getPos());
             }
         }
-        else if (thePlayer.getCurrentEquippedItem().getItem() != Item.getItemFromBlock(Blocks.torch))
+        else if (!BlockMovingLightSource.isLightEmittingItem(thePlayer.getCurrentEquippedItem().getItem()))
         {
             if (worldObj.getBlockState(getPos()).getBlock() == MovingLightSource.blockMovingLightSource)
             {

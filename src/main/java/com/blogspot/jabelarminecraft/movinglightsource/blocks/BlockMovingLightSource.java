@@ -16,6 +16,9 @@
 
 package com.blogspot.jabelarminecraft.movinglightsource.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -23,6 +26,9 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -40,6 +46,23 @@ import com.blogspot.jabelarminecraft.movinglightsource.tileentities.TileEntityMo
  */
 public class BlockMovingLightSource extends Block implements ITileEntityProvider
 {
+    public static List<Item> lightSourceList = new ArrayList<Item>() {
+        {
+            add(Item.getItemFromBlock(Blocks.torch));
+            add(Item.getItemFromBlock(Blocks.redstone_torch));
+            add(Item.getItemFromBlock(Blocks.redstone_lamp));
+            add(Item.getItemFromBlock(Blocks.glowstone));
+            add(Item.getItemFromBlock(Blocks.lava));
+            add(Item.getItemFromBlock(Blocks.lit_redstone_lamp));
+            add(Item.getItemFromBlock(Blocks.beacon));
+            add(Item.getItemFromBlock(Blocks.sea_lantern));
+            add(Item.getItemFromBlock(Blocks.end_portal));
+            add(Item.getItemFromBlock(Blocks.end_portal_frame));
+            add(Item.getItemFromBlock(Blocks.redstone_block));
+            add(Item.getItemFromBlock(Blocks.redstone_ore));
+            add(Items.lava_bucket  );
+        }
+    };
 
     public BlockMovingLightSource()
     {
@@ -49,6 +72,11 @@ public class BlockMovingLightSource extends Block implements ITileEntityProvider
         setTickRandomly(false);
         setLightLevel(1.0F);
         setBlockBounds(0.5F, 0.5F, 0.5F, 0.5F, 0.5F, 0.5F);
+    }
+    
+    public static boolean isLightEmittingItem(Item parItem)
+    {
+        return lightSourceList.contains(parItem);
     }
 
     @Override
