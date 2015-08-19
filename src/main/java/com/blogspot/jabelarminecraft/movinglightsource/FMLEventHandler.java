@@ -156,9 +156,9 @@ public class FMLEventHandler
             EntityPlayer thePlayer = event.player;
             if (!MovingLightSource.haveWarnedVersionOutOfDate && !MovingLightSource.versionChecker.isLatestVersion())
             {
-                ClickEvent versionCheckChatClickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, "http://jabelarminecraft.blogspot.com");
+                ClickEvent versionCheckChatClickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, MovingLightSource.MODURL);
                 ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(versionCheckChatClickEvent);
-                ChatComponentText versionWarningChatComponent = new ChatComponentText("Your Magic Beans Mod is not latest version!  Click here to update.");
+                ChatComponentText versionWarningChatComponent = new ChatComponentText("Your mod is not latest version!  Click here to update.");
                 versionWarningChatComponent.setChatStyle(clickableChatStyle);
                 thePlayer.addChatMessage(versionWarningChatComponent);
                 MovingLightSource.haveWarnedVersionOutOfDate = true;

@@ -41,7 +41,7 @@ public class VersionChecker implements Runnable
         InputStream in = null;
         try 
         {
-            in = new URL("https://raw.githubusercontent.com/jabelar/MagicBeans-1.7.10/master/src/main/java/com/blogspot/jabelarminecraft/magicbeans/version_file").openStream();
+            in = new URL("https://raw.githubusercontent.com/jabelar/MovingLightSource-1.8/master/src/main/java/com/blogspot/jabelarminecraft/movinglightsource/version_file").openStream();
         } 
         catch 
         (MalformedURLException e) 
@@ -68,8 +68,9 @@ public class VersionChecker implements Runnable
         {
             IOUtils.closeQuietly(in);
         }
-        System.out.println("Latest mod version = "+latestVersion);
-        isLatestVersion = MovingLightSource.MODVERSION.equals(latestVersion);
+        // DEBUG
+        System.out.println("Current version is "+MovingLightSource.MODVERSION+" and latest version is "+latestVersion);
+        isLatestVersion = MovingLightSource.MODVERSION.compareTo(latestVersion) >= 0;
         System.out.println("Are you running latest version = "+isLatestVersion);
     }
     

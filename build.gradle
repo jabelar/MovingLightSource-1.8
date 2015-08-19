@@ -17,9 +17,9 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.8-1.0.0"
-group= "com.blogspot.jabelarminecraft.movingblocksource" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "movingblocksource"
+version = "1.8-1.0.1"
+group= "com.blogspot.jabelarminecraft.movinglightsource" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "movinglightsource"
 
 minecraft {
     version = "1.8-11.14.3.1502"

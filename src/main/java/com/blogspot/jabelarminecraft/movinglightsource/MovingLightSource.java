@@ -55,7 +55,7 @@ public class MovingLightSource
     public static final String MODDESCRIPTION = "Let there be light!";
     public static final String MODAUTHOR = "jabelar";
     public static final String MODCREDITS = "";
-    public static final String MODURL = "www.jabelarminecraft.blogspot.com";
+    public static final String MODURL = "http://jabelarminecraftmods.blogspot.com/p/jabelars-moving-light-source-mod.html";
     public static final String MODLOGO = "modconfigraphic.png";
 
     // this is tag used for sub-compound in extended properties and packet syncing
