@@ -46,13 +46,12 @@ import com.blogspot.jabelarminecraft.movinglightsource.proxy.CommonProxy;
 @Mod(modid = 
       MovingLightSource.MODID, 
       name = MovingLightSource.MODNAME, 
-      version = MovingLightSource.MODVERSION,
-      guiFactory = "com.blogspot.jabelarminecraft."+MovingLightSource.MODID+".gui.GuiFactory")
+      version = MovingLightSource.MODVERSION)
 public class MovingLightSource
 {
     public static final String MODID = "movinglightsource";
     public static final String MODNAME = "Jabelar's Moving Light Source";
-    public static final String MODVERSION = "1.0.0";
+    public static final String MODVERSION = "1.0.1";
     public static final String MODDESCRIPTION = "Let there be light!";
     public static final String MODAUTHOR = "jabelar";
     public static final String MODCREDITS = "";
