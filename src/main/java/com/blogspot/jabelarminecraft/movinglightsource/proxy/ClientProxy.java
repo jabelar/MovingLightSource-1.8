@@ -161,7 +161,7 @@ public class ClientProxy extends CommonProxy
         
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         
-        renderItem.getItemModelMesher().register(Item.getItemFromBlock(MovingLightSource.blockMovingLightSource), 0, new ModelResourceLocation("torch"));
+        renderItem.getItemModelMesher().register(Item.getItemFromBlock(MovingLightSource.blockMovingLightSource15), 0, new ModelResourceLocation("torch"));
     }
     
     /*     

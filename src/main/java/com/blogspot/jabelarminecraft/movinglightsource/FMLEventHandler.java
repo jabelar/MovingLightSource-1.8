@@ -177,12 +177,11 @@ public class FMLEventHandler
                     BlockPos blockLocation = new BlockPos(blockX, blockY, blockZ).up();
                     if (event.player.worldObj.getBlockState(blockLocation).getBlock() == Blocks.air)
                     {
-                        event.player.worldObj.setBlockState(blockLocation, MovingLightSource.blockMovingLightSource.getDefaultState());
+                        event.player.worldObj.setBlockState(blockLocation, MovingLightSource.blockMovingLightSource15.getDefaultState());
                     }
-                    else 
-                        if (event.player.worldObj.getBlockState(blockLocation.add(event.player.getLookVec().xCoord, event.player.getLookVec().yCoord, event.player.getLookVec().zCoord)).getBlock() == Blocks.air)
+                    else if (event.player.worldObj.getBlockState(blockLocation.add(event.player.getLookVec().xCoord, event.player.getLookVec().yCoord, event.player.getLookVec().zCoord)).getBlock() == Blocks.air)
                     {
-                        event.player.worldObj.setBlockState(blockLocation.add(event.player.getLookVec().xCoord, event.player.getLookVec().yCoord, event.player.getLookVec().zCoord), MovingLightSource.blockMovingLightSource.getDefaultState());
+                        event.player.worldObj.setBlockState(blockLocation.add(event.player.getLookVec().xCoord, event.player.getLookVec().yCoord, event.player.getLookVec().zCoord), MovingLightSource.blockMovingLightSource15.getDefaultState());
                     }
                 }
             }

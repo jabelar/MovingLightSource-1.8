@@ -83,7 +83,14 @@ public class MovingLightSource
     
     // instantiate blocks
     // need to instantiate some blocks before related item if the item constructor associates with block
-    public final static BlockMovingLightSource blockMovingLightSource = new BlockMovingLightSource();
+    public final static BlockMovingLightSource blockMovingLightSource15 = new BlockMovingLightSource();
+    public final static BlockMovingLightSource blockMovingLightSource14 = new BlockMovingLightSource(14);
+    public final static BlockMovingLightSource blockMovingLightSource13 = new BlockMovingLightSource(13);
+    public final static BlockMovingLightSource blockMovingLightSource12 = new BlockMovingLightSource(12);
+    public final static BlockMovingLightSource blockMovingLightSource11 = new BlockMovingLightSource(11);
+    public final static BlockMovingLightSource blockMovingLightSource9 = new BlockMovingLightSource(9);
+    public final static BlockMovingLightSource blockMovingLightSource7 = new BlockMovingLightSource(7);
+    public final static BlockMovingLightSource blockMovingLightSource1 = new BlockMovingLightSource(1);
 	
     // instantiate items
 	// important to do this after blocks where item is associated with custom block, like with crop

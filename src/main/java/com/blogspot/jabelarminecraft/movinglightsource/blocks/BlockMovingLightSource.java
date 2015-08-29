@@ -77,6 +77,12 @@ public class BlockMovingLightSource extends Block implements ITileEntityProvider
         setBlockBounds(0.5F, 0.5F, 0.5F, 0.5F, 0.5F, 0.5F);
     }
     
+    public BlockMovingLightSource(int parLightLevel)
+    {
+    	this();
+    	setLightLevel(parLightLevel);
+    }
+    
     public static boolean isLightEmittingItem(Item parItem)
     {
         return lightSourceList.contains(parItem);

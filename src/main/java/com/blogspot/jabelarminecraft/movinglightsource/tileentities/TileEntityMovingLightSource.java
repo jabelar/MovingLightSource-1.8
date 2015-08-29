@@ -58,7 +58,7 @@ public class TileEntityMovingLightSource extends TileEntity implements IUpdatePl
         EntityPlayer thePlayer = worldObj.getClosestPlayer(getPos().getX()+0.5D, getPos().getY()+0.5D, getPos().getZ()+0.5D, 2.0D);
         if (thePlayer == null)
         {
-            if (worldObj.getBlockState(getPos()).getBlock() == MovingLightSource.blockMovingLightSource)
+            if (worldObj.getBlockState(getPos()).getBlock() == MovingLightSource.blockMovingLightSource15)
             {
                 worldObj.setBlockToAir(getPos());
             }
@@ -66,7 +66,7 @@ public class TileEntityMovingLightSource extends TileEntity implements IUpdatePl
         else if (thePlayer.getCurrentEquippedItem() != null
                 && !BlockMovingLightSource.isLightEmittingItem(thePlayer.getCurrentEquippedItem().getItem()))
         {
-            if (worldObj.getBlockState(getPos()).getBlock() == MovingLightSource.blockMovingLightSource)
+            if (worldObj.getBlockState(getPos()).getBlock() == MovingLightSource.blockMovingLightSource15)
             {
                 worldObj.setBlockToAir(getPos());
             }            
