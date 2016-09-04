@@ -21,6 +21,8 @@ package com.blogspot.jabelarminecraft.movinglightsource;
 
 import java.io.File;
 
+import com.blogspot.jabelarminecraft.movinglightsource.blocks.BlockMovingLightSource;
+import com.blogspot.jabelarminecraft.movinglightsource.proxy.CommonProxy;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBasic;
 import net.minecraft.util.EnumChatFormatting;
@@ -40,13 +42,10 @@ import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-import com.blogspot.jabelarminecraft.movinglightsource.blocks.BlockMovingLightSource;
-import com.blogspot.jabelarminecraft.movinglightsource.proxy.CommonProxy;
-
-@Mod(modid = 
-      MovingLightSource.MODID, 
+@Mod( modid = MovingLightSource.MODID, 
       name = MovingLightSource.MODNAME, 
-      version = MovingLightSource.MODVERSION)
+      version = MovingLightSource.MODVERSION,
+      acceptedMinecraftVersions = "[1.8,1.8.9]")
 public class MovingLightSource
 {
     public static final String MODID = "movinglightsource";
